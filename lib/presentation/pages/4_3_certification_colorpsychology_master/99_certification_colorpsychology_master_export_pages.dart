@@ -1,0 +1,1 @@
+export '1_certification_colorpsychology_master_main.dart';

@@ -1,0 +1,1 @@
+export '1_color_psychology_consult_main.dart';

@@ -1,0 +1,1 @@
+export '1_certification_personalcolor_consultant_main.dart';
