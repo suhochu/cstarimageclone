@@ -7,19 +7,11 @@ class CstarImageHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final indexedPage = IndexedPage.of(context);
     return Scaffold(
       appBar: const TopTabBar(),
-      body: TabBarView(
-
-        controller: TabPage.of(context).controller,
-        children: const [
-          HomeMain(),
-          PersonalColorDiagnosisPage(),
-          ColorPsychologyConsultPage(),
-          TotalImageMakingPage(),
-          PurchasingTeachingToolPage(),
-          InquiryEducationOrLecturePage(),
-        ],
+      body: PageStackNavigator(
+        stack: indexedPage.currentStack,
       ),
     );
   }

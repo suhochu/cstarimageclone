@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+// import 'package:responsive_framework/responsive_framework.dart';
 import '../../../widget/slideshow.dart';
 
 class HomeCarousel extends StatelessWidget {
@@ -8,16 +8,16 @@ class HomeCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double? sizeFactor = ResponsiveValue(context, defaultValue: 1.0, valueWhen: [
-      const Condition.smallerThan(name: TABLET, value: 0.4),
-      const Condition.largerThan(name: TABLET, value: 1.4),
-    ]).value;
+    // double? sizeFactor = ResponsiveValue(context, defaultValue: 1.0, valueWhen: [
+    //   const Condition.smallerThan(name: TABLET, value: 0.4),
+    //   const Condition.largerThan(name: TABLET, value: 1.4),
+    // ]).value;
     return Stack(children: [
       Container(
         color: Colors.blueGrey,
         child: ImageSlideshow(
           width: double.infinity,
-          height: 400 * sizeFactor!,
+          height: 400,
           initialPage: 0,
           autoPlayInterval: 3000,
           isLoop: true,
@@ -32,24 +32,24 @@ class HomeCarousel extends StatelessWidget {
         left: 0,
         right: 0,
         child: SizedBox(
-          height: 400 * sizeFactor,
+          height: 400,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 0.3, sigmaY: 0.3),
-                child: Image(
-                  image: const AssetImage('assets/images/homepage/mtxt.png'),
-                  width: 200 * sizeFactor,
-                  color: const Color.fromRGBO(255, 255, 255, 0.95),
+                child: const Image(
+                  image: AssetImage('assets/images/homepage/mtxt.png'),
+                  width: 200 ,
+                  color: Color.fromRGBO(255, 255, 255, 0.95),
                   colorBlendMode: BlendMode.modulate,
                 ),
               ),
-              SizedBox(
-                height: 20 * sizeFactor,
+              const SizedBox(
+                height: 20,
               ),
-              KakaoTalkButton(sizeFactor: sizeFactor),
+              const KakaoTalkButton(sizeFactor: 1),
             ],
           ),
         ),

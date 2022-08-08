@@ -52,11 +52,18 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
             color: Colors.transparent,
             child: Column(
               children: [
-                PopUpMenu(title: '토탈이미지메이킹 컨설턴트', event: () {}),
+                PopUpMenu(title: '토탈이미지메이킹 컨설턴트', event: () {
+                  Routemaster.of(context).push('/${TotalImageMakingPage.routeName}');
+
+                }),
                 const Divider(color: Colors.grey,height: 1),
-                PopUpMenu(title: '퍼스널컬러 컨설턴트',event: () {}),
+                PopUpMenu(title: '퍼스널컬러 컨설턴트',event: () {
+                  Routemaster.of(context).push('/${TotalImageMakingPage.routeName}/${PersonalColorConsultantPage.routeName}');
+                }),
                 const Divider(color: Colors.grey, height: 1,),
-                PopUpMenu(title: '색체심리 마스터',event: () {}),
+                PopUpMenu(title: '색체심리 마스터',event: () {
+                  Routemaster.of(context).push('${TotalImageMakingPage.routeName}/${ColorPsychologyMasterPage.routeName}');
+                }),
               ],
             ),
           ),
