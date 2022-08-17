@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../widget/google_Map.dart';
+
+
 class CstarImageCenter extends StatelessWidget {
   const CstarImageCenter({Key? key}) : super(key: key);
 
@@ -50,12 +53,24 @@ class CstarImageCenter extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    Text('DIRECTIONS', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
+                    Text('DIRECTIONS',
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
                     Text('오시는길', style: TextStyle(fontSize: 18, color: Colors.white)),
                   ],
                 ),
-                const Icon(Icons.search, size: 50, color: Colors.white,)
+                const Icon(
+                  Icons.search,
+                  size: 50,
+                  color: Colors.white,
+                )
               ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.yellow,
+              child: const GoogleMapWidget(),
             ),
           )
         ],
@@ -86,12 +101,12 @@ class CstarImageCenter extends StatelessWidget {
             height: 10,
           ),
           Text('010.9340.2890',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
           SizedBox(height: 5),
           Text('02.6482.2890',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
           SizedBox(height: 10),
-          Text('굼금한사항있으시면 언제든문의주세요!', style: TextStyle(fontSize: 16, color: Colors.white)),
+          Text('궁금한사항있으시면 언제든문의주세요!', style: TextStyle(fontSize: 16, color: Colors.white)),
         ],
       ),
     );
@@ -146,3 +161,4 @@ class CstarImageCenter extends StatelessWidget {
     );
   }
 }
+

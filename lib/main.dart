@@ -27,9 +27,10 @@ class MyApp extends StatelessWidget {
       //     background: Container(color: const Color(0xFFF5F5F5))),
       title: 'Welcome to CSTAR IMAGE',
       debugShowCheckedModeBanner: false,
-
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1)
       ),
       routerDelegate: RoutemasterDelegate(
         observers: [TitleObserver()],

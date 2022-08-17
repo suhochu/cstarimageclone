@@ -14,6 +14,12 @@ dependencies:
   routemaster: ^1.0.1
   responsive_framework: ^0.2.0
   page_transition: ^2.0.9
+  web_smooth_scroll: ^1.0.0
+  url_launcher: ^6.1.5
+  google_maps_flutter: ^2.1.10
+  google_maps_flutter_web: ^0.4.0+1
+  custom_info_window: ^1.0.1
+  flutter_svg: ^1.1.3
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +30,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/homepage/
+    - assets/images/footer/
+    - assets/images/SVG/
+    - assets/images/personalColor/
+    - assets/images/common/
+    - assets/images/colorTherapy/
+    - assets/images/teachingTool/
+    - assets/images/edu/
+    - assets/images/certification/
 
 
 

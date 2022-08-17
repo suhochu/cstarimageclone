@@ -52,18 +52,28 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
             color: Colors.transparent,
             child: Column(
               children: [
-                PopUpMenu(title: '토탈이미지메이킹 컨설턴트', event: () {
-                  Routemaster.of(context).push('/${TotalImageMakingPage.routeName}');
-
-                }),
-                const Divider(color: Colors.grey,height: 1),
-                PopUpMenu(title: '퍼스널컬러 컨설턴트',event: () {
-                  Routemaster.of(context).push('/${TotalImageMakingPage.routeName}/${PersonalColorConsultantPage.routeName}');
-                }),
-                const Divider(color: Colors.grey, height: 1,),
-                PopUpMenu(title: '색체심리 마스터',event: () {
-                  Routemaster.of(context).push('${TotalImageMakingPage.routeName}/${ColorPsychologyMasterPage.routeName}');
-                }),
+                PopUpMenu(
+                    title: '토탈이미지메이킹 컨설턴트',
+                    event: () {
+                      Routemaster.of(context).push('/${TotalImageMakingPage.routeName}');
+                    }),
+                const Divider(color: Colors.grey, height: 1),
+                PopUpMenu(
+                    title: '퍼스널컬러 컨설턴트',
+                    event: () {
+                      Routemaster.of(context).push(
+                          '/${TotalImageMakingPage.routeName}/${PersonalColorConsultantPage.routeName}');
+                    }),
+                const Divider(
+                  color: Colors.grey,
+                  height: 1,
+                ),
+                PopUpMenu(
+                    title: '색체심리 마스터',
+                    event: () {
+                      Routemaster.of(context).push(
+                          '${TotalImageMakingPage.routeName}/${ColorPsychologyMasterPage.routeName}');
+                    }),
               ],
             ),
           ),
@@ -93,11 +103,13 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
   }
 
   void hideOverlay() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
     if (isPopupClose == true) {
       _animationController.reverse();
-      entry?.remove();
-      entry = null;
+      if (_animationController.value == 0) {
+        entry?.remove();
+        entry = null;
+      }
     }
   }
 
@@ -156,7 +168,6 @@ class PopUpMenu extends StatefulWidget {
 }
 
 class _PopUpMenuState extends State<PopUpMenu> {
-
   Color titleColor = Colors.white;
   Color backGroundColor = Colors.black87;
 

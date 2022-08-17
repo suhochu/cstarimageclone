@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:routemaster/routemaster.dart';
+
+import '../all_pages_out.dart';
 
 class HomeIntroduce extends StatelessWidget {
   HomeIntroduce({Key? key}) : super(key: key);
@@ -13,6 +16,13 @@ class HomeIntroduce extends StatelessWidget {
     'CSTAR 컬러자격증과정을 \n안내해 드립니다.',
     'CSTAR 컬러교구구입을 \n안내해 드립니다.',
     'CSTAR 기업교육 및 강의문의를 \n안내해 드립니다.'
+  ];
+
+  final List<String> routePages = [
+    '/${PersonalColorDiagnosisPage.routeName}',
+    '/${TotalImageMakingPage.routeName}',
+    '/${PurchasingTeachingToolPage.routeName}',
+    '/${InquiryEducationOrLecturePage.routeName}',
   ];
 
   @override
@@ -36,7 +46,7 @@ class HomeIntroduce extends StatelessWidget {
           children: List.generate(
               4,
               (index) =>
-                  IntroduceCard(title: titles[index], content: contents[index], index: index)),
+                  IntroduceCard(title: titles[index], content: contents[index], index: index, route: routePages[index],)),
         ),
       ),
     ]);
@@ -44,12 +54,13 @@ class HomeIntroduce extends StatelessWidget {
 }
 
 class IntroduceCard extends StatefulWidget {
-  const IntroduceCard({Key? key, required this.title, required this.content, required this.index})
+  const IntroduceCard({Key? key, required this.title, required this.content, required this.index, required this.route})
       : super(key: key);
 
   final String title;
   final String content;
   final int index;
+  final String route;
 
   @override
   State<IntroduceCard> createState() => _IntroduceCardState();
@@ -63,6 +74,7 @@ class _IntroduceCardState extends State<IntroduceCard> {
     return GestureDetector(
       onTap: () {
         print('Click ${widget.index}');
+        Routemaster.of(context).push(widget.route);
       },
       child: MouseRegion(
         cursor: SystemMouseCursors.click,

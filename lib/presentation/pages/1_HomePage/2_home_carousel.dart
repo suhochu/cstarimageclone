@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+
 // import 'package:responsive_framework/responsive_framework.dart';
-import '../../../widget/slideshow.dart';
+import '../../../widget/slide_show.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeCarousel extends StatelessWidget {
   const HomeCarousel({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class HomeCarousel extends StatelessWidget {
         color: Colors.blueGrey,
         child: ImageSlideshow(
           width: double.infinity,
-          height: 400,
+          height: 600,
           initialPage: 0,
           autoPlayInterval: 3000,
           isLoop: true,
@@ -31,6 +33,7 @@ class HomeCarousel extends StatelessWidget {
       Positioned(
         left: 0,
         right: 0,
+        top: 100,
         child: SizedBox(
           height: 400,
           child: Column(
@@ -41,7 +44,7 @@ class HomeCarousel extends StatelessWidget {
                 imageFilter: ImageFilter.blur(sigmaX: 0.3, sigmaY: 0.3),
                 child: const Image(
                   image: AssetImage('assets/images/homepage/mtxt.png'),
-                  width: 200 ,
+                  width: 300,
                   color: Color.fromRGBO(255, 255, 255, 0.95),
                   colorBlendMode: BlendMode.modulate,
                 ),
@@ -68,13 +71,20 @@ class KakaoTalkButton extends StatefulWidget {
 
 class _KakaoTalkButtonState extends State<KakaoTalkButton> {
   bool isInRegion = false;
-  double sizeFactor = 1.0;
+  double sizeFactor = 1.3;
+  final Uri _url = Uri.parse('https://pf.kakao.com/_lPGBd');
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw 'Could not launch $_url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.sizeFactor != null) {
-      sizeFactor = widget.sizeFactor!;
-    }
+    // if (widget.sizeFactor != null) {
+    //   sizeFactor = widget.sizeFactor!;
+    // }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (PointerEvent details) {
@@ -92,25 +102,28 @@ class _KakaoTalkButtonState extends State<KakaoTalkButton> {
         height: 50 * sizeFactor,
         width: 200 * sizeFactor,
         color: isInRegion ? const Color.fromRGBO(55, 30, 32, 1) : Colors.yellow,
-        child: Row(
-          children: [
-            const Spacer(),
-            Image.asset(
-              'assets/images/homepage/mtxt_bn.png',
-              fit: BoxFit.fill,
-              width: 30 * sizeFactor,
-            ),
-            SizedBox(width: 15 * sizeFactor),
-            AnimatedDefaultTextStyle(
-                style: TextStyle(
-                    fontSize: 17 * sizeFactor,
-                    fontWeight: FontWeight.bold,
-                    color: isInRegion ? Colors.yellow : const Color.fromRGBO(55, 30, 32, 1)),
-                duration: const Duration(milliseconds: 300),
-                child: const Text('카카오톡 문의')),
-            SizedBox(width: 15 * sizeFactor),
-            const Spacer(),
-          ],
+        child: MaterialButton(
+          onPressed: _launchUrl,
+          child: Row(
+            children: [
+              const Spacer(),
+              Image.asset(
+                'assets/images/homepage/mtxt_bn.png',
+                fit: BoxFit.fill,
+                width: 30 * sizeFactor,
+              ),
+              SizedBox(width: 15 * sizeFactor),
+              AnimatedDefaultTextStyle(
+                  style: TextStyle(
+                      fontSize: 17 * sizeFactor,
+                      fontWeight: FontWeight.bold,
+                      color: isInRegion ? Colors.yellow : const Color.fromRGBO(55, 30, 32, 1)),
+                  duration: const Duration(milliseconds: 300),
+                  child: const Text('카카오톡 문의')),
+              SizedBox(width: 15 * sizeFactor),
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

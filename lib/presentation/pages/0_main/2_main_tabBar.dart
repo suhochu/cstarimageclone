@@ -38,6 +38,7 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        const SizedBox(width: 20,),
         tabBarButton(
           index: 0,
           child: Container(
@@ -51,6 +52,7 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
         tabBarButton(index: 3, child: const TabWidget(title: '자격증과정', isPopup: true)),
         tabBarButton(index: 4, child: const TabWidget(title: '컬러교구 구입')),
         tabBarButton(index: 5, child: const TabWidget(title: '교육 및 강의(문의)')),
+        const SizedBox(width: 20,),
         // MaterialButton(
         //   hoverColor: Colors.transparent,
         //   onPressed: () => indexedPage.index = 0,

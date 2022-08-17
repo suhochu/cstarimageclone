@@ -1,5 +1,10 @@
-import 'package:cstar_image_clone/widget/slideshow.dart';
+import 'package:cstar_image_clone/constants/urls.dart';
+import 'package:cstar_image_clone/widget/slide_show.dart';
 import 'package:flutter/material.dart';
+import 'package:routemaster/routemaster.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../all_pages_out.dart';
 
 class CstarImageContacts extends StatelessWidget {
   const CstarImageContacts({Key? key}) : super(key: key);
@@ -30,7 +35,7 @@ class CstarImageContacts extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.all(20),
-                      color: Colors.deepPurple.shade800,
+                      width: 500,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -45,15 +50,7 @@ class CstarImageContacts extends StatelessWidget {
                                 Image.asset('assets/images/homepage/st_vis2.jpg', fit: BoxFit.fill),
                                 Image.asset('assets/images/homepage/st_vis3.jpg', fit: BoxFit.fill),
                               ]),
-                          const SizedBox(
-                            height: 90,
-                            child: Center(
-                                child: Text(
-                              '씨스타 이미지 컨설팅 문의',
-                              style: TextStyle(
-                                  fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
-                            )),
-                          )
+                          const CstarConsultingButton(),
                         ],
                       ),
                     ),
@@ -64,25 +61,28 @@ class CstarImageContacts extends StatelessWidget {
                           title: '카카오톡',
                           content: 'CSTAR 카카오톡을 안내합니다.',
                           iconImage: 'st2_con_img01.png',
+                          url: kakaoChannel,
                         ),
                         ContactCard(
                           color: Color.fromRGBO(0, 198, 58, 1),
                           title: '네이버톡톡',
                           content: 'CSTAR 네이버톡톡을 안내합니다.',
                           iconImage: 'st2_con_img02.png',
+                          url: naverTalkTalk,
                         ),
                         ContactCard(
                           color: Color.fromRGBO(67, 46, 136, 1),
                           title: '인스타그램',
                           content: 'CSTAR 인스타그램을 안내합니다.',
                           iconImage: 'st2_con_img03.png',
+                          url: instarPage,
                         ),
                         ContactCard(
-                          color: Color.fromRGBO(0, 198, 58, 1),
-                          title: '네이버톡톡',
-                          content: 'CSTAR 네이버블로그를 안내합니다.',
-                          iconImage: 'st2_con_img04.png',
-                        ),
+                            color: Color.fromRGBO(0, 198, 58, 1),
+                            title: '네이버블로그',
+                            content: 'CSTAR 네이버블로그를 안내합니다.',
+                            iconImage: 'st2_con_img04.png',
+                            url: naverBlog),
                       ],
                     )
                   ],
@@ -96,6 +96,48 @@ class CstarImageContacts extends StatelessWidget {
   }
 }
 
+class CstarConsultingButton extends StatefulWidget {
+  const CstarConsultingButton({Key? key}) : super(key: key);
+
+  @override
+  State<CstarConsultingButton> createState() => _CstarConsultingButtonState();
+}
+
+class _CstarConsultingButtonState extends State<CstarConsultingButton> {
+  bool isInRegion = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      opaque: false,
+      onEnter: (PointerEvent details) {
+        setState(() {
+          isInRegion = true;
+        });
+      },
+      onExit: (PointerEvent details) {
+        setState(() {
+          isInRegion = false;
+        });
+      },
+      child: GestureDetector(
+        onTap: () => Routemaster.of(context).push('/${InquiryEducationOrLecturePage.routeName}'),
+        child: Container(
+          width: 500,
+          color: isInRegion ? const Color.fromRGBO(43, 26, 103, 1) : const Color.fromRGBO(67, 46, 136, 1),
+          height: 90,
+          child: const Center(
+              child: Text(
+            '씨스타 이미지 컨설팅 문의',
+            style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+          )),
+        ),
+      ),
+    );
+  }
+}
+
 class ContactCard extends StatefulWidget {
   const ContactCard({
     Key? key,
@@ -103,12 +145,14 @@ class ContactCard extends StatefulWidget {
     required this.title,
     required this.content,
     required this.color,
+    required this.url,
   }) : super(key: key);
 
   final String iconImage;
   final String title;
   final String content;
   final Color color;
+  final String url;
 
   @override
   State<ContactCard> createState() => _ContactCardState();
@@ -116,39 +160,65 @@ class ContactCard extends StatefulWidget {
 
 class _ContactCardState extends State<ContactCard> {
   bool isInRegion = false;
+  late final Uri _url;
+
+  @override
+  void initState() {
+    super.initState();
+    _url = Uri.parse(widget.url);
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw 'Could not launch $_url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      color: isInRegion ? widget.color : const Color.fromRGBO(44, 44, 44, 1),
-      duration: const Duration(milliseconds: 300),
-      width: 500,
-      height: 110,
-      margin: const EdgeInsets.only(top: 20, right: 20),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (PointerEvent details) {
-          setState(() {
-            isInRegion = true;
-          });
-        },
-        onExit: (PointerEvent details) {
-          setState(() {
-            isInRegion = false;
-          });
-        },
-        child: Row(
-          children: [
-            Container(child: Image.asset('assets/images/homepage/${widget.iconImage}'), margin: const EdgeInsets.all(20),),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.title, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
-                Text(widget.content, style: const TextStyle(color: Colors.white, fontSize: 12),),
-              ],
-            )
-          ],
+    return MaterialButton(
+      onPressed: _launchUrl,
+      child: AnimatedContainer(
+        color: isInRegion ? widget.color : const Color.fromRGBO(44, 44, 44, 1),
+        duration: const Duration(milliseconds: 300),
+        width: 500,
+        height: 110,
+        margin: const EdgeInsets.only(top: 20, right: 20),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (PointerEvent details) {
+            setState(() {
+              isInRegion = true;
+            });
+          },
+          onExit: (PointerEvent details) {
+            setState(() {
+              isInRegion = false;
+            });
+          },
+          child: Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: Image.asset('assets/images/homepage/${widget.iconImage}'),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                        color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    widget.content,
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
