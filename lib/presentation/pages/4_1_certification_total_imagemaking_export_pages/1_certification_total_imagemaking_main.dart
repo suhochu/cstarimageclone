@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 import '../../../widget/main_footer.dart';
 import '../../../widget/page_banner.dart';
 import '../../../widget/page_footer.dart';
 
-class TotalImageMakingPage extends StatefulWidget {
+class CertificationPage extends StatefulWidget {
   static const String routeName = 'certification_total_image_making';
+  final String? query;
 
-  const TotalImageMakingPage({Key? key}) : super(key: key);
+  const CertificationPage({Key? key, this.query}) : super(key: key);
 
   @override
-  State<TotalImageMakingPage> createState() => _TotalImageMakingPageState();
+  State<CertificationPage> createState() => _CertificationPageState();
 }
 
-class _TotalImageMakingPageState extends State<TotalImageMakingPage> {
+class _CertificationPageState extends State<CertificationPage> {
   late final ScrollController _scrollController;
-  int isSelected = 1;
-
+  int _selectedIndex = 1;
   double opacity = 0;
-
   bool _isSelected = false;
 
   void _opacityFAB() {
@@ -50,10 +50,10 @@ class _TotalImageMakingPageState extends State<TotalImageMakingPage> {
 
   List<Widget> buildContents() {
     return [
-      const PageBanner(
-        title: '토탈이미지메이킹 컨설턴트 자격증',
-      ),
+      const PageBanner(title: '토탈이미지메이킹 컨설턴트 자격증'),
       tabBuilder(),
+      const SizedBox(height: 30),
+      contentsBuilder(),
       const PageFooter(),
       const MainFooter(),
     ];
@@ -70,31 +70,63 @@ class _TotalImageMakingPageState extends State<TotalImageMakingPage> {
     );
   }
 
+  Widget contentsBuilder() {
+    int pageIndex;
+    try {
+       pageIndex = int.parse(RouteData
+          .of(context)
+          .queryParameters['query']!);
+    } catch(e) {
+      pageIndex = 1;
+    }
+    if (pageIndex != _selectedIndex) _selectedIndex = pageIndex;
+    switch (_selectedIndex) {
+      case 2:
+        return contentBuilder('1');
+      case 3:
+        return contentBuilder('3');
+      default:
+        return contentBuilder('2');
+    }
+  }
+
+  Widget contentBuilder(String index) => Container(
+        margin: const EdgeInsets.symmetric(vertical: 20),
+        child: Image.asset(
+          'assets/images/certification/$index.jpeg',
+        ),
+      );
+
   GestureDetector tabButton({required String title, required int index}) {
     return GestureDetector(
-      onTap: () => setState(() {
-        isSelected = index;
-      }),
+      onTap: () => Routemaster.of(context).push('/${CertificationPage.routeName}?query=$index'),
       child: AnimatedContainer(
         margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 70),
         duration: const Duration(milliseconds: 200),
-        width: 250,
-        height: 80,
-        color: isSelected == index
+        color: _selectedIndex == index
             ? const Color.fromRGBO(164, 69, 237, 1)
             : const Color.fromRGBO(120, 120, 120, 1),
-        child: Center(
-            child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 20),
-        )),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: SizedBox(
+            width: 250,
+            height: 80,
+            child: Center(
+                child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style:
+                  const TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 20),
+            )),
+          ),
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    contentsBuilder();
     return Scaffold(
       body: WebSmoothScroll(
         controller: _scrollController,

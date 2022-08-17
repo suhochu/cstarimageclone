@@ -55,14 +55,13 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
                 PopUpMenu(
                     title: '토탈이미지메이킹 컨설턴트',
                     event: () {
-                      Routemaster.of(context).push('/${TotalImageMakingPage.routeName}');
+                      Routemaster.of(context).push('/${CertificationPage.routeName}?query=1');
                     }),
                 const Divider(color: Colors.grey, height: 1),
                 PopUpMenu(
                     title: '퍼스널컬러 컨설턴트',
                     event: () {
-                      Routemaster.of(context).push(
-                          '/${TotalImageMakingPage.routeName}/${PersonalColorConsultantPage.routeName}');
+                      Routemaster.of(context).push('/${CertificationPage.routeName}?query=2');
                     }),
                 const Divider(
                   color: Colors.grey,
@@ -71,8 +70,7 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
                 PopUpMenu(
                     title: '색체심리 마스터',
                     event: () {
-                      Routemaster.of(context).push(
-                          '${TotalImageMakingPage.routeName}/${ColorPsychologyMasterPage.routeName}');
+                      Routemaster.of(context).replace('/${CertificationPage.routeName}/?query=3');
                     }),
               ],
             ),

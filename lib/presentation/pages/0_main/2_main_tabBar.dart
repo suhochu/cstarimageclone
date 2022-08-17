@@ -35,55 +35,58 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const SizedBox(width: 20,),
-        tabBarButton(
-          index: 0,
-          child: Container(
-            margin: const EdgeInsets.only(left: 10, top: 10),
-            child:
-                Image.asset('assets/images/homepage/logo.png', height: 80, fit: BoxFit.fitHeight),
+    return Material(
+      elevation: 6,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(width: 20,),
+          tabBarButton(
+            index: 0,
+            child: Container(
+              margin: const EdgeInsets.only(left: 10, top: 10),
+              child:
+                  Image.asset('assets/images/homepage/logo.png', height: 80, fit: BoxFit.fitHeight),
+            ),
           ),
-        ),
-        tabBarButton(index: 1, child: const TabWidget(title: '퍼스널 컬러 진단')),
-        tabBarButton(index: 2, child: const TabWidget(title: '색채심리상담(컬러테라피)', isLong: true)),
-        tabBarButton(index: 3, child: const TabWidget(title: '자격증과정', isPopup: true)),
-        tabBarButton(index: 4, child: const TabWidget(title: '컬러교구 구입')),
-        tabBarButton(index: 5, child: const TabWidget(title: '교육 및 강의(문의)')),
-        const SizedBox(width: 20,),
-        // MaterialButton(
-        //   hoverColor: Colors.transparent,
-        //   onPressed: () => indexedPage.index = 0,
-        //   child: Container(
-        //     margin: const EdgeInsets.only(left: 10, top: 10),
-        //     child:
-        //         Image.asset('assets/images/homepage/logo.png', height: 80, fit: BoxFit.fitHeight),
-        //   ),
-        // ),
-        // MaterialButton(
-        //   hoverColor: Colors.transparent,
-        //   onPressed: () {
-        //     indexedPage.index = 1;
-        //   },
-        //   child: const TabWidget(title: '퍼스널 컬러 진단'),
-        // ),
-        // InkWell(
-        //     onTap: () => indexedPage.index = 2,
-        //     child: const TabWidget(title: '색채심리상담(컬러테라피)', isLong: true)),
-        // InkWell(
-        //     onTap: () => indexedPage.index = 3,
-        //     child: const TabWidget(title: '자격증과정', isPopup: true)),
-        // InkWell(
-        //   onTap: () => indexedPage.index = 4,
-        //   child: const TabWidget(title: '컬러교구 구입'),
-        // ),
-        // TextButton(
-        //   onPressed: () => indexedPage.index = 5,
-        //   child: const TabWidget(title: '교육 및 강의(문의)'),
-        // ),
-      ],
+          tabBarButton(index: 1, child: const TabWidget(title: '퍼스널 컬러 진단')),
+          tabBarButton(index: 2, child: const TabWidget(title: '색채심리상담(컬러테라피)', isLong: true)),
+          tabBarButton(index: 3, child: const TabWidget(title: '자격증과정', isPopup: true)),
+          tabBarButton(index: 4, child: const TabWidget(title: '컬러교구 구입')),
+          tabBarButton(index: 5, child: const TabWidget(title: '교육 및 강의(문의)')),
+          const SizedBox(width: 20,),
+          // MaterialButton(
+          //   hoverColor: Colors.transparent,
+          //   onPressed: () => indexedPage.index = 0,
+          //   child: Container(
+          //     margin: const EdgeInsets.only(left: 10, top: 10),
+          //     child:
+          //         Image.asset('assets/images/homepage/logo.png', height: 80, fit: BoxFit.fitHeight),
+          //   ),
+          // ),
+          // MaterialButton(
+          //   hoverColor: Colors.transparent,
+          //   onPressed: () {
+          //     indexedPage.index = 1;
+          //   },
+          //   child: const TabWidget(title: '퍼스널 컬러 진단'),
+          // ),
+          // InkWell(
+          //     onTap: () => indexedPage.index = 2,
+          //     child: const TabWidget(title: '색채심리상담(컬러테라피)', isLong: true)),
+          // InkWell(
+          //     onTap: () => indexedPage.index = 3,
+          //     child: const TabWidget(title: '자격증과정', isPopup: true)),
+          // InkWell(
+          //   onTap: () => indexedPage.index = 4,
+          //   child: const TabWidget(title: '컬러교구 구입'),
+          // ),
+          // TextButton(
+          //   onPressed: () => indexedPage.index = 5,
+          //   child: const TabWidget(title: '교육 및 강의(문의)'),
+          // ),
+        ],
+      ),
     );
   }
 }

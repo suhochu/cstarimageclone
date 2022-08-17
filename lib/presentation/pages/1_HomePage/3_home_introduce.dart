@@ -20,7 +20,7 @@ class HomeIntroduce extends StatelessWidget {
 
   final List<String> routePages = [
     '/${PersonalColorDiagnosisPage.routeName}',
-    '/${TotalImageMakingPage.routeName}',
+    '/${CertificationPage.routeName}?query=1',
     '/${PurchasingTeachingToolPage.routeName}',
     '/${InquiryEducationOrLecturePage.routeName}',
   ];
@@ -73,7 +73,6 @@ class _IntroduceCardState extends State<IntroduceCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print('Click ${widget.index}');
         Routemaster.of(context).push(widget.route);
       },
       child: MouseRegion(

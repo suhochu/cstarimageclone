@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         routesBuilder: (context) => routes,
       ),
       routeInformationParser: const RoutemasterParser(),
+
     );
   }
 }
