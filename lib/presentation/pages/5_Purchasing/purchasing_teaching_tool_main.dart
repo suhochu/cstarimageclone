@@ -1,20 +1,19 @@
-import 'package:cstar_image_clone/presentation/pages/all_pages_out.dart';
-import 'package:cstar_image_clone/widget/page_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
+import '../../../widget/main_footer.dart';
 import '../../../widget/page_banner.dart';
+import '../../../widget/page_footer.dart';
 
-class ColorPsychologyConsultPage extends StatefulWidget {
-  static const String routeName = 'color_psychology_consult';
-
-  const ColorPsychologyConsultPage({Key? key}) : super(key: key);
+class PurchasingTeachingToolPage extends StatefulWidget {
+  static const String routeName = 'purchasing_teaching_tool';
+  const PurchasingTeachingToolPage({Key? key}) : super(key: key);
 
   @override
-  State<ColorPsychologyConsultPage> createState() => _ColorPsychologyConsultPageState();
+  State<PurchasingTeachingToolPage> createState() => _PurchasingTeachingToolPageState();
 }
 
-class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage> {
+class _PurchasingTeachingToolPageState extends State<PurchasingTeachingToolPage> {
   late final ScrollController _scrollController;
 
   double opacity = 0;
@@ -49,14 +48,9 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
 
   List<Widget> buildContents() {
     return [
-      const PageBanner(title: '색채심리상담(컬러테라피)',),
-      Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
-        child: Image.asset(
-          'assets/images/colorTherapy/1.jpeg',
-        ),
-      ),
-      const PageFooter(),
+      const PageBanner(title: '컬러교구 구입',),
+      for (int i = 1; i <= 20; i++) insideImage(i.toString()),
+      PageFooter(),
       const MainFooter(),
     ];
   }
@@ -87,7 +81,6 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
             onPressed: () {
               _scrollController.animateTo(0,
                   duration: const Duration(milliseconds: 500), curve: Curves.linear);
-              if (_scrollController.offset <= 100) {}
             },
             child: MouseRegion(
               onEnter: (event) {
@@ -117,6 +110,15 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget insideImage(String index) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      child: Image.asset(
+        'assets/images/teachingTool/$index.jpeg',
       ),
     );
   }

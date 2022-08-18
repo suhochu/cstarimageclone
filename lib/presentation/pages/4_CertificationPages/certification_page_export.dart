@@ -1,0 +1,1 @@
+export 'certification_page_main.dart';

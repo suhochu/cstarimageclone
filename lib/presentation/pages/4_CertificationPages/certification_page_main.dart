@@ -54,7 +54,7 @@ class _CertificationPageState extends State<CertificationPage> {
       tabBuilder(),
       const SizedBox(height: 30),
       contentsBuilder(),
-      const PageFooter(),
+      PageFooter(),
       const MainFooter(),
     ];
   }
@@ -151,7 +151,6 @@ class _CertificationPageState extends State<CertificationPage> {
             onPressed: () {
               _scrollController.animateTo(0,
                   duration: const Duration(milliseconds: 500), curve: Curves.linear);
-              if (_scrollController.offset <= 100) {}
             },
             child: MouseRegion(
               onEnter: (event) {

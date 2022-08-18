@@ -1,0 +1,1 @@
+export 'personalcolor_diagnosis_main.dart';

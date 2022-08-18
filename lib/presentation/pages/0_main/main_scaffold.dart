@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:routemaster/routemaster.dart';
@@ -102,23 +101,13 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     isClicked
-                        ? const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            color: Colors.white,
-                          )
-                        : const Icon(
-                            Icons.arrow_back_ios_new,
-                            color: Colors.white,
-                          ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                        ? const Icon(Icons.arrow_forward_ios_outlined, color: Colors.white)
+                        : const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+                    const SizedBox(height: 15),
                     const RotatedBox(
                       quarterTurns: 3,
-                      child: Text(
-                        'QUICK MENU',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
+                      child: Text('QUICK MENU',
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -134,7 +123,6 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                 onExit: (event) => setTimer(),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
-                  // color: const Color.fromRGBO(211, 211, 211, 1),
                   color: Colors.black87,
                   width: isClicked ? 80 : 0,
                   height: 600,
@@ -142,15 +130,13 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: const [
                       SideButton(
-                        thumbNail: 'PhoneIcon.svg',
-                        url: 'https://pf.kakao.com/_lPGBd',
-                        svg: true,
-                      ),
+                          thumbNail: 'PhoneIcon.svg',
+                          url: 'https://pf.kakao.com/_lPGBd',
+                          svg: true),
                       SideButton(
-                        thumbNail: 'kakaoTalk.svg',
-                        url: 'https://pf.kakao.com/_lPGBd',
-                        svg: true,
-                      ),
+                          thumbNail: 'kakaoTalk.svg',
+                          url: 'https://pf.kakao.com/_lPGBd',
+                          svg: true),
                       SideButton(
                           thumbNail: 'st2_con_img02.png',
                           url:
@@ -161,16 +147,14 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                       SideButton(
                           thumbNail: 'st2_con_img04.png', url: 'https://blog.naver.com/wnduddl55'),
                       SideButton(
-                        thumbNail: 'facebook.svg',
-                        url: 'https://www.facebook.com/cstarimage/',
-                        svg: true,
-                      ),
+                          thumbNail: 'facebook.svg',
+                          url: 'https://www.facebook.com/cstarimage/',
+                          svg: true),
                       SideButton(
-                        thumbNail: 'GoogleMaps.svg',
-                        url:
-                            'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko',
-                        svg: true,
-                      ),
+                          thumbNail: 'GoogleMaps.svg',
+                          url:
+                              'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko',
+                          svg: true),
                     ],
                   ),
                 ),

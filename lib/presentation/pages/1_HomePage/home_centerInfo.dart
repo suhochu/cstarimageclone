@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../widget/google_Map.dart';
 
-
 class CstarImageCenter extends StatelessWidget {
   const CstarImageCenter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromRGBO(234, 234, 234, 1),
+      color: const Color.fromRGBO(255, 255, 255, 1),
       child: Column(
         children: [
           const SizedBox(height: 50),
@@ -26,9 +25,7 @@ class CstarImageCenter extends StatelessWidget {
               directions(),
             ],
           ),
-          const SizedBox(
-            height: 50,
-          ),
+          const SizedBox(height: 50),
         ],
       ),
     );
@@ -59,19 +56,12 @@ class CstarImageCenter extends StatelessWidget {
                     Text('오시는길', style: TextStyle(fontSize: 18, color: Colors.white)),
                   ],
                 ),
-                const Icon(
-                  Icons.search,
-                  size: 50,
-                  color: Colors.white,
-                )
+                const Icon(Icons.search, size: 50, color: Colors.white)
               ],
             ),
           ),
           Expanded(
-            child: Container(
-              color: Colors.yellow,
-              child: const GoogleMapWidget(),
-            ),
+            child: Container(color: Colors.yellow, child: const GoogleMapWidget()),
           )
         ],
       ),
@@ -161,4 +151,3 @@ class CstarImageCenter extends StatelessWidget {
     );
   }
 }
-

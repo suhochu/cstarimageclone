@@ -1,8 +1,7 @@
-import 'package:cstar_image_clone/constants/urls.dart';
+import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:cstar_image_clone/widget/slide_show.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../all_pages_out.dart';
 
@@ -13,9 +12,7 @@ class CstarImageContacts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 80,
-        ),
+        const SizedBox(height: 80),
         Stack(
           children: [
             Image.asset('assets/images/homepage/st2_bg.jpg',
@@ -57,32 +54,29 @@ class CstarImageContacts extends StatelessWidget {
                     Column(
                       children: const [
                         ContactCard(
-                          color: Color.fromRGBO(55, 30, 32, 1),
-                          title: '카카오톡',
-                          content: 'CSTAR 카카오톡을 안내합니다.',
-                          iconImage: 'st2_con_img01.png',
-                          url: kakaoChannel,
-                        ),
+                            color: Color.fromRGBO(55, 30, 32, 1),
+                            title: '카카오톡',
+                            content: 'CSTAR 카카오톡을 안내합니다.',
+                            iconImage: 'st2_con_img01.png',
+                            url: URLs.kakaoChannel),
                         ContactCard(
-                          color: Color.fromRGBO(0, 198, 58, 1),
-                          title: '네이버톡톡',
-                          content: 'CSTAR 네이버톡톡을 안내합니다.',
-                          iconImage: 'st2_con_img02.png',
-                          url: naverTalkTalk,
-                        ),
+                            color: Color.fromRGBO(0, 198, 58, 1),
+                            title: '네이버톡톡',
+                            content: 'CSTAR 네이버톡톡을 안내합니다.',
+                            iconImage: 'st2_con_img02.png',
+                            url: URLs.naverTalkTalk),
                         ContactCard(
-                          color: Color.fromRGBO(67, 46, 136, 1),
-                          title: '인스타그램',
-                          content: 'CSTAR 인스타그램을 안내합니다.',
-                          iconImage: 'st2_con_img03.png',
-                          url: instarPage,
-                        ),
+                            color: Color.fromRGBO(67, 46, 136, 1),
+                            title: '인스타그램',
+                            content: 'CSTAR 인스타그램을 안내합니다.',
+                            iconImage: 'st2_con_img03.png',
+                            url: URLs.instaPage),
                         ContactCard(
                             color: Color.fromRGBO(0, 198, 58, 1),
                             title: '네이버블로그',
                             content: 'CSTAR 네이버블로그를 안내합니다.',
                             iconImage: 'st2_con_img04.png',
-                            url: naverBlog),
+                            url: URLs.naverBlog)
                       ],
                     )
                   ],
@@ -125,7 +119,9 @@ class _CstarConsultingButtonState extends State<CstarConsultingButton> {
         onTap: () => Routemaster.of(context).push('/${InquiryEducationOrLecturePage.routeName}'),
         child: Container(
           width: 500,
-          color: isInRegion ? const Color.fromRGBO(43, 26, 103, 1) : const Color.fromRGBO(67, 46, 136, 1),
+          color: isInRegion
+              ? const Color.fromRGBO(43, 26, 103, 1)
+              : const Color.fromRGBO(67, 46, 136, 1),
           height: 90,
           child: const Center(
               child: Text(
@@ -152,34 +148,24 @@ class ContactCard extends StatefulWidget {
   final String title;
   final String content;
   final Color color;
-  final String url;
+  final URLs url;
 
   @override
   State<ContactCard> createState() => _ContactCardState();
 }
 
 class _ContactCardState extends State<ContactCard> {
-  bool isInRegion = false;
-  late final Uri _url;
-
-  @override
-  void initState() {
-    super.initState();
-    _url = Uri.parse(widget.url);
-  }
-
-  Future<void> _launchUrl() async {
-    if (!await launchUrl(_url)) {
-      throw 'Could not launch $_url';
-    }
-  }
+  bool _isInRegion = false;
+  LaunchURl launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: _launchUrl,
+      onPressed: () {
+        launchURl.selectUrlMethod(widget.url);
+      },
       child: AnimatedContainer(
-        color: isInRegion ? widget.color : const Color.fromRGBO(44, 44, 44, 1),
+        color: _isInRegion ? widget.color : const Color.fromRGBO(44, 44, 44, 1),
         duration: const Duration(milliseconds: 300),
         width: 500,
         height: 110,
@@ -188,12 +174,12 @@ class _ContactCardState extends State<ContactCard> {
           cursor: SystemMouseCursors.click,
           onEnter: (PointerEvent details) {
             setState(() {
-              isInRegion = true;
+              _isInRegion = true;
             });
           },
           onExit: (PointerEvent details) {
             setState(() {
-              isInRegion = false;
+              _isInRegion = false;
             });
           },
           child: Row(

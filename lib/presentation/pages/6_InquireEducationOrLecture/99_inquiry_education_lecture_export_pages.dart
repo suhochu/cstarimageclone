@@ -1,1 +1,0 @@
-export '1_inquiry_education_lecture_main.dart';

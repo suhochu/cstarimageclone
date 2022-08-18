@@ -1,9 +1,9 @@
-import 'package:cstar_image_clone/constants/urls.dart';
+import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PageFooter extends StatelessWidget {
-  const PageFooter({Key? key}) : super(key: key);
+  PageFooter({Key? key}) : super(key: key);
+  final LaunchURl _launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +14,7 @@ class PageFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: (){
-              launchUrl(Uri.parse(kakaoChannel));
-            },
+            onTap: _launchURl.launchKakaoChannel,
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Image.asset(
@@ -30,8 +28,8 @@ class PageFooter extends StatelessWidget {
             width: 20,
           ),
           GestureDetector(
-            onTap: (){
-              print('phone call');
+            onTap: () {
+              // Todo implement this at android and IOS
             },
             child: MouseRegion(
               cursor: SystemMouseCursors.click,

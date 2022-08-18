@@ -36,6 +36,7 @@ class NoAnimationPage extends TransitionBuilderPage<void> {
   const NoAnimationPage({required Widget child, required this.name})
       : super(child: child, name: name);
 
+  @override
   final String name;
 
   @override

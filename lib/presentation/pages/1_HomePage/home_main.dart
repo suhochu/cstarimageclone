@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../widget/main_footer.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
-import '99_home_export_pages.dart';
+import 'home_export_pages.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -80,7 +80,6 @@ class _HomeMainState extends State<HomeMain> {
             onPressed: () {
               _scrollController.animateTo(0,
                   duration: const Duration(milliseconds: 500), curve: Curves.linear);
-              if (_scrollController.offset <= 100) {}
             },
             child: MouseRegion(
               onEnter: (event) {

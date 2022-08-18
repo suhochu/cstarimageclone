@@ -2,21 +2,23 @@ import 'package:cstar_image_clone/widget/page_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
-import '../../../widget/page_banner.dart';
 import '../../../widget/main_footer.dart';
+import '../../../widget/page_banner.dart';
 
-class PersonalColorDiagnosisPage extends StatefulWidget {
-  static const String routeName = 'personal_color_diagnosis';
+class ColorPsychologyConsultPage extends StatefulWidget {
+  static const String routeName = 'color_psychology_consult';
 
-  const PersonalColorDiagnosisPage({Key? key}) : super(key: key);
+  const ColorPsychologyConsultPage({Key? key}) : super(key: key);
 
   @override
-  State<PersonalColorDiagnosisPage> createState() => _PersonalColorDiagnosisPageState();
+  State<ColorPsychologyConsultPage> createState() => _ColorPsychologyConsultPageState();
 }
 
-class _PersonalColorDiagnosisPageState extends State<PersonalColorDiagnosisPage> {
+class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage> {
   late final ScrollController _scrollController;
+
   double opacity = 0;
+
   bool _isSelected = false;
 
   void _opacityFAB() {
@@ -47,11 +49,14 @@ class _PersonalColorDiagnosisPageState extends State<PersonalColorDiagnosisPage>
 
   List<Widget> buildContents() {
     return [
-      const PageBanner(
-        title: '퍼스널 컬러 진단',
+      const PageBanner(title: '색채심리상담(컬러테라피)',),
+      Container(
+        margin: const EdgeInsets.symmetric(vertical: 20),
+        child: Image.asset(
+          'assets/images/colorTherapy/1.jpeg',
+        ),
       ),
-      for (int i = 1; i <= 13; i++) insideImage(i.toString()),
-      const PageFooter(),
+      PageFooter(),
       const MainFooter(),
     ];
   }
@@ -82,7 +87,6 @@ class _PersonalColorDiagnosisPageState extends State<PersonalColorDiagnosisPage>
             onPressed: () {
               _scrollController.animateTo(0,
                   duration: const Duration(milliseconds: 500), curve: Curves.linear);
-              if (_scrollController.offset <= 100) {}
             },
             child: MouseRegion(
               onEnter: (event) {
@@ -112,15 +116,6 @@ class _PersonalColorDiagnosisPageState extends State<PersonalColorDiagnosisPage>
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget insideImage(String index) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      child: Image.asset(
-        'assets/images/personalColor/$index.jpeg',
       ),
     );
   }

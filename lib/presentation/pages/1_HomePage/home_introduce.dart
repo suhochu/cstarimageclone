@@ -115,7 +115,7 @@ class _IntroduceCardState extends State<IntroduceCard> {
                 const SizedBox(height: 30),
                 Text(
                   widget.content,
-                  style: const TextStyle(fontSize: 15, color: Colors.white),
+                  style: const TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w500),
                 ),
               ],
             ),

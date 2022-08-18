@@ -1,7 +1,5 @@
+import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../constants/urls.dart';
 
 class MainFooter extends StatelessWidget {
   const MainFooter({Key? key}) : super(key: key);
@@ -43,9 +41,9 @@ class MainFooter extends StatelessWidget {
             ),
             Row(
               children: const [
-                RouteButton(url: facebookPage),
+                RouteButton(url: URLs.facebookPage),
                 SizedBox(width: 30,),
-                RouteButton(url: instarPage)
+                RouteButton(url: URLs.instaPage)
               ],
             ),
 
@@ -58,7 +56,8 @@ class MainFooter extends StatelessWidget {
 
 class RouteButton extends StatefulWidget {
   const RouteButton({Key? key, required this.url}) : super(key: key);
-  final String url;
+
+  final URLs url;
 
   @override
   State<RouteButton> createState() => _RouteButtonState();
@@ -66,11 +65,12 @@ class RouteButton extends StatefulWidget {
 
 class _RouteButtonState extends State<RouteButton> {
   bool isInRegion = false;
+  final LaunchURl _launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {
     String image;
-    if(widget.url == facebookPage){
+    if(widget.url == URLs.facebookPage){
       image = 'assets/images/footer/icon_facebook.png';
     } else {
       image = 'assets/images/footer/icon_instagram.png';
@@ -83,7 +83,7 @@ class _RouteButtonState extends State<RouteButton> {
         isInRegion = false;
       }),
       child: GestureDetector(
-        onTap: () => launchUrl(Uri.parse(widget.url)),
+        onTap: () => _launchURl.selectUrlMethod(widget.url),
         child: Image.asset(
           image,
           fit: BoxFit.fitHeight,

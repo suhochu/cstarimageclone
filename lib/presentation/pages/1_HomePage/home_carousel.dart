@@ -1,9 +1,8 @@
 import 'dart:ui';
+import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:responsive_framework/responsive_framework.dart';
 import '../../../widget/slide_show.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:responsive_framework/responsive_framework.dart';
 
 class HomeCarousel extends StatelessWidget {
   const HomeCarousel({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class HomeCarousel extends StatelessWidget {
       Container(
         color: Colors.blueGrey,
         child: ImageSlideshow(
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           height: 600,
           initialPage: 0,
           autoPlayInterval: 3000,
@@ -46,12 +45,12 @@ class HomeCarousel extends StatelessWidget {
                   image: AssetImage('assets/images/homepage/mtxt.png'),
                   width: 300,
                   color: Color.fromRGBO(255, 255, 255, 0.95),
+                  filterQuality: FilterQuality.high,
                   colorBlendMode: BlendMode.modulate,
+                  isAntiAlias: true,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const KakaoTalkButton(sizeFactor: 1),
             ],
           ),
@@ -72,19 +71,10 @@ class KakaoTalkButton extends StatefulWidget {
 class _KakaoTalkButtonState extends State<KakaoTalkButton> {
   bool isInRegion = false;
   double sizeFactor = 1.3;
-  final Uri _url = Uri.parse('https://pf.kakao.com/_lPGBd');
-
-  Future<void> _launchUrl() async {
-    if (!await launchUrl(_url)) {
-      throw 'Could not launch $_url';
-    }
-  }
+  LaunchURl launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.sizeFactor != null) {
-    //   sizeFactor = widget.sizeFactor!;
-    // }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (PointerEvent details) {
@@ -103,7 +93,7 @@ class _KakaoTalkButtonState extends State<KakaoTalkButton> {
         width: 200 * sizeFactor,
         color: isInRegion ? const Color.fromRGBO(55, 30, 32, 1) : Colors.yellow,
         child: MaterialButton(
-          onPressed: _launchUrl,
+          onPressed: launchURl.launchKakaoChannel,
           child: Row(
             children: [
               const Spacer(),

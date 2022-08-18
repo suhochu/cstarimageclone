@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:cstar_image_clone/constants/urls.dart';
+import 'package:cstar_image_clone/constants/text.dart';
+import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,21 +18,16 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   final Set<Marker> _markers = {};
   final GlobalKey globalKey = GlobalKey();
   final LatLng _latLng = const LatLng(37.5301773, 126.9716482);
-  late final Uri _url;
+  final LaunchURl launchURl = LaunchURl();
 
   final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
 
-  @override
-  void initState() {
-    super.initState();
-    _url = Uri.parse(cstarAddress);
-  }
-
-  Future<void> _launchUrl() async {
-    if (!await launchUrl(_url)) {
-      throw 'Could not launch $_url';
-    }
-  }
+  //
+  // Future<void> _launchUrl() async {
+  //   if (!await launchUrl(_url)) {
+  //     throw 'Could not launch $_url';
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -76,9 +72,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   Widget build(BuildContext context) {
     addMarker();
     return GestureDetector(
-      onTap: () {
-        _launchUrl();
-      },
+      onTap: launchURl.launchCstarDirection,
       child: Stack(
         children: [
           GoogleMap(
