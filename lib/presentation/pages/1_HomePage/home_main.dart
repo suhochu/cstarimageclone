@@ -47,7 +47,7 @@ class _HomeMainState extends State<HomeMain> {
       const HomeCarousel(),
       HomeIntroduce(),
       const CstarImageContacts(),
-      const CstarImageCenter(),
+      CstarImageCenter(),
       const MainFooter(),
     ];
   }

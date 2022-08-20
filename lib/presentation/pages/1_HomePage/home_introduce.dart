@@ -31,7 +31,7 @@ class HomeIntroduce extends StatelessWidget {
       const SizedBox(height: 50),
       const Text('C S T A R', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300)),
       const SizedBox(height: 5),
-      const Text('INTRODUCE', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+      const Text('INTRODUCE', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
       const SizedBox(height: 30),
       SizedBox(
         height: 600,

@@ -16,6 +16,7 @@ class LaunchURl {
   final String naverBlog = 'https://blog.naver.com/wnduddl55';
   final String cstarDirection = 'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko';
   final String facebookPage = 'https://www.facebook.com/cstarimage/';
+  final String cstarDirectionNaverMap = 'https://map.naver.com/v5/search/%EC%94%A8%EC%8A%A4%ED%83%80%EC%9D%B4%EB%AF%B8%EC%A7%80/place/49768739?c=14133957.4755631,4513272.4630257,15,0,0,0,dh&isCorrectAnswer=true';
 
   void selectUrlMethod(URLs url){
     switch(url){
@@ -75,6 +76,12 @@ class LaunchURl {
   Future<void> launchFacebookPage() async {
     if (!await launchUrl(Uri.parse(facebookPage))) {
       throw 'Could not launch FacebookPage';
+    }
+  }
+
+  Future<void> launchNaverMap() async {
+    if (!await launchUrl(Uri.parse(cstarDirectionNaverMap))) {
+      throw 'Could not launch cstar Direction NaverMap';
     }
   }
 
