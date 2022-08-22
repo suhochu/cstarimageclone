@@ -8,11 +8,9 @@ class TabWidget extends StatefulWidget {
     Key? key,
     required this.title,
     this.isPopup = false,
-    this.isLong = false,
   }) : super(key: key);
   final String title;
   final bool isPopup;
-  final bool isLong;
 
   @override
   State<TabWidget> createState() => _TabWidgetState();
@@ -24,6 +22,7 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
   OverlayEntry? entry;
   late AnimationController _animationController;
   late Animation<double> animations;
+  final layerLink = LayerLink();
 
   @override
   void initState() {
@@ -35,6 +34,12 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     animations = (Tween(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: _animationController, curve: const Interval(0.2, 1.0))));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    entry?.dispose();
+    super.dispose();
   }
 
   Widget buildOverlay() => MouseRegion(
@@ -84,12 +89,19 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
 
+    entry?.remove();
+    entry = null;
     entry = OverlayEntry(
       builder: (context) => Positioned(
-        width: size.width + 20,
-        left: offset.dx - 15,
-        top: offset.dy + 50,
-        child: Opacity(opacity: animations.value, child: buildOverlay()),
+        width: size.width + 100,
+        left: offset.dx,
+        top: offset.dy,
+        child: CompositedTransformFollower(
+          link: layerLink,
+          showWhenUnlinked: false,
+          offset: Offset(size.height - 90, size.height + 10),
+          child: Opacity(opacity: animations.value, child: buildOverlay()),
+        ),
       ),
     );
 
@@ -104,10 +116,10 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     await Future.delayed(const Duration(milliseconds: 300));
     if (isPopupClose == true) {
       _animationController.reverse();
-      if (_animationController.value == 0) {
-        entry?.remove();
-        entry = null;
-      }
+      // if (_animationController.value == 0) {
+      //   entry?.remove();
+      //   entry = null;
+      // }
     }
   }
 
@@ -142,13 +154,14 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
           hideOverlay();
         }
       },
-      child: Container(
-        margin: widget.isLong
-            ? const EdgeInsets.symmetric(vertical: 10, horizontal: 30)
-            : const EdgeInsets.symmetric(vertical: 10, horizontal: 60),
-        child: Text(
-          widget.title,
-          style: topTabBarTextStyle(),
+      child: CompositedTransformTarget(
+        link: layerLink,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            widget.title,
+            style: topTabBarTextStyle(),
+          ),
         ),
       ),
     );
@@ -185,7 +198,11 @@ class _PopUpMenuState extends State<PopUpMenu> {
         });
       },
       child: ListTile(
-        title: Center(child: Text(widget.title)),
+        title: Center(
+            child: Text(
+          widget.title,
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+        )),
         textColor: titleColor,
         tileColor: backGroundColor,
         onTap: widget.event,
