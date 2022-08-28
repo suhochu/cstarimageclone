@@ -47,7 +47,7 @@ class _PersonalColorDiagnosisPageState extends State<PersonalColorDiagnosisPage>
 
   List<Widget> buildContents() {
     return [
-      const PageBanner(title: '퍼스널 컬러 진단'),
+      const PageBanner(title: '퍼스널 컬러 진단',),
       for (int i = 1; i <= 13; i++) insideImage(i.toString()),
       PageFooter(),
       const MainFooter(),
@@ -115,7 +115,7 @@ class _PersonalColorDiagnosisPageState extends State<PersonalColorDiagnosisPage>
 
   Widget insideImage(String index) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Image.asset(
         'assets/images/personalColor/$index.jpeg',
       ),

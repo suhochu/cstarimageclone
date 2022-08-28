@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
@@ -49,10 +50,11 @@ class _CertificationPageState extends State<CertificationPage> {
   }
 
   List<Widget> buildContents() {
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return [
       const PageBanner(title: '토탈이미지메이킹 컨설턴트 자격증'),
       tabBuilder(),
-      const SizedBox(height: 30),
+      if(!isSmallerThanMobile) const SizedBox(height: 20),
       contentsBuilder(),
       PageFooter(),
       const MainFooter(),
@@ -61,11 +63,13 @@ class _CertificationPageState extends State<CertificationPage> {
 
   Widget tabBuilder() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
+        const SizedBox(width: 10,),
         tabButton(title: '토탈이미지메이킹\n컨설턴트 자격증', index: 1),
         tabButton(title: '퍼스널컬러\n컨설턴트 자격증', index: 2),
         tabButton(title: '색채심리\n마스터 자격증', index: 3),
+        const SizedBox(width: 10,),
       ],
     );
   }
@@ -91,17 +95,21 @@ class _CertificationPageState extends State<CertificationPage> {
   }
 
   Widget contentBuilder(String index) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Image.asset(
           'assets/images/certification/$index.jpeg',
         ),
       );
 
   GestureDetector tabButton({required String title, required int index}) {
+    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    double screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () => Routemaster.of(context).push('/${CertificationPage.routeName}?query=$index'),
       child: AnimatedContainer(
-        margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 70),
+        margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         duration: const Duration(milliseconds: 200),
         color: _selectedIndex == index
             ? const Color.fromRGBO(164, 69, 237, 1)
@@ -109,14 +117,13 @@ class _CertificationPageState extends State<CertificationPage> {
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: SizedBox(
-            width: 250,
-            height: 80,
+            width: screenWidth / 30 * 7,
             child: Center(
                 child: Text(
               title,
               textAlign: TextAlign.center,
               style:
-                  const TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 20),
+              TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: isSmallerThanDesktop ? isSmallerThanMobile ? 10 : screenWidth * 0.020833 : 25),
             )),
           ),
         ),

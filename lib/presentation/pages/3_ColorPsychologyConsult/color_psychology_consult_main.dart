@@ -51,9 +51,9 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
     return [
       const PageBanner(title: '색채심리상담(컬러테라피)',),
       Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
         child: Image.asset(
-          'assets/images/colorTherapy/1.jpeg',
+          'assets/images/colorTherapy/1.jpeg', fit: BoxFit.fitWidth,
         ),
       ),
       PageFooter(),

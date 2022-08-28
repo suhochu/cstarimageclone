@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:routemaster/routemaster.dart';
 import '../../../widget/tab_popUp_Widget.dart';
+import '../../../constants/tabbar_menu_names.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+
+import '../all_pages_out.dart';
 
 class TopTabBar extends StatefulWidget implements PreferredSizeWidget {
   const TopTabBar({Key? key}) : super(key: key);
@@ -35,43 +39,113 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return Material(
       elevation: 6,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // const SizedBox(width: 20,),
           tabBarButton(
             index: 0,
             child: Container(
               margin: const EdgeInsets.only(top: 10),
               child: Image.asset(
                 'assets/images/homepage/logo.png',
-                height: 80,
+                height: isSmallerThanTablet ? isSmallerThanMobile ? 50 :80 : 65,
                 fit: BoxFit.fitHeight,
               ),
             ),
           ),
-          ResponsiveVisibility(hiddenWhen: const [
-            Condition.smallerThan(name: DESKTOP),
-          ], child: tabBarButton(index: 1, child: const TabWidget(title: '퍼스널 컬러 진단'))),
-          ResponsiveVisibility(hiddenWhen: const [
-            Condition.smallerThan(name: DESKTOP),
-          ], child: tabBarButton(index: 2, child: const TabWidget(title: '색채심리상담(컬러테라피)'))),
-          ResponsiveVisibility(hiddenWhen: const [
-            Condition.smallerThan(name: DESKTOP),
-          ], child: tabBarButton(index: 3, child: const TabWidget(title: '자격증과정', isPopup: true))),
-          ResponsiveVisibility(hiddenWhen: const [
-            Condition.smallerThan(name: DESKTOP),
-          ], child: tabBarButton(index: 4, child: const TabWidget(title: '컬러교구 구입'))),
-          ResponsiveVisibility(hiddenWhen: const [
-            Condition.smallerThan(name: DESKTOP),
-          ], child: tabBarButton(index: 5, child: const TabWidget(title: '교육 및 강의(문의)'))),
-          const SizedBox(
-            width: 10,
-          ),
+          if (!isSmallerThanTablet)
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  tabBarButton(index: 1, child: TabWidget(title: tabBarMenuNames[0])),
+                  tabBarButton(index: 2, child: TabWidget(title: tabBarMenuNames[1])),
+                  tabBarButton(
+                      index: 3, child: TabWidget(title: tabBarMenuNames[2], isPopup: true)),
+                  tabBarButton(index: 4, child: TabWidget(title: tabBarMenuNames[3])),
+                  tabBarButton(index: 5, child: TabWidget(title: tabBarMenuNames[4])),
+                ],
+              ),
+            ),
+          if (isSmallerThanTablet) const Spacer(),
+          if (isSmallerThanTablet) menuButton(),
+          if (isSmallerThanTablet) SizedBox(width: isSmallerThanMobile ? 30 : 70),
         ],
       ),
     );
+  }
+
+  Widget menuButton() {
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2<int>(
+        customButton: Icon(
+          Icons.menu,
+          size: isSmallerThanMobile ?  30 : 40,
+          color: Colors.black54,
+        ),
+        focusColor: Colors.transparent,
+        items: [
+          menuButtonBuilder(0),
+          menuButtonBuilder(1),
+          menuButtonBuilder(2),
+          menuButtonBuilder(3),
+          menuButtonBuilder(4),
+        ],
+        onChanged: (value) {
+          routeWithDropDownButton(value!);
+        },
+        itemHeight: isSmallerThanMobile ? 35 : 48,
+        itemPadding: isSmallerThanMobile ? const EdgeInsets.only(left: 8, right: 8) : const EdgeInsets.only(left: 16, right: 16),
+        dropdownWidth: isSmallerThanMobile ? 110 : 160,
+        dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
+        dropdownDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: Colors.black54,
+        ),
+        dropdownElevation: 8,
+        offset: const Offset(-63, -5),
+        alignment: Alignment.center,
+      ),
+    );
+  }
+
+  DropdownMenuItem<int> menuButtonBuilder(int index) {
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    return DropdownMenuItem<int>(
+        value: index,
+        onTap: null,
+
+        child: ListTile(
+            contentPadding: const EdgeInsets.all(1),
+            title: Text(
+              tabBarMenuNames[index],
+              style: TextStyle(
+                  fontSize: isSmallerThanMobile ? 8 : 11.5, fontWeight: FontWeight.w800, color: Colors.white),
+            )));
+  }
+
+  void routeWithDropDownButton(int index) {
+    switch (index) {
+      case 0:
+        Routemaster.of(context).push('/${PersonalColorDiagnosisPage.routeName}');
+        break;
+      case 1:
+        Routemaster.of(context).push('/${ColorPsychologyConsultPage.routeName}');
+        break;
+      case 2:
+        Routemaster.of(context).push('/${CertificationPage.routeName}');
+        break;
+      case 3:
+        Routemaster.of(context).push('/${PurchasingTeachingToolPage.routeName}');
+        break;
+      default:
+        Routemaster.of(context).push('/${InquiryEducationOrLecturePage.routeName}');
+    }
   }
 }

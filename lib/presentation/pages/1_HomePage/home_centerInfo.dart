@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class CstarImageCenter extends StatefulWidget {
-  CstarImageCenter({Key? key}) : super(key: key);
+  const CstarImageCenter({Key? key}) : super(key: key);
 
   @override
   State<CstarImageCenter> createState() => _CstarImageCenterState();
@@ -13,57 +13,51 @@ class _CstarImageCenterState extends State<CstarImageCenter> {
   final LaunchURl _launchURl = LaunchURl();
   double scaleFactor = 1;
 
-  void buildScreen() {
-    if (MediaQuery.of(context).size.width <= 1200 && MediaQuery.of(context).size.width > 800) {
-      setState(() {
-        print('under Desktop');
-        scaleFactor = 0.8;
-      });
-    } else if (MediaQuery.of(context).size.width <= 800 &&
-        MediaQuery.of(context).size.width > 650) {
-      setState(() {
-        print('under Tablet');
-        scaleFactor = 0.65;
-      });
-    } else {
-      setState(() {
-        print('default');
-        scaleFactor = 1;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    double? textSizeFactor = ResponsiveValue(context, defaultValue: 1.0, valueWhen: [
-      const Condition.smallerThan(name: DESKTOP, value: 3 / 4),
-    ]).value;
-
-    buildScreen();
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
 
     return Container(
       color: const Color.fromRGBO(255, 255, 255, 1),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 50),
+          SizedBox(height: isSmallerThanMobile ? 30 : 60),
           Text('C S T A R',
-              style: TextStyle(fontSize: 25 * textSizeFactor!, fontWeight: FontWeight.w300)),
+              style: TextStyle(
+                  fontSize: isSmallerThanDesktop
+                      ? isSmallerThanTablet
+                          ? isSmallerThanMobile
+                              ? 14
+                              : 16
+                          : screenWidth * 0.02
+                      : 28,
+                  fontWeight: FontWeight.w300)),
           const SizedBox(height: 5),
           Text('CUSTOMER CENTER',
-              style: TextStyle(fontSize: 35 * textSizeFactor, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 30),
-          ResponsiveRowColumn(
-            layout: ResponsiveWrapper.of(context).isSmallerThan('MOBILE2')
-                ? ResponsiveRowColumnType.COLUMN
-                : ResponsiveRowColumnType.ROW,
-            rowMainAxisAlignment: MainAxisAlignment.center,
-            columnSpacing: 20,
-            rowSpacing: 20,
-            children: [
-              // noticeBoard(),
-              ResponsiveRowColumnItem(child: customerService(context, scaleFactor)),
-              ResponsiveRowColumnItem(child: directions(context, scaleFactor)),
-            ],
+              style: TextStyle(
+                  fontSize: isSmallerThanDesktop
+                      ? isSmallerThanTablet
+                          ? isSmallerThanMobile
+                              ? 18
+                              : 24
+                          : screenWidth * 0.03
+                      : 36,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: isSmallerThanDesktop ? screenWidth - 80 : 1140,
+            height: isSmallerThanDesktop
+                ? isSmallerThanTablet
+                    ? screenWidth * 2 / 3
+                    : screenWidth / 3
+                : 400,
+            child: isSmallerThanTablet
+                ? centerInfoContentsColumn(spacing: isSmallerThanMobile ? 5 : 15)
+                : centerInfoContentsRow(),
           ),
           const SizedBox(height: 50),
         ],
@@ -71,16 +65,34 @@ class _CstarImageCenterState extends State<CstarImageCenter> {
     );
   }
 
-  Container directions(BuildContext context, double scale) {
+  Widget centerInfoContentsRow() => Row(
+        children: [
+          Expanded(flex: 1, child: customerService(context)),
+          const SizedBox(width: 30),
+          Expanded(flex: 2, child: directions(context)),
+        ],
+      );
+
+  Widget centerInfoContentsColumn({double? spacing = 15}) => Column(
+        children: [
+          Expanded(flex: 8, child: customerService(context)),
+          SizedBox(height: spacing),
+          Expanded(flex: 15, child: directions(context)),
+        ],
+      );
+
+  Container directions(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     return Container(
-      width: 570 * scale,
+      height: 400,
       color: Colors.white,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             color: const Color.fromRGBO(26, 73, 165, 1),
-            width: ResponsiveWrapper.of(context).isSmallerThan('MOBILE2') ?  MediaQuery.of(context).size.width - 80 : 570 * scale,
-            height: 50 * scale,
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: GestureDetector(
               onTap: _launchURl.launchNaverMap,
               child: Row(
@@ -88,111 +100,131 @@ class _CstarImageCenterState extends State<CstarImageCenter> {
                 children: [
                   Text('DIRECTIONS',
                       style: TextStyle(
-                          fontSize: 25 * scale, fontWeight: FontWeight.bold, color: Colors.white)),
+                          fontSize: isSmallThanDesktop ? screenWidth * 0.02 : 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
                 ],
               ),
             ),
           ),
-          naverMap(context, scale)
+          Expanded(child: naverMap(context))
         ],
       ),
     );
   }
 
-  MouseRegion naverMap(BuildContext context, double scale) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: _launchURl.launchNaverMap,
-        child: Stack(
-          children: [
-            SizedBox(
-              width: ResponsiveWrapper.of(context).isSmallerThan('MOBILE2') ?  MediaQuery.of(context).size.width - 80 : 570 * scale,
-              height: 300 * scale,
-              child: Image.asset(
+  Widget naverMap(BuildContext context) {
+    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    return LayoutBuilder(builder: (context, constraints) {
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: _launchURl.launchNaverMap,
+          child: Stack(
+            children: [
+              Image.asset(
                 'assets/images/common/naverMap.png',
+                width: constraints.maxWidth,
+                height: constraints.maxWidth,
                 fit: BoxFit.fill,
               ),
-            ),
-            Positioned(
-                right: 15 * scale,
-                top: 70 * scale,
-                child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  elevation: 10,
-                  child: const Padding(
-                    padding: EdgeInsets.all(6),
-                    child: Text(
-                      '한강로 2가 71,\n백두드레곤 402',
-                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+              Positioned(
+                  right: isSmallerThanMobile ? 5 : 20,
+                  top: isSmallerThanTablet
+                      ? isSmallerThanMobile
+                          ? 35
+                          : 90
+                      : 70,
+                  child: Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    elevation: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: Text(
+                        '한강로 2가 71,\n백두드레곤 402',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: isSmallerThanTablet
+                                ? isSmallerThanMobile
+                                    ? 8
+                                    : 14
+                                : 12),
+                      ),
                     ),
-                  ),
-                ))
-          ],
+                  ))
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  Container customerService(BuildContext context, double scale) {
-    if (ResponsiveWrapper.of(context).isSmallerThan('MOBILE2')) {
-      scale = 0.8;
-    }
+  Container customerService(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
     return Container(
       color: const Color.fromRGBO(245, 76, 76, 1),
-      width: ResponsiveWrapper.of(context).isSmallerThan('MOBILE2') ?  MediaQuery.of(context).size.width - 80  : 370 * scale,
-      height: ResponsiveWrapper.of(context).isSmallerThan('MOBILE2') ? null : 350 * scale,
+      alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (!ResponsiveWrapper.of(context).isSmallerThan('MOBILE2'))
-            Icon(
-              Icons.phone_in_talk,
-              color: Colors.white,
-              size: 60 * scale,
-            ),
-          SizedBox(
-            height: 30 * scale,
-          ),
+          if (!isSmallerThanTablet)
+            Column(children: [
+              Icon(Icons.phone_in_talk,
+                  color: Colors.white, size: isSmallThanDesktop ? screenWidth * 0.05 : 60),
+              const SizedBox(height: 30),
+            ]),
           Text('CUSTOMER SERVICE',
+              style: customServiceTextStyle(isSmallThanDesktop
+                  ? isSmallerThanTablet
+                      ? screenWidth * 0.025
+                      : screenWidth * 0.019
+                  : 25)),
+          if (isSmallerThanTablet)
+            Column(children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Text('010.9340.2890 | 02.482.2890',
+                  style: customServiceTextStyle(screenWidth * 0.025)),
+              const SizedBox(
+                height: 10,
+              )
+            ]),
+          if (!isSmallerThanTablet)
+            Column(
+              children: [
+                const SizedBox(height: 15),
+                Text('010.9340.2890',
+                    style: customServiceTextStyle(isSmallThanDesktop ? screenWidth * 0.02666 : 32)),
+                const SizedBox(height: 5),
+                Text('02.482.2890',
+                    style: customServiceTextStyle(isSmallThanDesktop ? screenWidth * 0.02666 : 32)),
+                const SizedBox(height: 15),
+              ],
+            ),
+          Text('궁금한사항 있으시면 언제든 문의주세요!',
               style: TextStyle(
-                  fontSize: 25 * scale,
-                  fontWeight: FontWeight.bold,
+                  fontSize: isSmallThanDesktop
+                      ? isSmallerThanTablet
+                          ? screenWidth * 0.01875
+                          : screenWidth * 0.01333
+                      : 16,
                   color: Colors.white,
-                  letterSpacing: 3 * scale)),
-          SizedBox(
-            height: 15 * scale,
-          ),
-          if(ResponsiveWrapper.of(context).isSmallerThan('MOBILE2') && ResponsiveWrapper.of(context).isLargerThan(MOBILE))  Text('010.9340.2890 | 02.482.2890',
-              style: TextStyle(
-                fontSize: 32 * scale,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 3 * scale,
-              )),
-          if(ResponsiveWrapper.of(context).isLargerThan('MOBILE2') || ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) Text('010.9340.2890',
-              style: TextStyle(
-                fontSize: 32 * scale,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 3 * scale,
-              )),
-          if(ResponsiveWrapper.of(context).isLargerThan('MOBILE2') || ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) SizedBox(height: 10 * scale),
-          if(ResponsiveWrapper.of(context).isLargerThan('MOBILE2') || ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) Text('02.482.2890',
-              style: TextStyle(
-                fontSize: 32 * scale,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 3 * scale,
-              )),
-          SizedBox(height: 15 * scale),
-          Text('궁금한사항있으시면 언제든문의주세요!',
-              style: TextStyle(
-                  fontSize: 16 * scale, color: Colors.white, fontWeight: FontWeight.w500)),
-          SizedBox(height: 30 * scale),
+                  fontWeight: FontWeight.w500)),
         ],
       ),
     );
+  }
+
+  TextStyle customServiceTextStyle(double fontSize, {double letterSpacing = 3}) {
+    return TextStyle(
+        fontSize: fontSize,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+        letterSpacing: letterSpacing);
   }
 
   Container noticeBoard() {

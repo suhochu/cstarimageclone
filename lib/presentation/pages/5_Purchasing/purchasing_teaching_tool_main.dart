@@ -116,7 +116,7 @@ class _PurchasingTeachingToolPageState extends State<PurchasingTeachingToolPage>
 
   Widget insideImage(String index) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Image.asset(
         'assets/images/teachingTool/$index.jpeg',
       ),

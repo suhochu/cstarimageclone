@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:routemaster/routemaster.dart';
-
 import '../presentation/pages/all_pages_out.dart';
+import '../constants/tabbar_menu_names.dart';
 
 class TabWidget extends StatefulWidget {
   const TabWidget({
@@ -53,18 +54,19 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Material(
+
             elevation: 2,
             color: Colors.transparent,
             child: Column(
               children: [
                 PopUpMenu(
-                    title: '토탈이미지메이킹 컨설턴트',
+                    title: tabBarMenuSubNames[0],
                     event: () {
                       Routemaster.of(context).push('/${CertificationPage.routeName}?query=1');
                     }),
                 const Divider(color: Colors.grey, height: 1),
                 PopUpMenu(
-                    title: '퍼스널컬러 컨설턴트',
+                    title: tabBarMenuSubNames[1],
                     event: () {
                       Routemaster.of(context).push('/${CertificationPage.routeName}?query=2');
                     }),
@@ -73,7 +75,7 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
                   height: 1,
                 ),
                 PopUpMenu(
-                    title: '색체심리 마스터',
+                    title: tabBarMenuSubNames[2],
                     event: () {
                       Routemaster.of(context).replace('/${CertificationPage.routeName}/?query=3');
                     }),
@@ -88,23 +90,24 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
+    final screenWidth = MediaQuery.of(context).size.width;
 
     entry?.remove();
     entry = null;
     entry = OverlayEntry(
       builder: (context) => Positioned(
         width: size.width + 100,
-        left: offset.dx,
-        top: offset.dy,
+        // left: offset.dx,
+        // top: offset.dy,
         child: CompositedTransformFollower(
           link: layerLink,
           showWhenUnlinked: false,
-          offset: Offset(size.height - 90, size.height + 10),
+          offset: Offset(size.width - 118 - ((screenWidth - 800) * 0.009333) , size.height + 10), // -130, 10
           child: Opacity(opacity: animations.value, child: buildOverlay()),
         ),
       ),
     );
-
+    // 118 - ((screenWidth - 800) * 0.0215385
     _animationController.addListener(() {
       overlay!.setState(() {});
     });
@@ -116,16 +119,12 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     await Future.delayed(const Duration(milliseconds: 300));
     if (isPopupClose == true) {
       _animationController.reverse();
-      // if (_animationController.value == 0) {
-      //   entry?.remove();
-      //   entry = null;
-      // }
     }
   }
 
   TextStyle topTabBarTextStyle() {
     return TextStyle(
-      fontSize: 17,
+      fontSize: ResponsiveWrapper.of(context).isSmallerThan(DESKTOP) ? 14 : 17,
       fontWeight: FontWeight.bold,
       color: isInRegion ? Colors.purple.shade800 : Colors.black87,
     );
@@ -184,6 +183,7 @@ class _PopUpMenuState extends State<PopUpMenu> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     return MouseRegion(
       onEnter: (event) {
         setState(() {
@@ -201,7 +201,7 @@ class _PopUpMenuState extends State<PopUpMenu> {
         title: Center(
             child: Text(
           widget.title,
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+          style: TextStyle(fontSize: isSmallerThanDesktop ? 11.5 : 13, fontWeight: FontWeight.w400),
         )),
         textColor: titleColor,
         tileColor: backGroundColor,

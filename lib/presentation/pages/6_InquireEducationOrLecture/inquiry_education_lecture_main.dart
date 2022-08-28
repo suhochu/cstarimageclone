@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 import '../../../widget/main_footer.dart';
@@ -48,46 +49,71 @@ class _InquiryEducationOrLecturePageState extends State<InquiryEducationOrLectur
   }
 
   List<Widget> buildContents() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return [
       const PageBanner(
         title: '교육 및 강의(문의)',
       ),
       Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Image.asset(
           'assets/images/edu/1.jpeg',
         ),
       ),
       gridViewImage(index1: '2', index2: '3'),
-      gridViewImage(index1: '4', index2: '5', size2: 595),
+      gridViewImage(index1: '4', index2: '5', size2: 1.088),
       gridViewImage(index1: '6', index2: '7'),
-      gridViewImage(index1: '8', index2: '9', size2: 515),
-      gridViewImage(index1: '10', index2: '11', size1: 500, size2: 655),
+      gridViewImage(index1: '8', index2: '9', size1: 1.07),
+      gridViewImage(index1: '10', index2: '11', size2: 1.31),
       Container(
         color: const Color.fromRGBO(223, 23, 95, 1),
-        width: 1050,
-        height: 70,
-        child: const Center(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        height: isSmallerThanDesktop
+            ? isSmallerThanMobile
+                ? 30
+                : screenWidth * 0.08
+            : 70,
+        child: Center(
           child: Text(
             '교육 현장 사진',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400, color: Colors.white),
+            style: TextStyle(
+                fontSize: isSmallerThanDesktop
+                    ? isSmallerThanMobile
+                        ? 10
+                        : screenWidth * 0.03
+                    : 25,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
           ),
         ),
       ),
       Container(
-        margin: const EdgeInsets.symmetric(vertical: 30),
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Image.asset(
           'assets/images/edu/12.jpeg',
         ),
       ),
       Container(
         color: const Color.fromRGBO(51, 51, 51, 1),
-        width: 1050,
-        height: 70,
-        child: const Center(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        height: isSmallerThanDesktop
+            ? isSmallerThanMobile
+                ? 30
+                : screenWidth * 0.08
+            : 70,
+        child: Center(
           child: Text(
             '※ 텍스트 컬러, 힐링의 관련된 힐링스팟(진단지)을 활용하여 진행',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400, color: Colors.white),
+            style: TextStyle(
+                fontSize: isSmallerThanDesktop
+                    ? isSmallerThanMobile
+                        ? 10
+                        : screenWidth * 0.03
+                    : 25,
+                fontWeight: FontWeight.w400,
+                color: Colors.white),
           ),
         ),
       ),
@@ -156,25 +182,26 @@ class _InquiryEducationOrLecturePageState extends State<InquiryEducationOrLectur
   }
 
   Widget gridViewImage(
-      {required String index1, required String index2, double size1 = 550, double size2 = 550}) {
+      {required String index1, required String index2, double size1 = 1, double size2 = 1}) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: 1050,
-      margin: const EdgeInsets.symmetric(vertical: 20),
+      width: screenWidth,
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset(
             'assets/images/edu/$index1.jpeg',
-            height: size1,
-            width: 510,
+            height: ((screenWidth - 40) / 2) * size1,
+            width: (screenWidth - 40) / 2,
             fit: BoxFit.fill,
             filterQuality: FilterQuality.high,
           ),
           Image.asset(
             'assets/images/edu/$index2.jpeg',
-            height: size2,
-            width: 510,
+            height: ((screenWidth - 40) / 2) * size2,
+            width: (screenWidth - 40) / 2,
             fit: BoxFit.fill,
             filterQuality: FilterQuality.high,
           ),

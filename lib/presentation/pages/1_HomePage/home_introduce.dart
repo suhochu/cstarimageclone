@@ -27,56 +27,73 @@ class HomeIntroduce extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double? widgetSizeFactor = ResponsiveValue(context, defaultValue: 1.0, valueWhen: [
-      const Condition.smallerThan(name: DESKTOP, value: 3/4),
-    ]).value;
-
-    double? textSizeFactor = ResponsiveValue(context, defaultValue: 1.0, valueWhen: [
-      const Condition.smallerThan(name: DESKTOP, value: 3/4),
-    ]).value;
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
 
     return Column(children: [
-      const SizedBox(height: 50),
-       Text('C S T A R', style: TextStyle(fontSize: 25 * textSizeFactor!, fontWeight: FontWeight.w300)),
+      SizedBox(height: isSmallerThanMobile ? 30 : 60),
+      Text('C S T A R',
+          style: TextStyle(
+              fontSize: isSmallerThanDesktop
+                  ? isSmallerThanTablet
+                      ? isSmallerThanMobile
+                          ? 14
+                          : 16
+                      : screenWidth * 0.02
+                  : 28,
+              fontWeight: FontWeight.w300)),
       const SizedBox(height: 5),
-       Text('INTRODUCE', style: TextStyle(fontSize: 35 * textSizeFactor, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 30),
+      Text('INTRODUCE',
+          style: TextStyle(
+              fontSize: isSmallerThanDesktop
+                  ? isSmallerThanTablet
+                      ? isSmallerThanMobile
+                          ? 18
+                          : 24
+                      : screenWidth * 0.03
+                  : 36,
+              fontWeight: FontWeight.bold)),
+      const SizedBox(height: 10),
       SizedBox(
-        width: MediaQuery.of(context).size.width,
+        width: screenWidth,
         child: Column(
           children: [
-            introduceCardsBuilder(context, 0, 1, sizeFactor: widgetSizeFactor!),
-            const SizedBox(height: 30),
-            introduceCardsBuilder(context, 2, 3, sizeFactor: widgetSizeFactor),
+            introduceCardsBuilder(context, 0, 1),
+            SizedBox(height: isSmallerThanTablet ? 15 : 30),
+            introduceCardsBuilder(context, 2, 3),
           ],
         ),
       )
     ]);
   }
 
-  ResponsiveRowColumn introduceCardsBuilder(BuildContext context, int index1, int index2, {double sizeFactor = 1.0}) {
+  ResponsiveRowColumn introduceCardsBuilder(BuildContext context, int index1, int index2) {
+    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return ResponsiveRowColumn(
-      layout: ResponsiveWrapper.of(context).isSmallerThan(TABLET) ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
-      rowMainAxisAlignment : MainAxisAlignment.center,
-      columnSpacing: 30 * sizeFactor,
-      rowSpacing: 30 * sizeFactor,
+      layout: isSmallerThanMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+      rowMainAxisAlignment: MainAxisAlignment.center,
+      columnSpacing: isSmallerThanTablet ? 15 : 30,
+      rowSpacing: isSmallerThanTablet ? 15 : 30,
       children: [
         ResponsiveRowColumnItem(
           child: IntroduceCard(
-              title: titles[index1],
-              content: contents[index1],
-              index: index1,
-              route: routePages[index1],
-              sizeFactor: sizeFactor),
+            title: titles[index1],
+            content: contents[index1],
+            index: index1,
+            route: routePages[index1],
+          ),
         ),
         // SizedBox(width: 30 * sizeFactor),
         ResponsiveRowColumnItem(
           child: IntroduceCard(
-              title: titles[index2],
-              content: contents[index2],
-              index: index2,
-              route: routePages[index2],
-              sizeFactor: sizeFactor),
+            title: titles[index2],
+            content: contents[index2],
+            index: index2,
+            route: routePages[index2],
+          ),
         )
       ],
     );
@@ -84,30 +101,48 @@ class HomeIntroduce extends StatelessWidget {
 }
 
 class IntroduceCard extends StatefulWidget {
-  const IntroduceCard(
-      {Key? key,
-      required this.title,
-      required this.content,
-      required this.index,
-      required this.route,
-      this.sizeFactor = 1.0})
-      : super(key: key);
+  const IntroduceCard({
+    Key? key,
+    required this.title,
+    required this.content,
+    required this.index,
+    required this.route,
+  }) : super(key: key);
 
   final String title;
   final String content;
   final int index;
   final String route;
-  final double sizeFactor;
 
   @override
   State<IntroduceCard> createState() => _IntroduceCardState();
 }
 
-class _IntroduceCardState extends State<IntroduceCard> {
-  bool isBlended = false;
+class _IntroduceCardState extends State<IntroduceCard> with SingleTickerProviderStateMixin {
+  late Animation<Color?> boxAnimation;
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
+    boxAnimation =
+        ColorTween(begin: Colors.transparent, end: Colors.black38).animate(animationController);
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+
     return GestureDetector(
       onTap: () {
         Routemaster.of(context).push(widget.route);
@@ -116,28 +151,33 @@ class _IntroduceCardState extends State<IntroduceCard> {
         cursor: SystemMouseCursors.click,
         onEnter: (PointerEvent details) {
           setState(() {
-            isBlended = true;
+            animationController.forward();
           });
         },
         onExit: (PointerEvent details) {
           setState(() {
-            isBlended = false;
+            animationController.reverse();
           });
         },
         child: Stack(children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            child: Image.asset(
+          AnimatedBuilder(
+            animation: boxAnimation,
+            builder: (context, child) => Image.asset(
               'assets/images/homepage/st1_con${widget.index + 1}.jpg',
-              width: 500 * widget.sizeFactor,
-              fit: BoxFit.fitWidth,
-              color: isBlended ? Colors.black38 : Colors.transparent,
+              width: isSmallerThanDesktop
+                  ? isSmallerThanMobile
+                      ? screenWidth - 80
+                      : (screenWidth - 100) / 2
+                  : 550,
+              height: isSmallerThanMobile ? (screenWidth - 100) * 0.4 : null,
+              fit: BoxFit.cover,
+              color: boxAnimation.value,
               colorBlendMode: BlendMode.luminosity,
             ),
           ),
           Positioned(
-            top: 30 * widget.sizeFactor,
-            left: 40 * widget.sizeFactor,
+            top: isSmallerThanDesktop ? 13 : 20,
+            left: isSmallerThanDesktop ? 13 : 20,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -147,20 +187,21 @@ class _IntroduceCardState extends State<IntroduceCard> {
                     Text(widget.title,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 30 * widget.sizeFactor,
+                            fontSize: isSmallerThanDesktop ? screenWidth * 0.025 : 35,
                             fontWeight: FontWeight.bold)),
                     const SizedBox(width: 5),
                     Container(
-                        margin: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 5),
                         child: Icon(Icons.arrow_circle_right,
-                            color: Colors.white, size: 35 * widget.sizeFactor)),
+                            color: Colors.white,
+                            size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
                   ],
                 ),
-                SizedBox(height: 30 * widget.sizeFactor),
+                SizedBox(height: isSmallerThanDesktop ? screenWidth * 0.015 : 30),
                 Text(
                   widget.content,
                   style: TextStyle(
-                      fontSize: 15 * widget.sizeFactor,
+                      fontSize: isSmallerThanDesktop ? screenWidth * 0.015 : 16,
                       color: Colors.white,
                       fontWeight: FontWeight.w500),
                 ),

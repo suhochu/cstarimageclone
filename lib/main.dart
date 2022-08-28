@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
           minWidth: 350,
           defaultScale: true,
           breakpoints: [
-            const ResponsiveBreakpoint.resize(480, name: MOBILE),
-            const ResponsiveBreakpoint.resize(650, name: 'MOBILE2'),
+            // const ResponsiveBreakpoint.resize(480, name: MOBILE),
+            const ResponsiveBreakpoint.resize(600, name: MOBILE),
             const ResponsiveBreakpoint.resize(800, name: TABLET),
             const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
             const ResponsiveBreakpoint.autoScale(2460, name: '4K'),
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1)
+        scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       ),
       routerDelegate: RoutemasterDelegate(
         observers: [TitleObserver()],

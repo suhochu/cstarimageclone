@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../all_pages_out.dart';
@@ -17,12 +18,13 @@ class _CstarImageHomePageState extends State<CstarImageHomePage> {
 
   void showOverlay() async {
     final overlay = Overlay.of(context);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     entry = OverlayEntry(
       opaque: false,
       builder: (context) => Positioned(
         right: 0,
-        top: (MediaQuery.of(context).size.height / 2) - 300,
-        bottom: (MediaQuery.of(context).size.height / 2) - 300,
+        top: isSmallerThanMobile ? (MediaQuery.of(context).size.height / 2) - 200 : (MediaQuery.of(context).size.height / 2) - 300,
+        bottom: isSmallerThanMobile ? (MediaQuery.of(context).size.height / 2) - 200 : (MediaQuery.of(context).size.height / 2) - 300,
         child: const OverlayWidget(),
       ),
     );
@@ -80,6 +82,7 @@ class _OverlayWidgetState extends State<OverlayWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return Row(
       children: [
         GestureDetector(
@@ -90,24 +93,27 @@ class _OverlayWidgetState extends State<OverlayWidget> {
             });
           },
           child: ClipRRect(
-            borderRadius: const BorderRadius.only(
+            borderRadius: isSmallerThanMobile ?
+            const BorderRadius.only(
+                bottomLeft: Radius.circular(6), topLeft: Radius.circular(6)) :
+            const BorderRadius.only(
                 bottomLeft: Radius.circular(12), topLeft: Radius.circular(12)),
             child: Material(
               child: Container(
                 padding: const EdgeInsets.all(3),
                 color: Colors.purple.shade600,
-                height: 180,
+                height: isSmallerThanMobile ? 100 : 180,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     isClicked
-                        ? const Icon(Icons.arrow_forward_ios_outlined, color: Colors.white)
-                        : const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-                    const SizedBox(height: 15),
-                    const RotatedBox(
+                        ?  Icon(Icons.arrow_forward_ios_outlined, color: Colors.white, size: isSmallerThanMobile ? 14 : 30,)
+                        :  Icon(Icons.arrow_back_ios_new, color: Colors.white, size: isSmallerThanMobile ? 14 : 30,),
+                    SizedBox(height: isSmallerThanMobile ? 10 : 15),
+                    RotatedBox(
                       quarterTurns: 3,
                       child: Text('QUICK MENU',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: isSmallerThanMobile ? 8 : 16)),
                     ),
                   ],
                 ),
@@ -124,8 +130,8 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   color: Colors.black87,
-                  width: isClicked ? 80 : 0,
-                  height: 600,
+                  width: isClicked ? isSmallerThanMobile ? 60 : 80 : 0,
+                  height: isSmallerThanMobile ? 400 : 600,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: const [
@@ -176,6 +182,7 @@ class SideButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: MaterialButton(
@@ -189,16 +196,16 @@ class SideButton extends StatelessWidget {
             child: svg
                 ? SvgPicture.asset(
                     'assets/images/SVG/$thumbNail',
-                    height: 45,
-                    width: 45,
+                    height: isSmallerThanMobile ? 30 : 45,
+                    width: isSmallerThanMobile ? 30 :45,
                     fit: BoxFit.fill,
                   )
                 : Image.asset(
                     'assets/images/homepage/$thumbNail',
                     filterQuality: FilterQuality.high,
                     fit: BoxFit.fill,
-                    height: 65,
-                    width: 65,
+                    height: isSmallerThanMobile ? 45 : 65,
+                    width: isSmallerThanMobile ? 45 : 65,
                   )),
       ),
     );
