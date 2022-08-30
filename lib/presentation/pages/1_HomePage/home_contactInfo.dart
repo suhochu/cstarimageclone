@@ -54,7 +54,7 @@ class CstarImageContacts extends StatelessWidget {
                   : 1200 * 0.45,
               child: Image.asset(
                 'assets/images/homepage/st2_bg.jpg',
-                fit: isSmallerThanTablet ? BoxFit.cover : BoxFit.fill,
+                fit: isSmallerThanTablet ? BoxFit.cover : BoxFit.fill, filterQuality: FilterQuality.low,
               ),
             ),
             contentsWidgetBuilder(context),
@@ -98,9 +98,9 @@ class CstarImageContacts extends StatelessWidget {
                     autoPlayInterval: 3000,
                     isLoop: true,
                     children: [
-                      Image.asset('assets/images/homepage/st_vis1.jpg', fit: BoxFit.cover),
-                      Image.asset('assets/images/homepage/st_vis2.jpg', fit: BoxFit.cover),
-                      Image.asset('assets/images/homepage/st_vis3.jpg', fit: BoxFit.cover),
+                      Image.asset('assets/images/homepage/st_vis1.jpg', fit: BoxFit.cover, filterQuality: FilterQuality.low,),
+                      Image.asset('assets/images/homepage/st_vis2.jpg', fit: BoxFit.cover, filterQuality: FilterQuality.low,),
+                      Image.asset('assets/images/homepage/st_vis3.jpg', fit: BoxFit.cover, filterQuality: FilterQuality.low,),
                     ],
                   ),
                 ),

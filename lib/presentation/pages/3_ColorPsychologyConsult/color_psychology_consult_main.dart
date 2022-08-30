@@ -1,3 +1,4 @@
+import 'package:cstar_image_clone/widget/animated_floating_action_button.dart';
 import 'package:cstar_image_clone/widget/page_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
@@ -17,21 +18,17 @@ class ColorPsychologyConsultPage extends StatefulWidget {
 class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage> {
   late final ScrollController _scrollController;
 
-  double opacity = 0;
+  final ValueNotifier<double> _opacityNotifier = ValueNotifier<double>(0);
 
   bool _isSelected = false;
-
   void _opacityFAB() {
     if (_scrollController.offset <= 50) {
-      setState(() {
-        opacity = 0;
-      });
+      _opacityNotifier.value = 0;
     } else {
-      setState(() {
-        opacity = 1;
-      });
+      _opacityNotifier.value = 1;
     }
   }
+
 
   @override
   void initState() {
@@ -77,43 +74,27 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
       floatingActionButton: AnimatedPadding(
         duration: const Duration(milliseconds: 60),
         padding: EdgeInsets.only(bottom: _isSelected ? 10 : 5),
-        child: AnimatedOpacity(
-          opacity: opacity,
-          duration: const Duration(milliseconds: 300),
-          child: MaterialButton(
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () {
-              _scrollController.animateTo(0,
-                  duration: const Duration(milliseconds: 500), curve: Curves.linear);
-            },
-            child: MouseRegion(
-              onEnter: (event) {
-                setState(() {
-                  _isSelected = true;
-                });
-              },
-              onExit: (event) {
-                setState(() {
-                  _isSelected = false;
-                });
-              },
-              child: const PhysicalModel(
-                color: Colors.black,
-                elevation: 15.0,
-                shape: BoxShape.circle,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 28,
-                  child: Icon(
-                    Icons.keyboard_arrow_up,
-                    color: Colors.black54,
-                    size: 40,
-                  ),
-                ),
-              ),
-            ),
+        child: MouseRegion(
+          onEnter: (event) {
+            setState(() {
+              _isSelected = true;
+            });
+          },
+          onExit: (event) {
+            setState(() {
+              _isSelected = false;
+            });
+          },
+          child: ValueListenableBuilder(
+            valueListenable: _opacityNotifier,
+            builder: (BuildContext context, double opacity, Widget? child) =>
+                AnimatedFloatingActionButton(
+                    function: () {
+                      _scrollController.animateTo(0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.linear);
+                    },
+                    opacity: opacity),
           ),
         ),
       ),

@@ -209,11 +209,11 @@ class _CstarImageCenterState extends State<CstarImageCenter> {
               style: TextStyle(
                   fontSize: isSmallThanDesktop
                       ? isSmallerThanTablet
-                          ? screenWidth * 0.01875
-                          : screenWidth * 0.01333
+                          ? screenWidth * 0.019
+                          : screenWidth * 0.013
                       : 16,
                   color: Colors.white,
-                  fontWeight: FontWeight.w500)),
+                  fontWeight: FontWeight.bold)),
         ],
       ),
     );

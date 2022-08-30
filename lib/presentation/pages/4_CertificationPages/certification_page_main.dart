@@ -1,3 +1,4 @@
+import 'package:cstar_image_clone/widget/animated_floating_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:routemaster/routemaster.dart';
@@ -20,20 +21,17 @@ class CertificationPage extends StatefulWidget {
 class _CertificationPageState extends State<CertificationPage> {
   late final ScrollController _scrollController;
   int _selectedIndex = 1;
-  double opacity = 0;
+  final ValueNotifier<double> _opacityNotifier = ValueNotifier<double>(0);
   bool _isSelected = false;
 
   void _opacityFAB() {
     if (_scrollController.offset <= 50) {
-      setState(() {
-        opacity = 0;
-      });
+      _opacityNotifier.value = 0;
     } else {
-      setState(() {
-        opacity = 1;
-      });
+      _opacityNotifier.value = 1;
     }
   }
+
 
   @override
   void initState() {
@@ -51,9 +49,10 @@ class _CertificationPageState extends State<CertificationPage> {
 
   List<Widget> buildContents() {
     bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     return [
       const PageBanner(title: '토탈이미지메이킹 컨설턴트 자격증'),
-      tabBuilder(),
+      SizedBox(child: tabBuilder(), width: isSmallerThanDesktop ? null : 1200,),
       if(!isSmallerThanMobile) const SizedBox(height: 20),
       contentsBuilder(),
       PageFooter(),
@@ -117,7 +116,7 @@ class _CertificationPageState extends State<CertificationPage> {
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: SizedBox(
-            width: screenWidth / 30 * 7,
+            width: isSmallerThanDesktop ? screenWidth / 30 * 7 : 280,
             child: Center(
                 child: Text(
               title,
@@ -148,43 +147,27 @@ class _CertificationPageState extends State<CertificationPage> {
       floatingActionButton: AnimatedPadding(
         duration: const Duration(milliseconds: 60),
         padding: EdgeInsets.only(bottom: _isSelected ? 10 : 5),
-        child: AnimatedOpacity(
-          opacity: opacity,
-          duration: const Duration(milliseconds: 300),
-          child: MaterialButton(
-            hoverColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () {
-              _scrollController.animateTo(0,
-                  duration: const Duration(milliseconds: 500), curve: Curves.linear);
-            },
-            child: MouseRegion(
-              onEnter: (event) {
-                setState(() {
-                  _isSelected = true;
-                });
-              },
-              onExit: (event) {
-                setState(() {
-                  _isSelected = false;
-                });
-              },
-              child: const PhysicalModel(
-                color: Colors.black,
-                elevation: 15.0,
-                shape: BoxShape.circle,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 28,
-                  child: Icon(
-                    Icons.keyboard_arrow_up,
-                    color: Colors.black54,
-                    size: 40,
-                  ),
-                ),
-              ),
-            ),
+        child: MouseRegion(
+          onEnter: (event) {
+            setState(() {
+              _isSelected = true;
+            });
+          },
+          onExit: (event) {
+            setState(() {
+              _isSelected = false;
+            });
+          },
+          child: ValueListenableBuilder(
+            valueListenable: _opacityNotifier,
+            builder: (BuildContext context, double opacity, Widget? child) =>
+                AnimatedFloatingActionButton(
+                    function: () {
+                      _scrollController.animateTo(0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.linear);
+                    },
+                    opacity: opacity),
           ),
         ),
       ),

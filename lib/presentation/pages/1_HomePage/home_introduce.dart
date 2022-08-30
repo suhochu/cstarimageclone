@@ -173,6 +173,7 @@ class _IntroduceCardState extends State<IntroduceCard> with SingleTickerProvider
               fit: BoxFit.cover,
               color: boxAnimation.value,
               colorBlendMode: BlendMode.luminosity,
+              filterQuality: FilterQuality.low,
             ),
           ),
           Positioned(

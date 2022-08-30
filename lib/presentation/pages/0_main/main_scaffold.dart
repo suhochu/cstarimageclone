@@ -60,23 +60,34 @@ class OverlayWidget extends StatefulWidget {
 
 class _OverlayWidgetState extends State<OverlayWidget> {
   bool isClicked = false;
-  late Timer _timer;
+  // late Timer _timer;
 
-  void setTimer() {
-    _timer = Timer(const Duration(milliseconds: 2000), () {
-      setState(() {
-        isClicked = false;
-      });
-    });
-  }
-
-  void stopTimer() {
-    _timer.cancel();
-  }
+  // @override
+  // void initState() {
+  //   // _timer = Timer(const Duration(milliseconds: 2000), () {
+  //   //   setState(() {
+  //   //     isClicked = false;
+  //   //   });
+  //   // });
+  //   super.initState();
+  // }
+  //
+  // void setTimer() {
+  //   if(_timer.isActive) stopTimer();
+  //   _timer = Timer(const Duration(milliseconds: 2000), () {
+  //     setState(() {
+  //       isClicked = false;
+  //     });
+  //   });
+  // }
+  //
+  // void stopTimer() {
+  //   _timer.cancel();
+  // }
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel();
     super.dispose();
   }
 
@@ -89,7 +100,7 @@ class _OverlayWidgetState extends State<OverlayWidget> {
           onTap: () {
             setState(() {
               isClicked = !isClicked;
-              setTimer();
+              // setTimer();
             });
           },
           child: ClipRRect(
@@ -121,52 +132,50 @@ class _OverlayWidgetState extends State<OverlayWidget> {
             ),
           ),
         ),
-        Material(
-          child: Column(
-            children: [
-              MouseRegion(
-                onEnter: (event) => stopTimer(),
-                onExit: (event) => setTimer(),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
-                  color: Colors.black87,
-                  width: isClicked ? isSmallerThanMobile ? 60 : 80 : 0,
-                  height: isSmallerThanMobile ? 400 : 600,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      SideButton(
-                          thumbNail: 'PhoneIcon.svg',
-                          url: 'https://pf.kakao.com/_lPGBd',
-                          svg: true),
-                      SideButton(
-                          thumbNail: 'kakaoTalk.svg',
-                          url: 'https://pf.kakao.com/_lPGBd',
-                          svg: true),
-                      SideButton(
-                          thumbNail: 'st2_con_img02.png',
-                          url:
-                              'https://nid.naver.com/nidlogin.login?svctype=64&url=https%3A%2F%2Ftalk.naver.com%2Fct%2Fwc4qzd%3Fnidref%3Dhttp%253A%252F%252Fcstar2.79.ypage.kr%252F%23nafullscreen'),
-                      SideButton(
-                          thumbNail: 'st2_con_img03.png',
-                          url: 'https://www.instagram.com/cstarimagemaker/'),
-                      SideButton(
-                          thumbNail: 'st2_con_img04.png', url: 'https://blog.naver.com/wnduddl55'),
-                      SideButton(
-                          thumbNail: 'facebook.svg',
-                          url: 'https://www.facebook.com/cstarimage/',
-                          svg: true),
-                      SideButton(
-                          thumbNail: 'GoogleMaps.svg',
-                          url:
-                              'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko',
-                          svg: true),
-                    ],
-                  ),
+        Column(
+          children: [
+            MouseRegion(
+              // onEnter: (event) => stopTimer(),
+              // onExit: (event) => setTimer(),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                color: Colors.black87,
+                width: isClicked ? isSmallerThanMobile ? 60 : 80 : 0,
+                height: isSmallerThanMobile ? 400 : 600,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    SideButton(
+                        thumbNail: 'PhoneIcon.svg',
+                        url: 'https://pf.kakao.com/_lPGBd',
+                        svg: true),
+                    SideButton(
+                        thumbNail: 'kakaoTalk.svg',
+                        url: 'https://pf.kakao.com/_lPGBd',
+                        svg: true),
+                    SideButton(
+                        thumbNail: 'st2_con_img02.png',
+                        url:
+                            'https://nid.naver.com/nidlogin.login?svctype=64&url=https%3A%2F%2Ftalk.naver.com%2Fct%2Fwc4qzd%3Fnidref%3Dhttp%253A%252F%252Fcstar2.79.ypage.kr%252F%23nafullscreen'),
+                    SideButton(
+                        thumbNail: 'st2_con_img03.png',
+                        url: 'https://www.instagram.com/cstarimagemaker/'),
+                    SideButton(
+                        thumbNail: 'st2_con_img04.png', url: 'https://blog.naver.com/wnduddl55'),
+                    SideButton(
+                        thumbNail: 'facebook.svg',
+                        url: 'https://www.facebook.com/cstarimage/',
+                        svg: true),
+                    SideButton(
+                        thumbNail: 'GoogleMaps.svg',
+                        url:
+                            'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko',
+                        svg: true),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

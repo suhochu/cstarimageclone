@@ -28,9 +28,9 @@ class HomeCarousel extends StatelessWidget {
           autoPlayInterval: 3000,
           isLoop: true,
           children: [
-            Image.asset('assets/images/homepage/vis01.jpeg', fit: BoxFit.fill),
-            Image.asset('assets/images/homepage/vis02.jpeg', fit: BoxFit.fill),
-            Image.asset('assets/images/homepage/vis03.jpeg', fit: BoxFit.fill),
+            Image.asset('assets/images/homepage/vis01.jpeg', fit: BoxFit.fill, filterQuality: FilterQuality.low,),
+            Image.asset('assets/images/homepage/vis02.jpeg', fit: BoxFit.fill, filterQuality: FilterQuality.low),
+            Image.asset('assets/images/homepage/vis03.jpeg', fit: BoxFit.fill, filterQuality: FilterQuality.low),
           ],
         ),
       ),
