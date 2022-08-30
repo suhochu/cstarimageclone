@@ -47,7 +47,7 @@ class _HomeMainState extends State<HomeMain> {
       const HomeCarousel(),
       HomeIntroduce(),
       const CstarImageContacts(),
-      CstarImageCenter(),
+      const CstarImageCenter(),
       const MainFooter(),
     ];
   }
@@ -61,7 +61,6 @@ class _HomeMainState extends State<HomeMain> {
         animationDuration: 300,
         child: SingleChildScrollView(
           controller: _scrollController,
-          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: buildContents(),
           ),

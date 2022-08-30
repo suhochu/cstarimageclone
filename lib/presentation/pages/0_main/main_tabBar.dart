@@ -49,10 +49,14 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
           tabBarButton(
             index: 0,
             child: Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10, bottom: 10),
               child: Image.asset(
                 'assets/images/homepage/logo.png',
-                height: isSmallerThanTablet ? isSmallerThanMobile ? 50 :80 : 65,
+                height: isSmallerThanTablet
+                    ? isSmallerThanMobile
+                        ? 45
+                        : 70
+                    : 65,
                 fit: BoxFit.fitHeight,
               ),
             ),
@@ -86,7 +90,7 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
       child: DropdownButton2<int>(
         customButton: Icon(
           Icons.menu,
-          size: isSmallerThanMobile ?  30 : 40,
+          size: isSmallerThanMobile ? 30 : 40,
           color: Colors.black54,
         ),
         focusColor: Colors.transparent,
@@ -101,7 +105,9 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
           routeWithDropDownButton(value!);
         },
         itemHeight: isSmallerThanMobile ? 35 : 48,
-        itemPadding: isSmallerThanMobile ? const EdgeInsets.only(left: 8, right: 8) : const EdgeInsets.only(left: 16, right: 16),
+        itemPadding: isSmallerThanMobile
+            ? const EdgeInsets.only(left: 8, right: 8)
+            : const EdgeInsets.only(left: 16, right: 16),
         dropdownWidth: isSmallerThanMobile ? 110 : 160,
         dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
         dropdownDecoration: BoxDecoration(
@@ -120,13 +126,14 @@ class _TopTabBarState extends State<TopTabBar> with SingleTickerProviderStateMix
     return DropdownMenuItem<int>(
         value: index,
         onTap: null,
-
         child: ListTile(
             contentPadding: const EdgeInsets.all(1),
             title: Text(
               tabBarMenuNames[index],
               style: TextStyle(
-                  fontSize: isSmallerThanMobile ? 8 : 11.5, fontWeight: FontWeight.w800, color: Colors.white),
+                  fontSize: isSmallerThanMobile ? 8 : 11.5,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white),
             )));
   }
 

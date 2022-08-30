@@ -185,11 +185,13 @@ class SideButton extends StatelessWidget {
     bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: MaterialButton(
-        onPressed: () {
+      child: GestureDetector(
+        onTap: () {
           launchUrl(Uri.parse(url));
         },
         child: Container(
+          // width: isSmallerThanMobile ? 40 : 60,
+          //   height: isSmallerThanMobile ? 40 : 60,
             margin: svg
                 ? const EdgeInsets.symmetric(horizontal: 8, vertical: 8)
                 : const EdgeInsets.symmetric(horizontal: 0, vertical: 0),

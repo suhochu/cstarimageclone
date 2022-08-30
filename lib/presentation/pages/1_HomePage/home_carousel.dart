@@ -123,14 +123,14 @@ class _KakaoTalkButtonState extends State<KakaoTalkButton> with SingleTickerProv
           animation: boxAnimation,
           builder: (context, child) {
             return Container(
-              padding: isSmallerThanTablet
+              padding: isSmallerThanDesktop
                   ? isSmallerThanMobile
-                      ? const EdgeInsets.symmetric(vertical: 3, horizontal: 3)
-                      : const EdgeInsets.symmetric(vertical: 5, horizontal: 10)
-                  : const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      ? const EdgeInsets.symmetric(vertical: 10, horizontal: 10)
+                      : const EdgeInsets.symmetric(vertical: 15, horizontal: 15)
+                  : const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               decoration: BoxDecoration(color: boxAnimation.value),
-              child: MaterialButton(
-                onPressed: launchURl.launchKakaoChannel,
+              child: GestureDetector(
+                onTap: launchURl.launchKakaoChannel,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
