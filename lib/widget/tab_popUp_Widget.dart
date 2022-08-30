@@ -89,7 +89,7 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     final overlay = Overlay.of(context);
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
-    final offset = renderBox.localToGlobal(Offset.zero);
+    // final offset = renderBox.localToGlobal(Offset.zero);
     final screenWidth = MediaQuery.of(context).size.width;
 
     entry?.remove();
