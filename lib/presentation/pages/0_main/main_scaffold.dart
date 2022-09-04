@@ -1,9 +1,10 @@
 import 'dart:async';
+
+import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../all_pages_out.dart';
 
 class CstarImageHomePage extends StatefulWidget {
@@ -18,28 +19,30 @@ class _CstarImageHomePageState extends State<CstarImageHomePage> {
 
   void showOverlay() async {
     final overlay = Overlay.of(context);
-    bool isSmallerThanMobile =
-        ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    double screenHeight = MediaQuery.of(context).size.height;
+    entry = null;
     entry = OverlayEntry(
       opaque: false,
       builder: (context) => Positioned(
         right: 0,
-        top: isSmallerThanMobile
-            ? (MediaQuery.of(context).size.height / 2) - 200
-            : (MediaQuery.of(context).size.height / 2) - 300,
-        bottom: isSmallerThanMobile
-            ? (MediaQuery.of(context).size.height / 2) - 200
-            : (MediaQuery.of(context).size.height / 2) - 300,
+        top: isSmallerThanMobile ? (screenHeight / 2) - 200 : (screenHeight / 2) - 300,
+        bottom: isSmallerThanMobile ? (screenHeight / 2) - 200 : (screenHeight / 2) - 300,
         child: const OverlayWidget(),
       ),
     );
     overlay!.insert(entry!);
   }
 
-  void rebuildOverlay(){
+  void rebuildOverlay() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       showOverlay();
     });
+  }
+
+  void hideOverlay() {
+    entry!.remove();
+    entry = null;
   }
 
   @override
@@ -50,7 +53,13 @@ class _CstarImageHomePageState extends State<CstarImageHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    rebuildOverlay();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (entry!.mounted) {
+        hideOverlay();
+        showOverlay();
+      }
+    });
+
     final indexedPage = IndexedPage.of(context);
     return Scaffold(
       appBar: const TopTabBar(),
@@ -68,57 +77,66 @@ class OverlayWidget extends StatefulWidget {
   State<OverlayWidget> createState() => _OverlayWidgetState();
 }
 
-class _OverlayWidgetState extends State<OverlayWidget>
-    with SingleTickerProviderStateMixin {
+class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProviderStateMixin {
   bool isClicked = false;
 
   late Animation<double?> boxAnimation;
   late Animation<double?> boxAnimationForMobile;
   late AnimationController animationController;
 
-  // late Timer _timer;
+  late Widget phoneIcon;
+  late Widget kakaoTalkIcon;
+  late Widget naverTalkTalk;
+  late Widget instargramIcon;
+  late Widget naverBlog;
+  late Widget faceBook;
+  late Widget naverMaps;
+
+  late Timer _timer;
 
   @override
   void initState() {
-    // _timer = Timer(const Duration(milliseconds: 2000), () {
-    //   setState(() {
-    //     isClicked = false;
-    //   });
-    // });
-
+    _timer = Timer(const Duration(milliseconds: 2000), () {
+      setState(() {
+        isClicked = false;
+      });
+    });
     super.initState();
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-    boxAnimation = Tween(begin: 0.0, end: 80.0)
-        .animate(animationController);
-    boxAnimationForMobile = Tween(begin: 0.0, end: 60.0)
-        .animate(animationController);
+    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    boxAnimation = Tween(begin: 0.0, end: 80.0).animate(animationController);
+    boxAnimationForMobile = Tween(begin: 0.0, end: 60.0).animate(animationController);
+    phoneIcon = SvgPicture.asset('assets/images/SVG/PhoneIcon.svg', fit: BoxFit.cover);
+    kakaoTalkIcon = SvgPicture.asset('assets/images/SVG/kakaoTalk.svg', fit: BoxFit.cover);
+    naverTalkTalk = SvgPicture.asset('assets/images/SVG/naverTalkTalk.svg', semanticsLabel: 'NaverTalkTalk', fit: BoxFit.cover);
+    instargramIcon = SvgPicture.asset('assets/images/SVG/instagram.svg', fit: BoxFit.cover);
+    naverBlog = SvgPicture.asset('assets/images/SVG/naverBlog.svg', fit: BoxFit.cover);
+    faceBook = SvgPicture.asset('assets/images/SVG/facebook.svg', fit: BoxFit.cover);
+    naverMaps = SvgPicture.asset('assets/images/SVG/naverMaps.svg', fit: BoxFit.cover);
   }
 
-  //
-  // void setTimer() {
-  //   if(_timer.isActive) stopTimer();
-  //   _timer = Timer(const Duration(milliseconds: 2000), () {
-  //     setState(() {
-  //       isClicked = false;
-  //     });
-  //   });
-  // }
-  //
-  // void stopTimer() {
-  //   _timer.cancel();
-  // }
+  void setTimer() {
+    if (_timer.isActive) stopTimer();
+    _timer = Timer(const Duration(milliseconds: 2000), () {
+      setState(() {
+        animationController.reverse();
+        isClicked = false;
+      });
+    });
+  }
+
+  void stopTimer() {
+    _timer.cancel();
+  }
 
   @override
   void dispose() {
-    // _timer.cancel();
+    _timer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isSmallerThanMobile =
-        ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
 
     return Row(
       children: [
@@ -129,21 +147,18 @@ class _OverlayWidgetState extends State<OverlayWidget>
                 if (animationController.value == 0) {
                   animationController.forward();
                   isClicked = true;
+                  setTimer();
                 } else {
                   animationController.reverse();
                   isClicked = false;
+                  stopTimer();
                 }
-                // isClicked = !isClicked;
-                // setTimer();
               });
             },
             child: ClipRRect(
               borderRadius: isSmallerThanMobile
-                  ? const BorderRadius.only(
-                      bottomLeft: Radius.circular(6), topLeft: Radius.circular(6))
-                  : const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12)),
+                  ? const BorderRadius.only(bottomLeft: Radius.circular(6), topLeft: Radius.circular(6))
+                  : const BorderRadius.only(bottomLeft: Radius.circular(12), topLeft: Radius.circular(12)),
               child: Material(
                 child: Container(
                   padding: const EdgeInsets.all(3),
@@ -166,11 +181,7 @@ class _OverlayWidgetState extends State<OverlayWidget>
                       SizedBox(height: isSmallerThanMobile ? 10 : 15),
                       RotatedBox(
                         quarterTurns: 3,
-                        child: Text('QUICK MENU',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: isSmallerThanMobile ? 8 : 16)),
+                        child: Text('QUICK MENU', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: isSmallerThanMobile ? 8 : 16)),
                       ),
                     ],
                   ),
@@ -182,13 +193,10 @@ class _OverlayWidgetState extends State<OverlayWidget>
         Column(
           children: [
             MouseRegion(
-              // onEnter: (event) => stopTimer(),
-              // onExit: (event) => setTimer(),
+              onEnter: (event) => stopTimer(),
+              onExit: (event) => setTimer(),
               child: AnimatedBuilder(
-                // duration: const Duration(milliseconds: 300),
                 animation: isSmallerThanMobile ? boxAnimationForMobile : boxAnimation,
-                // width: isClicked ? isSmallerThanMobile ? 60 : 80 : 0,
-                // height: isSmallerThanMobile ? 400 : 600,
                 builder: (context, child) => Container(
                   color: Colors.black87,
                   height: isSmallerThanMobile ? 400 : 600,
@@ -196,35 +204,14 @@ class _OverlayWidgetState extends State<OverlayWidget>
                   child: (boxAnimation.value! > 20)
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            SideButton(
-                                thumbNail: 'PhoneIcon.svg',
-                                url: 'https://pf.kakao.com/_lPGBd',
-                                svg: true),
-                            SideButton(
-                                thumbNail: 'kakaoTalk.svg',
-                                url: 'https://pf.kakao.com/_lPGBd',
-                                svg: true),
-                            SideButton(
-                                thumbNail: 'st2_con_img02.png',
-                                url:
-                                    'https://nid.naver.com/nidlogin.login?svctype=64&url=https%3A%2F%2Ftalk.naver.com%2Fct%2Fwc4qzd%3Fnidref%3Dhttp%253A%252F%252Fcstar2.79.ypage.kr%252F%23nafullscreen'),
-                            SideButton(
-                                thumbNail: 'st2_con_img03.png',
-                                url:
-                                    'https://www.instagram.com/cstarimagemaker/'),
-                            SideButton(
-                                thumbNail: 'st2_con_img04.png',
-                                url: 'https://blog.naver.com/wnduddl55'),
-                            SideButton(
-                                thumbNail: 'facebook.svg',
-                                url: 'https://www.facebook.com/cstarimage/',
-                                svg: true),
-                            SideButton(
-                                thumbNail: 'GoogleMaps.svg',
-                                url:
-                                    'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko',
-                                svg: true),
+                          children: [
+                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: phoneIcon, url: URLs.phoneCall)),
+                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: kakaoTalkIcon, url: URLs.kakaoChannel)),
+                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: naverTalkTalk, url: URLs.naverTalkTalk)),
+                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: instargramIcon, url: URLs.instaPage), scale: 0.55),
+                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: naverBlog, url: URLs.naverBlog)),
+                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: faceBook, url: URLs.facebookPage), scale: 0.65),
+                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: naverMaps, url: URLs.naverMap)),
                           ],
                         )
                       : null,
@@ -236,47 +223,33 @@ class _OverlayWidgetState extends State<OverlayWidget>
       ],
     );
   }
+
+  Widget sideButtonLayout({required bool isMobile, required Widget child, double scale = 0.5}) {
+    return SizedBox(
+      width: isMobile ? boxAnimationForMobile.value! * scale : boxAnimation.value! * scale,
+      height: isMobile ? 30 : 40,
+      child: child,
+    );
+  }
 }
 
 class SideButton extends StatelessWidget {
-  const SideButton(
-      {Key? key, required this.url, required this.thumbNail, this.svg = false})
-      : super(key: key);
-  final String url;
-  final String thumbNail;
-  final bool svg;
+  SideButton({
+    Key? key,
+    required this.url,
+    required this.icon,
+  }) : super(key: key);
+  final URLs url;
+  final Widget icon;
+  final LaunchURl _launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {
-    bool isSmallerThanMobile =
-        ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          launchUrl(Uri.parse(url));
-        },
-        child: Container(
-            // width: isSmallerThanMobile ? 40 : 60,
-            //   height: isSmallerThanMobile ? 40 : 60,
-            margin: svg
-                ? const EdgeInsets.symmetric(horizontal: 8, vertical: 8)
-                : const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            child: svg
-                ? SvgPicture.asset(
-                    'assets/images/SVG/$thumbNail',
-                    height: isSmallerThanMobile ? 30 : 45,
-                    width: isSmallerThanMobile ? 30 : 45,
-                    fit: BoxFit.fill,
-                  )
-                : Image.asset(
-                    'assets/images/homepage/$thumbNail',
-                    filterQuality: FilterQuality.high,
-                    fit: BoxFit.fill,
-                    height: isSmallerThanMobile ? 45 : 65,
-                    width: isSmallerThanMobile ? 45 : 65,
-                  )),
-      ),
-    );
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => _launchURl.selectUrlMethod(url),
+          child: icon,
+        ));
   }
 }

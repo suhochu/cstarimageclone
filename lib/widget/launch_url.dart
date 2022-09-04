@@ -7,19 +7,24 @@ enum URLs {
   naverBlog,
   cstarDirection,
   facebookPage,
+  naverMap,
+  phoneCall,
 }
 
 class LaunchURl {
-  final String naverTalkTalk = 'https://nid.naver.com/nidlogin.login?svctype=64&url=https%3A%2F%2Ftalk.naver.com%2Fct%2Fwc4qzd%3Fnidref%3Dhttp%253A%252F%252Fcstar2.79.ypage.kr%252F%23nafullscreen';
+  final String naverTalkTalk =
+      'https://nid.naver.com/nidlogin.login?svctype=64&url=https%3A%2F%2Ftalk.naver.com%2Fct%2Fwc4qzd%3Fnidref%3Dhttp%253A%252F%252Fcstar2.79.ypage.kr%252F%23nafullscreen';
   final String kakaoChannel = 'https://pf.kakao.com/_lPGBd';
   final String instaPage = 'https://www.instagram.com/cstarimagemaker/';
   final String naverBlog = 'https://blog.naver.com/wnduddl55';
-  final String cstarDirection = 'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko';
+  final String cstarGoogleMap =
+      'https://www.google.com/maps/place/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C+%EC%9A%A9%EC%82%B0%EA%B5%AC+%ED%95%9C%EA%B0%95%EB%A1%9C2%EA%B0%80+71/data=!3m1!4b1!4m5!3m4!1s0x357ca219bd6b5c59:0xfd906902750883e6!8m2!3d37.5301773!4d126.9716487?hl=ko';
   final String facebookPage = 'https://www.facebook.com/cstarimage/';
-  final String cstarDirectionNaverMap = 'https://map.naver.com/v5/search/%EC%94%A8%EC%8A%A4%ED%83%80%EC%9D%B4%EB%AF%B8%EC%A7%80/place/49768739?c=14133957.4755631,4513272.4630257,15,0,0,0,dh&isCorrectAnswer=true';
+  final String cstarNaverMap =
+      'https://map.naver.com/v5/search/%EC%94%A8%EC%8A%A4%ED%83%80%EC%9D%B4%EB%AF%B8%EC%A7%80/place/49768739?c=14133957.4755631,4513272.4630257,15,0,0,0,dh&isCorrectAnswer=true';
 
-  void selectUrlMethod(URLs url){
-    switch(url){
+  void selectUrlMethod(URLs url) {
+    switch (url) {
       case URLs.naverTalkTalk:
         launchNaverTalkTalk();
         break;
@@ -37,6 +42,12 @@ class LaunchURl {
         break;
       case URLs.facebookPage:
         launchFacebookPage();
+        break;
+      case URLs.naverMap:
+        launchNaverMap();
+        break;
+      case URLs.phoneCall:
+        phoneCall();
         break;
       default:
         throw 'Could not launch $url';
@@ -68,7 +79,7 @@ class LaunchURl {
   }
 
   Future<void> launchCstarDirection() async {
-    if (!await launchUrl(Uri.parse(cstarDirection))) {
+    if (!await launchUrl(Uri.parse(cstarGoogleMap))) {
       throw 'Could not launch cstar Direction';
     }
   }
@@ -80,9 +91,15 @@ class LaunchURl {
   }
 
   Future<void> launchNaverMap() async {
-    if (!await launchUrl(Uri.parse(cstarDirectionNaverMap))) {
+    if (!await launchUrl(Uri.parse(cstarNaverMap))) {
       throw 'Could not launch cstar Direction NaverMap';
     }
   }
 
+  Future<void> phoneCall() async {
+    print('phone call');
+    // if (!await launchUrl(Uri.parse(cstarNaverMap))) {
+    //   throw 'Could not launch cstar Direction NaverMap';
+    // }
+  }
 }
