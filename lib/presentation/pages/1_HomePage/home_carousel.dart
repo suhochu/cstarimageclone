@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../widget/slide_show.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -134,8 +135,8 @@ class _KakaoTalkButtonState extends State<KakaoTalkButton> with SingleTickerProv
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset(
-                      'assets/images/homepage/mtxt_bn.png',
+                    SvgPicture.asset(
+                      'assets/images/SVG/kakaoTalk.svg',
                       fit: BoxFit.fitWidth,
                       width: isSmallerThanDesktop
                           ? isSmallerThanMobile

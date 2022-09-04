@@ -1,6 +1,7 @@
 import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:cstar_image_clone/widget/slide_show.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -291,13 +292,12 @@ class _ContactCardState extends State<ContactCard> with SingleTickerProviderStat
             child: Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(right: 5),
-                  width: isSmallerThanMobile ? screenWidth * 0.05 : null,
-                  child: Image.asset(
-                    'assets/images/homepage/${widget.contactPoint.iconImage}',
-                    fit: BoxFit.fitHeight,
-                    filterQuality: FilterQuality.high,
-                    isAntiAlias: true,
+                  margin: const EdgeInsets.only(left: 10, right: 15),
+                  width: isSmallerThanMobile ? screenWidth * 0.05 : screenWidth * 0.06,
+                  height: isSmallerThanMobile ? 25 :60,
+                  child: SvgPicture.asset(
+                    'assets/images/SVG/${widget.contactPoint.iconImage}',
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
                 Column(
@@ -315,8 +315,8 @@ class _ContactCardState extends State<ContactCard> with SingleTickerProviderStat
                               : 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 5),
-                    if (!ResponsiveWrapper.of(context).isSmallerThan(TABLET))
+                    if (!isSmallerThanTablet) const SizedBox(height: 5),
+                    if (!isSmallerThanTablet)
                       Text(
                         widget.contactPoint.content,
                         style: TextStyle(

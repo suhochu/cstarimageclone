@@ -22,26 +22,26 @@ List<ContactPoint> contactPoint = [
   ContactPoint(
     title: '카카오톡',
     content: 'CSTAR 카카오톡을 안내합니다.',
-    iconImage: 'st2_con_img01.png',
+    iconImage: 'kakaoTalk.svg',
     url: URLs.kakaoChannel,
     color: const Color.fromRGBO(55, 30, 32, 1),
   ),
   ContactPoint(
       title: '네이버톡톡',
       content: 'CSTAR 네이버톡톡을 안내합니다.',
-      iconImage: 'st2_con_img02.png',
+      iconImage: 'naverTalkTalk.svg',
       url: URLs.naverTalkTalk,
       color: const Color.fromRGBO(0, 198, 58, 1)),
   ContactPoint(
       title: '인스타그램',
       content: 'CSTAR 인스타그램을 안내합니다.',
-      iconImage: 'st2_con_img03.png',
+      iconImage: 'instagram.svg',
       url: URLs.instaPage,
       color: const Color.fromRGBO(67, 46, 136, 1)),
   ContactPoint(
       title: '네이버블로그',
       content: 'CSTAR 네이버블로그를 안내합니다.',
-      iconImage: 'st2_con_img04.png',
+      iconImage: 'naverBlog.svg',
       url: URLs.naverBlog,
       color: const Color.fromRGBO(0, 198, 58, 1))
 ];
