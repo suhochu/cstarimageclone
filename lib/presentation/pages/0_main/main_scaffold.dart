@@ -77,12 +77,8 @@ class OverlayWidget extends StatefulWidget {
   State<OverlayWidget> createState() => _OverlayWidgetState();
 }
 
-class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProviderStateMixin {
+class _OverlayWidgetState extends State<OverlayWidget> {
   bool isClicked = false;
-
-  late Animation<double?> boxAnimation;
-  late Animation<double?> boxAnimationForMobile;
-  late AnimationController animationController;
 
   late Widget phoneIcon;
   late Widget kakaoTalkIcon;
@@ -96,29 +92,25 @@ class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProvider
 
   @override
   void initState() {
-    _timer = Timer(const Duration(milliseconds: 2000), () {
+    _timer = Timer(const Duration(milliseconds: 4000), () {
       setState(() {
         isClicked = false;
       });
     });
     super.initState();
-    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
-    boxAnimation = Tween(begin: 0.0, end: 80.0).animate(animationController);
-    boxAnimationForMobile = Tween(begin: 0.0, end: 60.0).animate(animationController);
-    phoneIcon = SvgPicture.asset('assets/images/SVG/PhoneIcon.svg', fit: BoxFit.cover);
-    kakaoTalkIcon = SvgPicture.asset('assets/images/SVG/kakaoTalk.svg', fit: BoxFit.cover);
-    naverTalkTalk = SvgPicture.asset('assets/images/SVG/naverTalkTalk.svg', semanticsLabel: 'NaverTalkTalk', fit: BoxFit.cover);
-    instargramIcon = SvgPicture.asset('assets/images/SVG/instagram.svg', fit: BoxFit.cover);
-    naverBlog = SvgPicture.asset('assets/images/SVG/naverBlog.svg', fit: BoxFit.cover);
-    faceBook = SvgPicture.asset('assets/images/SVG/facebook.svg', fit: BoxFit.cover);
-    naverMaps = SvgPicture.asset('assets/images/SVG/naverMaps.svg', fit: BoxFit.cover);
+    phoneIcon = SideButton(url: URLs.phoneCall);
+    kakaoTalkIcon = SideButton(url: URLs.kakaoChannel);
+    naverTalkTalk = SideButton(url: URLs.naverTalkTalk);
+    instargramIcon = SideButton(url: URLs.instaPage);
+    naverBlog = SideButton(url: URLs.naverBlog);
+    faceBook = SideButton(url: URLs.facebookPage);
+    naverMaps = SideButton(url: URLs.naverMap);
   }
 
   void setTimer() {
     if (_timer.isActive) stopTimer();
-    _timer = Timer(const Duration(milliseconds: 2000), () {
+    _timer = Timer(const Duration(milliseconds: 4000), () {
       setState(() {
-        animationController.reverse();
         isClicked = false;
       });
     });
@@ -144,12 +136,10 @@ class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProvider
           child: GestureDetector(
             onTap: () {
               setState(() {
-                if (animationController.value == 0) {
-                  animationController.forward();
+                if (isClicked == false) {
                   isClicked = true;
                   setTimer();
                 } else {
-                  animationController.reverse();
                   isClicked = false;
                   stopTimer();
                 }
@@ -195,26 +185,32 @@ class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProvider
             MouseRegion(
               onEnter: (event) => stopTimer(),
               onExit: (event) => setTimer(),
-              child: AnimatedBuilder(
-                animation: isSmallerThanMobile ? boxAnimationForMobile : boxAnimation,
-                builder: (context, child) => Container(
-                  color: Colors.black87,
-                  height: isSmallerThanMobile ? 400 : 600,
-                  width: isSmallerThanMobile ? boxAnimationForMobile.value : boxAnimation.value,
-                  child: (boxAnimation.value! > 20)
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: phoneIcon, url: URLs.phoneCall)),
-                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: kakaoTalkIcon, url: URLs.kakaoChannel)),
-                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: naverTalkTalk, url: URLs.naverTalkTalk)),
-                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: instargramIcon, url: URLs.instaPage), scale: 0.55),
-                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: naverBlog, url: URLs.naverBlog)),
-                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: faceBook, url: URLs.facebookPage), scale: 0.65),
-                            sideButtonLayout(isMobile: isSmallerThanMobile, child: SideButton(icon: naverMaps, url: URLs.naverMap)),
-                          ],
-                        )
-                      : null,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                height: isSmallerThanMobile ? 400 : 600,
+                width: isClicked
+                    ? isSmallerThanMobile
+                        ? 50
+                        : 80
+                    : 0,
+                color: Colors.black87,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return (constraints.minWidth >= 20)
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: phoneIcon),
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: kakaoTalkIcon),
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: naverTalkTalk),
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: instargramIcon, scale: 0.55),
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: naverBlog),
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: faceBook, scale: 0.65),
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: naverMaps),
+                            ],
+                          )
+                        : Column();
+                  },
                 ),
               ),
             ),
@@ -225,9 +221,14 @@ class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProvider
   }
 
   Widget sideButtonLayout({required bool isMobile, required Widget child, double scale = 0.5}) {
-    return SizedBox(
-      width: isMobile ? boxAnimationForMobile.value! * scale : boxAnimation.value! * scale,
-      height: isMobile ? 30 : 40,
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      width: isClicked
+          ? isMobile
+              ? 25
+              : 40
+          : 0,
+      height: isMobile ? 25 : 40,
       child: child,
     );
   }
@@ -237,19 +238,44 @@ class SideButton extends StatelessWidget {
   SideButton({
     Key? key,
     required this.url,
-    required this.icon,
   }) : super(key: key);
   final URLs url;
-  final Widget icon;
   final LaunchURl _launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {
+    Widget image;
+    switch (url) {
+      case URLs.naverTalkTalk:
+        image = SvgPicture.asset('assets/images/SVG/naverTalkTalk.svg', fit: BoxFit.cover);
+        break;
+      case URLs.kakaoChannel:
+        image = SvgPicture.asset('assets/images/SVG/kakaoTalk.svg', fit: BoxFit.cover);
+        break;
+      case URLs.instaPage:
+        image = SvgPicture.asset('assets/images/SVG/instagram.svg', fit: BoxFit.cover);
+        break;
+      case URLs.naverBlog:
+        image = SvgPicture.asset('assets/images/SVG/naverBlog.svg', fit: BoxFit.cover);
+        break;
+      case URLs.cstarDirection:
+        image = SvgPicture.asset('assets/images/SVG/naverMaps.svg', fit: BoxFit.cover);
+        break;
+      case URLs.facebookPage:
+        image = SvgPicture.asset('assets/images/SVG/facebook.svg', fit: BoxFit.cover);
+        break;
+      case URLs.naverMap:
+        image = SvgPicture.asset('assets/images/SVG/naverMaps.svg', fit: BoxFit.cover);
+        break;
+      case URLs.phoneCall:
+        image = SvgPicture.asset('assets/images/SVG/PhoneIcon.svg', fit: BoxFit.cover);
+        break;
+    }
     return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: () => _launchURl.selectUrlMethod(url),
-          child: icon,
+          child: image,
         ));
   }
 }
