@@ -28,12 +28,13 @@ class PageFooter extends StatelessWidget {
                 child: Image.asset(
                   'assets/images/common/15.jpeg',
                   fit: BoxFit.fitWidth,
-                  width: isSmallerThanDesktop ?
-                  isSmallerThanTablet
-                      ? isSmallerThanMobile
-                          ? screenWidth - 60
-                          : 500
-                      : screenWidth * (9 / 20) : 550,
+                  width: isSmallerThanDesktop
+                      ? isSmallerThanTablet
+                          ? isSmallerThanMobile
+                              ? screenWidth - 60
+                              : 500
+                          : screenWidth * (9 / 20)
+                      : 550,
                 ),
               ),
             ),
@@ -49,11 +50,13 @@ class PageFooter extends StatelessWidget {
                 child: Image.asset(
                   'assets/images/common/14.jpeg',
                   fit: BoxFit.fitWidth,
-                  width: isSmallerThanDesktop ? isSmallerThanTablet
-                      ? isSmallerThanMobile
-                          ? screenWidth - 60
-                          : 500
-                      : screenWidth * (9 / 20) : 550,
+                  width: isSmallerThanDesktop
+                      ? isSmallerThanTablet
+                          ? isSmallerThanMobile
+                              ? screenWidth - 60
+                              : 500
+                          : screenWidth * (9 / 20)
+                      : 550,
                 ),
               ),
             ),

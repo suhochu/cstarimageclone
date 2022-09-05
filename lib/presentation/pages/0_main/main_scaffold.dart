@@ -193,7 +193,7 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                         ? 50
                         : 80
                     : 0,
-                color: Colors.black87,
+                color: Colors.black54,
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     return (constraints.minWidth >= 20)
@@ -205,7 +205,7 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                               sideButtonLayout(isMobile: isSmallerThanMobile, child: naverTalkTalk),
                               sideButtonLayout(isMobile: isSmallerThanMobile, child: instargramIcon, scale: 0.55),
                               sideButtonLayout(isMobile: isSmallerThanMobile, child: naverBlog),
-                              sideButtonLayout(isMobile: isSmallerThanMobile, child: faceBook, scale: 0.65),
+                              sideButtonLayout(isMobile: isSmallerThanMobile, child: faceBook, scale: 0.67),
                               sideButtonLayout(isMobile: isSmallerThanMobile, child: naverMaps),
                             ],
                           )
@@ -225,8 +225,8 @@ class _OverlayWidgetState extends State<OverlayWidget> {
       duration: const Duration(milliseconds: 300),
       width: isClicked
           ? isMobile
-              ? 25
-              : 40
+              ? 50 * scale
+              : 80 * scale
           : 0,
       height: isMobile ? 25 : 40,
       child: child,
@@ -250,7 +250,7 @@ class SideButton extends StatelessWidget {
         image = SvgPicture.asset('assets/images/SVG/naverTalkTalk.svg', fit: BoxFit.cover);
         break;
       case URLs.kakaoChannel:
-        image = SvgPicture.asset('assets/images/SVG/kakaoTalk.svg', fit: BoxFit.cover);
+        image = SvgPicture.asset('assets/images/SVG/bgkakaoTalk.svg', fit: BoxFit.cover);
         break;
       case URLs.instaPage:
         image = SvgPicture.asset('assets/images/SVG/instagram.svg', fit: BoxFit.cover);

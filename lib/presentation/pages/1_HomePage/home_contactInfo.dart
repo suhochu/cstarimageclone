@@ -55,7 +55,8 @@ class CstarImageContacts extends StatelessWidget {
                   : 1200 * 0.45,
               child: Image.asset(
                 'assets/images/homepage/st2_bg.jpg',
-                fit: isSmallerThanTablet ? BoxFit.cover : BoxFit.fill, filterQuality: FilterQuality.low,
+                fit: isSmallerThanTablet ? BoxFit.cover : BoxFit.fill,
+                filterQuality: FilterQuality.low,
               ),
             ),
             contentsWidgetBuilder(context),
@@ -77,9 +78,7 @@ class CstarImageContacts extends StatelessWidget {
       children: [
         ResponsiveRowColumnItem(
           child: Container(
-            margin: isSmallerThanTablet
-                ? null
-                : const EdgeInsets.only(left: 20, right: 15, top: 20, bottom: 20),
+            margin: isSmallerThanTablet ? null : const EdgeInsets.only(left: 20, right: 15, top: 20, bottom: 20),
             width: isSmallerThanDesktop
                 ? isSmallerThanTablet
                     ? screenWidth - 80 //180
@@ -99,22 +98,32 @@ class CstarImageContacts extends StatelessWidget {
                     autoPlayInterval: 3000,
                     isLoop: true,
                     children: [
-                      Image.asset('assets/images/homepage/st_vis1.jpg', fit: BoxFit.cover, filterQuality: FilterQuality.low,),
-                      Image.asset('assets/images/homepage/st_vis2.jpg', fit: BoxFit.cover, filterQuality: FilterQuality.low,),
-                      Image.asset('assets/images/homepage/st_vis3.jpg', fit: BoxFit.cover, filterQuality: FilterQuality.low,),
+                      Image.asset(
+                        'assets/images/homepage/st_vis1.jpg',
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.low,
+                      ),
+                      Image.asset(
+                        'assets/images/homepage/st_vis2.jpg',
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.low,
+                      ),
+                      Image.asset(
+                        'assets/images/homepage/st_vis3.jpg',
+                        fit: BoxFit.cover,
+                        filterQuality: FilterQuality.low,
+                      ),
                     ],
                   ),
                 ),
-                const Expanded(flex: 1, child: CstarConsultingButton()),
+                Expanded(flex: 1, child: CstarConsultingButton()),
               ],
             ),
           ),
         ),
         ResponsiveRowColumnItem(
           child: Container(
-            margin: isSmallerThanTablet
-                ? EdgeInsets.only(top: isSmallerThanMobile ? 5 : 15)
-                : const EdgeInsets.only(left: 15, right: 20, top: 20, bottom: 20),
+            margin: isSmallerThanTablet ? EdgeInsets.only(top: isSmallerThanMobile ? 5 : 15) : const EdgeInsets.only(left: 15, right: 20, top: 20, bottom: 20),
             width: isSmallerThanDesktop
                 ? isSmallerThanTablet
                     ? screenWidth - 80
@@ -125,8 +134,7 @@ class CstarImageContacts extends StatelessWidget {
                     ? null
                     : (screenWidth - 200) / 2
                 : 400,
-            child:
-                isSmallerThanTablet ? contactsCardBuilderRow(context) : contactsCardBuilderColumn(),
+            child: isSmallerThanTablet ? contactsCardBuilderRow(context) : contactsCardBuilderColumn(),
           ),
         )
       ],
@@ -172,17 +180,12 @@ class CstarImageContacts extends StatelessWidget {
   }
 }
 
-class CstarConsultingButton extends StatefulWidget {
-  const CstarConsultingButton({
+class CstarConsultingButton extends StatelessWidget {
+  CstarConsultingButton({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<CstarConsultingButton> createState() => _CstarConsultingButtonState();
-}
-
-class _CstarConsultingButtonState extends State<CstarConsultingButton> {
-  bool isInRegion = false;
+  final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -192,74 +195,44 @@ class _CstarConsultingButtonState extends State<CstarConsultingButton> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       opaque: false,
-      onEnter: (PointerEvent details) {
-        setState(() {
-          isInRegion = true;
-        });
-      },
-      onExit: (PointerEvent details) {
-        setState(() {
-          isInRegion = false;
-        });
-      },
+      onEnter: (PointerEvent details) => _colorChangeNotifier.value = true,
+      onExit: (PointerEvent details) => _colorChangeNotifier.value = false,
       child: GestureDetector(
         onTap: () => Routemaster.of(context).push('/${InquiryEducationOrLecturePage.routeName}'),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 3),
-          color: isInRegion
-              ? const Color.fromRGBO(43, 26, 103, 1)
-              : const Color.fromRGBO(67, 46, 136, 1),
-          child: Center(
-              child: Text(
-            '씨스타 이미지 컨설팅 문의',
-            style: TextStyle(
-                fontSize: isSmallerThanDesktop
-                    ? isSmallerThanTablet
-                        ? screenWidth * 0.020
-                        : screenWidth * 0.022
-                    : 30,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          )),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: _colorChangeNotifier,
+          builder: (context, value, child) => AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            color: _colorChangeNotifier.value ? const Color.fromRGBO(43, 26, 103, 1) : const Color.fromRGBO(67, 46, 136, 1),
+            child: Center(
+                child: Text(
+              '씨스타 이미지 컨설팅 문의',
+              style: TextStyle(
+                  fontSize: isSmallerThanDesktop
+                      ? isSmallerThanTablet
+                          ? screenWidth * 0.020
+                          : screenWidth * 0.022
+                      : 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            )),
+          ),
         ),
       ),
     );
   }
 }
 
-class ContactCard extends StatefulWidget {
-  const ContactCard({
+class ContactCard extends StatelessWidget {
+  ContactCard({
     Key? key,
     required this.contactPoint,
   }) : super(key: key);
 
   final ContactPoint contactPoint;
-
-  @override
-  State<ContactCard> createState() => _ContactCardState();
-}
-
-class _ContactCardState extends State<ContactCard> with SingleTickerProviderStateMixin {
-  LaunchURl launchURl = LaunchURl();
-
-  late Animation<Color?> boxAnimation;
-  late AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
-    boxAnimation =
-        ColorTween(begin: const Color.fromRGBO(44, 44, 44, 1), end: widget.contactPoint.color)
-            .animate(animationController);
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
+  final LaunchURl launchURl = LaunchURl();
+  final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -269,34 +242,33 @@ class _ContactCardState extends State<ContactCard> with SingleTickerProviderStat
     double screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
-      onTap: () {
-        launchURl.selectUrlMethod(widget.contactPoint.url);
-      },
-      child: AnimatedBuilder(
-        animation: boxAnimation,
-        builder: (context, child) => Container(
+      onTap: () => launchURl.selectUrlMethod(contactPoint.url),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: _colorChangeNotifier,
+        builder: (context, value, child) => AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
           padding: const EdgeInsets.all(6),
-          color: boxAnimation.value,
+          color: _colorChangeNotifier.value ? contactPoint.color : const Color.fromRGBO(44, 44, 44, 1),
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
-            onEnter: (PointerEvent details) {
-              setState(() {
-                animationController.forward();
-              });
-            },
-            onExit: (PointerEvent details) {
-              setState(() {
-                animationController.reverse();
-              });
-            },
+            onEnter: (PointerEvent details) => _colorChangeNotifier.value = true,
+            onExit: (PointerEvent details) => _colorChangeNotifier.value = false,
             child: Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 10, right: 15),
-                  width: isSmallerThanMobile ? screenWidth * 0.05 : screenWidth * 0.06,
-                  height: isSmallerThanMobile ? 25 :60,
+                  margin: const EdgeInsets.only(left: 10, right: 20, top: 10, bottom: 10),
+                  width: isSmallerThanDesktop
+                      ? isSmallerThanMobile
+                          ? screenWidth * 0.05
+                          : screenWidth * 0.057
+                      : 65,
+                  height: isSmallerThanDesktop
+                      ? isSmallerThanMobile
+                          ? screenWidth * 0.05
+                          : screenWidth * 0.057
+                      : 65,
                   child: SvgPicture.asset(
-                    'assets/images/SVG/${widget.contactPoint.iconImage}',
+                    'assets/images/SVG/${contactPoint.iconImage}',
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -305,7 +277,7 @@ class _ContactCardState extends State<ContactCard> with SingleTickerProviderStat
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.contactPoint.title,
+                      contactPoint.title,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: isSmallerThanDesktop
@@ -318,7 +290,7 @@ class _ContactCardState extends State<ContactCard> with SingleTickerProviderStat
                     if (!isSmallerThanTablet) const SizedBox(height: 5),
                     if (!isSmallerThanTablet)
                       Text(
-                        widget.contactPoint.content,
+                        contactPoint.content,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: isSmallerThanDesktop

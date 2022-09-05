@@ -2,16 +2,9 @@ import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class CstarImageCenter extends StatefulWidget {
-  const CstarImageCenter({Key? key}) : super(key: key);
-
-  @override
-  State<CstarImageCenter> createState() => _CstarImageCenterState();
-}
-
-class _CstarImageCenterState extends State<CstarImageCenter> {
+class CstarImageCenter extends StatelessWidget {
+  CstarImageCenter({Key? key}) : super(key: key);
   final LaunchURl _launchURl = LaunchURl();
-  double scaleFactor = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +49,8 @@ class _CstarImageCenterState extends State<CstarImageCenter> {
                     : screenWidth / 3
                 : 400,
             child: isSmallerThanTablet
-                ? centerInfoContentsColumn(spacing: isSmallerThanMobile ? 5 : 15)
-                : centerInfoContentsRow(),
+                ? centerInfoContentsColumn(context, spacing: isSmallerThanMobile ? 5 : 15)
+                : centerInfoContentsRow(context),
           ),
           const SizedBox(height: 50),
         ],
@@ -65,7 +58,7 @@ class _CstarImageCenterState extends State<CstarImageCenter> {
     );
   }
 
-  Widget centerInfoContentsRow() => Row(
+  Widget centerInfoContentsRow(BuildContext context) => Row(
         children: [
           Expanded(flex: 1, child: customerService(context)),
           const SizedBox(width: 30),
@@ -73,7 +66,7 @@ class _CstarImageCenterState extends State<CstarImageCenter> {
         ],
       );
 
-  Widget centerInfoContentsColumn({double? spacing = 15}) => Column(
+  Widget centerInfoContentsColumn(BuildContext context, {double? spacing = 15}) => Column(
         children: [
           Expanded(flex: 8, child: customerService(context)),
           SizedBox(height: spacing),

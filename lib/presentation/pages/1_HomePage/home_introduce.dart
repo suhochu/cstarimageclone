@@ -11,12 +11,7 @@ class HomeIntroduce extends StatelessWidget {
     '컬러교구구입',
     '기업교육 및 강의문의',
   ];
-  final List<String> contents = [
-    'CSTAR 퍼스널컬러진단을 \n안내해 드립니다.',
-    'CSTAR 컬러자격증과정을 \n안내해 드립니다.',
-    'CSTAR 컬러교구구입을 \n안내해 드립니다.',
-    'CSTAR 기업교육 및 강의문의를 \n안내해 드립니다.'
-  ];
+  final List<String> contents = ['CSTAR 퍼스널컬러진단을 \n안내해 드립니다.', 'CSTAR 컬러자격증과정을 \n안내해 드립니다.', 'CSTAR 컬러교구구입을 \n안내해 드립니다.', 'CSTAR 기업교육 및 강의문의를 \n안내해 드립니다.'];
 
   final List<String> routePages = [
     '/${PersonalColorDiagnosisPage.routeName}',
@@ -100,8 +95,8 @@ class HomeIntroduce extends StatelessWidget {
   }
 }
 
-class IntroduceCard extends StatefulWidget {
-  const IntroduceCard({
+class IntroduceCard extends StatelessWidget {
+  IntroduceCard({
     Key? key,
     required this.title,
     required this.content,
@@ -114,28 +109,7 @@ class IntroduceCard extends StatefulWidget {
   final int index;
   final String route;
 
-  @override
-  State<IntroduceCard> createState() => _IntroduceCardState();
-}
-
-class _IntroduceCardState extends State<IntroduceCard> with SingleTickerProviderStateMixin {
-  late Animation<Color?> boxAnimation;
-  late AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
-    boxAnimation =
-        ColorTween(begin: Colors.transparent, end: Colors.black38).animate(animationController);
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
+  final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -145,71 +119,61 @@ class _IntroduceCardState extends State<IntroduceCard> with SingleTickerProvider
 
     return GestureDetector(
       onTap: () {
-        Routemaster.of(context).push(widget.route);
+        Routemaster.of(context).push(route);
       },
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        onEnter: (PointerEvent details) {
-          setState(() {
-            animationController.forward();
-          });
-        },
-        onExit: (PointerEvent details) {
-          setState(() {
-            animationController.reverse();
-          });
-        },
-        child: Stack(children: [
-          AnimatedBuilder(
-            animation: boxAnimation,
-            builder: (context, child) => Image.asset(
-              'assets/images/homepage/st1_con${widget.index + 1}.jpg',
-              width: isSmallerThanDesktop
-                  ? isSmallerThanMobile
-                      ? screenWidth - 80
-                      : (screenWidth - 100) / 2
-                  : 550,
-              height: isSmallerThanMobile ? (screenWidth - 100) * 0.4 : null,
-              fit: BoxFit.cover,
-              color: boxAnimation.value,
-              colorBlendMode: BlendMode.luminosity,
-              filterQuality: FilterQuality.low,
-            ),
-          ),
-          Positioned(
-            top: isSmallerThanDesktop ? 13 : 20,
-            left: isSmallerThanDesktop ? 13 : 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(widget.title,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: isSmallerThanDesktop ? screenWidth * 0.025 : 35,
-                            fontWeight: FontWeight.bold)),
-                    const SizedBox(width: 5),
-                    Container(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Icon(Icons.arrow_circle_right,
-                            color: Colors.white,
-                            size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
-                  ],
+        onEnter: (PointerEvent details) => _colorChangeNotifier.value = true,
+        onExit: (PointerEvent details) => _colorChangeNotifier.value = false,
+        child: Stack(
+          children: [
+            ValueListenableBuilder<bool>(
+              valueListenable: _colorChangeNotifier,
+              builder: (context, value, child) => AnimatedContainer(
+                // animation: boxAnimation,
+                duration: const Duration(milliseconds: 300),
+                child: Image.asset(
+                  'assets/images/homepage/st1_con${index + 1}.jpg',
+                  width: isSmallerThanDesktop
+                      ? isSmallerThanMobile
+                          ? screenWidth - 80
+                          : (screenWidth - 100) / 2
+                      : 550,
+                  height: isSmallerThanMobile ? (screenWidth - 100) * 0.4 : null,
+                  fit: BoxFit.cover,
+                  color: _colorChangeNotifier.value ? Colors.black38 : Colors.transparent,
+                  colorBlendMode: BlendMode.luminosity,
+                  filterQuality: FilterQuality.low,
                 ),
-                SizedBox(height: isSmallerThanDesktop ? screenWidth * 0.015 : 30),
-                Text(
-                  widget.content,
-                  style: TextStyle(
-                      fontSize: isSmallerThanDesktop ? screenWidth * 0.015 : 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500),
-                ),
-              ],
+              ),
             ),
-          ),
-        ]),
+            Positioned(
+              top: isSmallerThanDesktop ? 13 : 20,
+              left: isSmallerThanDesktop ? 13 : 20,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(title,
+                          style: TextStyle(color: Colors.white, fontSize: isSmallerThanDesktop ? screenWidth * 0.025 : 35, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 5),
+                      Container(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Icon(Icons.arrow_circle_right, color: Colors.white, size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
+                    ],
+                  ),
+                  SizedBox(height: isSmallerThanDesktop ? screenWidth * 0.015 : 30),
+                  Text(
+                    content,
+                    style: TextStyle(fontSize: isSmallerThanDesktop ? screenWidth * 0.015 : 16, color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

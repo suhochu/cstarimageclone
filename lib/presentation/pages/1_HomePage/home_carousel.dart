@@ -29,7 +29,11 @@ class HomeCarousel extends StatelessWidget {
           autoPlayInterval: 3000,
           isLoop: true,
           children: [
-            Image.asset('assets/images/homepage/vis01.jpeg', fit: BoxFit.fill, filterQuality: FilterQuality.low,),
+            Image.asset(
+              'assets/images/homepage/vis01.jpeg',
+              fit: BoxFit.fill,
+              filterQuality: FilterQuality.low,
+            ),
             Image.asset('assets/images/homepage/vis02.jpeg', fit: BoxFit.fill, filterQuality: FilterQuality.low),
             Image.asset('assets/images/homepage/vis03.jpeg', fit: BoxFit.fill, filterQuality: FilterQuality.low),
           ],
@@ -61,7 +65,7 @@ class HomeCarousel extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const KakaoTalkButton(),
+            KakaoTalkButton(),
           ],
         ),
       )
@@ -69,100 +73,69 @@ class HomeCarousel extends StatelessWidget {
   }
 }
 
-class KakaoTalkButton extends StatefulWidget {
-  const KakaoTalkButton({
+class KakaoTalkButton extends StatelessWidget {
+  KakaoTalkButton({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<KakaoTalkButton> createState() => _KakaoTalkButtonState();
-}
-
-class _KakaoTalkButtonState extends State<KakaoTalkButton> with SingleTickerProviderStateMixin {
-  bool isInRegion = false;
-  LaunchURl launchURl = LaunchURl();
-  late Animation<Color?> boxAnimation;
-  late Animation<Color?> textAnimation;
-  late AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
-    boxAnimation = ColorTween(begin: Colors.yellow, end: const Color.fromRGBO(55, 30, 32, 1))
-        .animate(animationController);
-    textAnimation = ColorTween(begin: const Color.fromRGBO(55, 30, 32, 1), end: Colors.yellow)
-        .animate(animationController);
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
+  final LaunchURl launchURl = LaunchURl();
+  final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
     bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: (PointerEvent details) {
-        setState(() {
-          animationController.forward();
-        });
-      },
-      onExit: (PointerEvent details) {
-        setState(() {
-          animationController.reverse();
-        });
-      },
-      child: AnimatedBuilder(
-          animation: boxAnimation,
-          builder: (context, child) {
-            return Container(
-              padding: isSmallerThanDesktop
-                  ? isSmallerThanMobile
-                      ? const EdgeInsets.symmetric(vertical: 10, horizontal: 10)
-                      : const EdgeInsets.symmetric(vertical: 15, horizontal: 15)
-                  : const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              decoration: BoxDecoration(color: boxAnimation.value),
-              child: GestureDetector(
-                onTap: launchURl.launchKakaoChannel,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/SVG/kakaoTalk.svg',
-                      fit: BoxFit.fitWidth,
-                      width: isSmallerThanDesktop
-                          ? isSmallerThanMobile
-                              ? screenWidth * 0.05
-                              : screenWidth * 0.033
-                          : 35,
+      onEnter: (PointerEvent details) => _colorChangeNotifier.value = true,
+      onExit: (PointerEvent details) => _colorChangeNotifier.value = false,
+      child: ValueListenableBuilder<bool>(
+        valueListenable: _colorChangeNotifier,
+        builder: (context, value, child) {
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            padding: isSmallerThanDesktop
+                ? isSmallerThanMobile
+                    ? const EdgeInsets.symmetric(vertical: 5, horizontal: 10)
+                    : const EdgeInsets.symmetric(vertical: 8, horizontal: 15)
+                : const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            decoration: BoxDecoration(color: _colorChangeNotifier.value == false ? const Color.fromRGBO(255, 202, 40, 1) : const Color.fromRGBO(55, 30, 32, 1)),
+            child: GestureDetector(
+              onTap: launchURl.launchKakaoChannel,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/SVG/kakaoTalk.svg',
+                    fit: BoxFit.fitWidth,
+                    width: isSmallerThanDesktop
+                        ? isSmallerThanMobile
+                            ? screenWidth * 0.05
+                            : screenWidth * 0.033
+                        : 35,
+                  ),
+                  const SizedBox(width: 15),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    child: Text(
+                      '카카오톡 문의',
+                      style: TextStyle(
+                          color: _colorChangeNotifier.value == true ? const Color.fromRGBO(255, 202, 40, 1) : const Color.fromRGBO(55, 30, 32, 1),
+                          fontWeight: FontWeight.bold,
+                          fontSize: isSmallerThanDesktop
+                              ? isSmallerThanMobile
+                                  ? screenWidth * 0.03
+                                  : screenWidth * 0.02
+                              : 22),
                     ),
-                    const SizedBox(width: 15),
-                    AnimatedBuilder(
-                      animation: textAnimation,
-                      builder: (context, child) {
-                        return Text(
-                          '카카오톡 문의',
-                          style: TextStyle(
-                              color: textAnimation.value,
-                              fontWeight: FontWeight.bold,
-                              fontSize: isSmallerThanDesktop ? isSmallerThanMobile ? screenWidth * 0.03 : screenWidth * 0.02 : 22),
-                        );
-                      },
-                    ),
-                    // const SizedBox(width: 15),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
