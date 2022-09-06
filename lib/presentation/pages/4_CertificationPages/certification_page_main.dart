@@ -22,7 +22,10 @@ class _CertificationPageState extends State<CertificationPage> {
   late final ScrollController _scrollController;
   int _selectedIndex = 1;
   final ValueNotifier<double> _opacityNotifier = ValueNotifier<double>(0);
-  bool _isSelected = false;
+  final ValueNotifier<bool> _isSelectedNotifier = ValueNotifier<bool>(false);
+  late Widget page1;
+  late Widget page2;
+  late Widget page3;
 
   void _opacityFAB() {
     if (_scrollController.offset <= 50) {
@@ -37,6 +40,9 @@ class _CertificationPageState extends State<CertificationPage> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_opacityFAB);
+    page1 = Container(margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20), child: Image.asset('assets/images/certification/1.jpeg'));
+    page2 = Container(margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20), child: Image.asset('assets/images/certification/2.jpeg'));
+    page3 = Container(margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20), child: Image.asset('assets/images/certification/3.jpeg'));
   }
 
   @override
@@ -51,10 +57,7 @@ class _CertificationPageState extends State<CertificationPage> {
     bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     return [
       const PageBanner(title: '토탈이미지메이킹 컨설턴트 자격증'),
-      SizedBox(
-        width: isSmallerThanDesktop ? null : 1200,
-        child: tabBuilder(),
-      ),
+      SizedBox(width: isSmallerThanDesktop ? null : 1200, child: tabBuilder()),
       if (!isSmallerThanMobile) const SizedBox(height: 20),
       contentsBuilder(),
       PageFooter(),
@@ -87,20 +90,13 @@ class _CertificationPageState extends State<CertificationPage> {
     if (pageIndex != _selectedIndex) _selectedIndex = pageIndex;
     switch (_selectedIndex) {
       case 2:
-        return contentBuilder('1');
+        return page1;
       case 3:
-        return contentBuilder('3');
+        return page3;
       default:
-        return contentBuilder('2');
+        return page2;
     }
   }
-
-  Widget contentBuilder(String index) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Image.asset(
-          'assets/images/certification/$index.jpeg',
-        ),
-      );
 
   GestureDetector tabButton({required String title, required int index}) {
     bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
@@ -150,27 +146,22 @@ class _CertificationPageState extends State<CertificationPage> {
               children: buildContents(),
             )),
       ),
-      floatingActionButton: AnimatedPadding(
-        duration: const Duration(milliseconds: 60),
-        padding: EdgeInsets.only(bottom: _isSelected ? 10 : 5),
-        child: MouseRegion(
-          onEnter: (event) {
-            setState(() {
-              _isSelected = true;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              _isSelected = false;
-            });
-          },
-          child: ValueListenableBuilder(
-            valueListenable: _opacityNotifier,
-            builder: (BuildContext context, double opacity, Widget? child) => AnimatedFloatingActionButton(
-                function: () {
-                  _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                },
-                opacity: opacity),
+      floatingActionButton: ValueListenableBuilder<bool>(
+        valueListenable: _isSelectedNotifier,
+        builder: (context, value, child) => AnimatedPadding(
+          duration: const Duration(milliseconds: 60),
+          padding: EdgeInsets.only(bottom: _isSelectedNotifier.value ? 10 : 5),
+          child: MouseRegion(
+            onEnter: (event) => _isSelectedNotifier.value = true,
+            onExit: (event) => _isSelectedNotifier.value = false,
+            child: ValueListenableBuilder(
+              valueListenable: _opacityNotifier,
+              builder: (BuildContext context, double opacity, Widget? child) => AnimatedFloatingActionButton(
+                  function: () {
+                    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                  },
+                  opacity: opacity),
+            ),
           ),
         ),
       ),

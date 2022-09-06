@@ -4,7 +4,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../all_pages_out.dart';
 
 class HomeIntroduce extends StatelessWidget {
-  HomeIntroduce({Key? key}) : super(key: key);
+  HomeIntroduce({Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile}) : super(key: key);
   final List<String> titles = [
     '퍼스널컬러진단',
     '컬러자격증과정',
@@ -20,13 +20,14 @@ class HomeIntroduce extends StatelessWidget {
     '/${InquiryEducationOrLecturePage.routeName}',
   ];
 
+  final double screenWidth;
+  final bool isSmallerThanTablet;
+
+  final bool isSmallerThanDesktop;
+  final bool isSmallerThanMobile;
+
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
-
     return Column(children: [
       SizedBox(height: isSmallerThanMobile ? 30 : 60),
       Text('C S T A R',
@@ -156,18 +157,16 @@ class IntroduceCard extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(title,
-                          style: TextStyle(color: Colors.white, fontSize: isSmallerThanDesktop ? screenWidth * 0.025 : 35, fontWeight: FontWeight.bold)),
+                      Text(title, style: TextStyle(color: Colors.white, fontSize: isSmallerThanDesktop ? isSmallerThanMobile ? screenWidth * 0.035 : screenWidth * 0.025 : 35, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 5),
                       Container(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Icon(Icons.arrow_circle_right, color: Colors.white, size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
+                          padding: const EdgeInsets.only(top: 5), child: Icon(Icons.arrow_circle_right, color: Colors.white, size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
                     ],
                   ),
                   SizedBox(height: isSmallerThanDesktop ? screenWidth * 0.015 : 30),
                   Text(
                     content,
-                    style: TextStyle(fontSize: isSmallerThanDesktop ? screenWidth * 0.015 : 16, color: Colors.white, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: isSmallerThanDesktop ? isSmallerThanMobile ? screenWidth * 0.022 : screenWidth * 0.015 : 16, color: Colors.white, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

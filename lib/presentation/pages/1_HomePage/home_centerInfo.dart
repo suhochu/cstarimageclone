@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class CstarImageCenter extends StatelessWidget {
-  const CstarImageCenter({Key? key}) : super(key: key);
-
+  const CstarImageCenter({Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile}) : super(key: key);
+  final double screenWidth;
+  final bool isSmallerThanTablet;
+  final bool isSmallerThanDesktop;
+  final bool isSmallerThanMobile;
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
-
     return Container(
       color: const Color.fromRGBO(255, 255, 255, 1),
       child: Column(

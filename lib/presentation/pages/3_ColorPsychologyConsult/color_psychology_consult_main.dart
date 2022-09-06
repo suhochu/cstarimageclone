@@ -19,8 +19,8 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
   late final ScrollController _scrollController;
 
   final ValueNotifier<double> _opacityNotifier = ValueNotifier<double>(0);
+  final ValueNotifier<bool> _isSelectedNotifier = ValueNotifier<bool>(false);
 
-  bool _isSelected = false;
   void _opacityFAB() {
     if (_scrollController.offset <= 50) {
       _opacityNotifier.value = 0;
@@ -28,7 +28,6 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
       _opacityNotifier.value = 1;
     }
   }
-
 
   @override
   void initState() {
@@ -46,11 +45,14 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
 
   List<Widget> buildContents() {
     return [
-      const PageBanner(title: '색채심리상담(컬러테라피)',),
+      const PageBanner(
+        title: '색채심리상담(컬러테라피)',
+      ),
       Container(
-        margin: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: Image.asset(
-          'assets/images/colorTherapy/1.jpeg', fit: BoxFit.fitWidth,
+          'assets/images/colorTherapy/1.jpeg',
+          fit: BoxFit.fitWidth,
         ),
       ),
       PageFooter(),
@@ -71,30 +73,22 @@ class _ColorPsychologyConsultPageState extends State<ColorPsychologyConsultPage>
               children: buildContents(),
             )),
       ),
-      floatingActionButton: AnimatedPadding(
-        duration: const Duration(milliseconds: 60),
-        padding: EdgeInsets.only(bottom: _isSelected ? 10 : 5),
-        child: MouseRegion(
-          onEnter: (event) {
-            setState(() {
-              _isSelected = true;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              _isSelected = false;
-            });
-          },
-          child: ValueListenableBuilder(
-            valueListenable: _opacityNotifier,
-            builder: (BuildContext context, double opacity, Widget? child) =>
-                AnimatedFloatingActionButton(
-                    function: () {
-                      _scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.linear);
-                    },
-                    opacity: opacity),
+      floatingActionButton: ValueListenableBuilder<bool>(
+        valueListenable: _isSelectedNotifier,
+        builder:(context, value, child) =>  AnimatedPadding(
+          duration: const Duration(milliseconds: 60),
+          padding: EdgeInsets.only(bottom: _isSelectedNotifier.value ? 10 : 5),
+          child: MouseRegion(
+            onEnter: (event) => _isSelectedNotifier.value = true,
+            onExit: (event) => _isSelectedNotifier.value = false,
+            child: ValueListenableBuilder(
+              valueListenable: _opacityNotifier,
+              builder: (BuildContext context, double opacity, Widget? child) => AnimatedFloatingActionButton(
+                  function: () {
+                    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                  },
+                  opacity: opacity),
+            ),
           ),
         ),
       ),

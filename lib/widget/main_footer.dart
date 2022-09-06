@@ -105,7 +105,6 @@ class RouteButton extends StatefulWidget {
 
 class _RouteButtonState extends State<RouteButton> {
   bool isInRegion = false;
-  final LaunchURl _launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {

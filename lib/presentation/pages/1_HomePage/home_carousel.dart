@@ -7,23 +7,23 @@ import '../../../widget/slide_show.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class HomeCarousel extends StatelessWidget {
-  const HomeCarousel({Key? key}) : super(key: key);
+  const HomeCarousel({Key? key, required this.isSmallerThanDesktop, required this.isSmallerThanMobile, required this.screenWidth}) : super(key: key);
+  final bool isSmallerThanDesktop;
+  final bool isSmallerThanMobile;
+  final double screenWidth;
 
   @override
   Widget build(BuildContext context) {
-    double screenSize = MediaQuery.of(context).size.width;
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
 
     return Stack(children: [
       Container(
         color: Colors.blueGrey,
         child: ImageSlideshow(
-          width: isSmallerThanDesktop ? screenSize : 1200,
+          width: isSmallerThanDesktop ? screenWidth : 1200,
           height: isSmallerThanDesktop
               ? isSmallerThanMobile
-                  ? screenSize * 3 / 5
-                  : screenSize * 2 / 5
+                  ? screenWidth * 3 / 5
+                  : screenWidth * 2 / 5
               : 480,
           initialPage: 0,
           autoPlayInterval: 3000,
@@ -54,8 +54,8 @@ class HomeCarousel extends StatelessWidget {
                 image: const AssetImage('assets/images/homepage/mtxt.png'),
                 width: isSmallerThanDesktop
                     ? isSmallerThanMobile
-                        ? screenSize * 0.5
-                        : screenSize * 0.3
+                        ? screenWidth * 0.5
+                        : screenWidth * 0.3
                     : 400,
                 color: const Color.fromRGBO(255, 255, 255, 0.95),
                 filterQuality: FilterQuality.high,

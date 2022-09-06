@@ -8,6 +8,7 @@ import '../../../widget/page_footer.dart';
 
 class PurchasingTeachingToolPage extends StatefulWidget {
   static const String routeName = 'purchasing_teaching_tool';
+
   const PurchasingTeachingToolPage({Key? key}) : super(key: key);
 
   @override
@@ -18,7 +19,7 @@ class _PurchasingTeachingToolPageState extends State<PurchasingTeachingToolPage>
   late final ScrollController _scrollController;
   final ValueNotifier<double> _opacityNotifier = ValueNotifier<double>(0);
 
-  bool _isSelected = false;
+  final ValueNotifier<bool> _isSelectedNotifier = ValueNotifier<bool>(false);
 
   void _opacityFAB() {
     if (_scrollController.offset <= 50) {
@@ -27,7 +28,6 @@ class _PurchasingTeachingToolPageState extends State<PurchasingTeachingToolPage>
       _opacityNotifier.value = 1;
     }
   }
-
 
   @override
   void initState() {
@@ -45,7 +45,9 @@ class _PurchasingTeachingToolPageState extends State<PurchasingTeachingToolPage>
 
   List<Widget> buildContents() {
     return [
-      const PageBanner(title: '컬러교구 구입',),
+      const PageBanner(
+        title: '컬러교구 구입',
+      ),
       for (int i = 1; i <= 20; i++) insideImage(i.toString()),
       PageFooter(),
       const MainFooter(),
@@ -65,30 +67,22 @@ class _PurchasingTeachingToolPageState extends State<PurchasingTeachingToolPage>
               children: buildContents(),
             )),
       ),
-      floatingActionButton: AnimatedPadding(
-        duration: const Duration(milliseconds: 60),
-        padding: EdgeInsets.only(bottom: _isSelected ? 10 : 5),
-        child: MouseRegion(
-          onEnter: (event) {
-            setState(() {
-              _isSelected = true;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              _isSelected = false;
-            });
-          },
-          child: ValueListenableBuilder(
-            valueListenable: _opacityNotifier,
-            builder: (BuildContext context, double opacity, Widget? child) =>
-                AnimatedFloatingActionButton(
-                    function: () {
-                      _scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.linear);
-                    },
-                    opacity: opacity),
+      floatingActionButton: ValueListenableBuilder<bool>(
+        valueListenable: _isSelectedNotifier,
+        builder: (context, value, child) => AnimatedPadding(
+          duration: const Duration(milliseconds: 60),
+          padding: EdgeInsets.only(bottom: _isSelectedNotifier.value ? 10 : 5),
+          child: MouseRegion(
+            onEnter: (event) => _isSelectedNotifier.value = true,
+            onExit: (event) => _isSelectedNotifier.value = false,
+            child: ValueListenableBuilder(
+              valueListenable: _opacityNotifier,
+              builder: (BuildContext context, double opacity, Widget? child) => AnimatedFloatingActionButton(
+                  function: () {
+                    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                  },
+                  opacity: opacity),
+            ),
           ),
         ),
       ),

@@ -20,8 +20,7 @@ class _InquiryEducationOrLecturePageState extends State<InquiryEducationOrLectur
   late final ScrollController _scrollController;
 
   final ValueNotifier<double> _opacityNotifier = ValueNotifier<double>(0);
-
-  bool _isSelected = false;
+  final ValueNotifier<bool> _isSelectedNotifier = ValueNotifier<bool>(false);
 
   void _opacityFAB() {
     if (_scrollController.offset <= 50) {
@@ -30,7 +29,6 @@ class _InquiryEducationOrLecturePageState extends State<InquiryEducationOrLectur
       _opacityNotifier.value = 1;
     }
   }
-
 
   @override
   void initState() {
@@ -133,38 +131,29 @@ class _InquiryEducationOrLecturePageState extends State<InquiryEducationOrLectur
               children: buildContents(),
             )),
       ),
-      floatingActionButton: AnimatedPadding(
-        duration: const Duration(milliseconds: 60),
-        padding: EdgeInsets.only(bottom: _isSelected ? 10 : 5),
-        child: MouseRegion(
-          onEnter: (event) {
-            setState(() {
-              _isSelected = true;
-            });
-          },
-          onExit: (event) {
-            setState(() {
-              _isSelected = false;
-            });
-          },
-          child: ValueListenableBuilder(
-            valueListenable: _opacityNotifier,
-            builder: (BuildContext context, double opacity, Widget? child) =>
-                AnimatedFloatingActionButton(
-                    function: () {
-                      _scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.linear);
-                    },
-                    opacity: opacity),
+      floatingActionButton: ValueListenableBuilder<bool>(
+        valueListenable: _isSelectedNotifier,
+        builder: (context, value, child) => AnimatedPadding(
+          duration: const Duration(milliseconds: 60),
+          padding: EdgeInsets.only(bottom: _isSelectedNotifier.value ? 10 : 5),
+          child: MouseRegion(
+            onEnter: (event) => _isSelectedNotifier.value = true,
+            onExit: (event) => _isSelectedNotifier.value = false,
+            child: ValueListenableBuilder(
+              valueListenable: _opacityNotifier,
+              builder: (BuildContext context, double opacity, Widget? child) => AnimatedFloatingActionButton(
+                  function: () {
+                    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                  },
+                  opacity: opacity),
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget gridViewImage(
-      {required String index1, required String index2, double size1 = 1, double size2 = 1}) {
+  Widget gridViewImage({required String index1, required String index2, double size1 = 1, double size2 = 1}) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       width: screenWidth,
