@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import '../../../constants/contact_point.dart';
 import '../all_pages_out.dart';
 
 class CstarImageContacts extends StatelessWidget {
-  const CstarImageContacts({Key? key}) : super(key: key);
+  const CstarImageContacts({Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile}) : super(key: key);
+
+  final double screenWidth;
+  final bool isSmallerThanTablet;
+  final bool isSmallerThanDesktop;
+  final bool isSmallerThanMobile;
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
 
     return Column(
       children: [
