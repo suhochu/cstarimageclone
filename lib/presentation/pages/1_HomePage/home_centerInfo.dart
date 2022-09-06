@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class CstarImageCenter extends StatelessWidget {
-  CstarImageCenter({Key? key}) : super(key: key);
-  final LaunchURl _launchURl = LaunchURl();
+  const CstarImageCenter({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class CstarImageCenter extends StatelessWidget {
             color: const Color.fromRGBO(26, 73, 165, 1),
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: GestureDetector(
-              onTap: _launchURl.launchNaverMap,
+              onTap: () => LaunchURl.selectUrlMethod(URLs.cstarDirection),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -113,7 +113,7 @@ class CstarImageCenter extends StatelessWidget {
       return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          onTap: _launchURl.launchNaverMap,
+          onTap: () => LaunchURl.selectUrlMethod(URLs.naverMap),
           child: Stack(
             children: [
               Image.asset(

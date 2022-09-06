@@ -62,7 +62,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   Widget build(BuildContext context) {
     addMarker();
     return GestureDetector(
-      onTap: launchURl.launchCstarDirection,
+      onTap: ()=> LaunchURl.selectUrlMethod(URLs.cstarDirection),
       child: Stack(
         children: [
           GoogleMap(

@@ -123,7 +123,7 @@ class _RouteButtonState extends State<RouteButton> {
         isInRegion = false;
       }),
       child: GestureDetector(
-        onTap: () => _launchURl.selectUrlMethod(widget.url),
+        onTap: () => LaunchURl.selectUrlMethod(widget.url),
         child: Image.asset(
           image,
           fit: BoxFit.fitHeight,

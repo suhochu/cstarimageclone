@@ -231,7 +231,6 @@ class ContactCard extends StatelessWidget {
   }) : super(key: key);
 
   final ContactPoint contactPoint;
-  final LaunchURl launchURl = LaunchURl();
   final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier(false);
 
   @override
@@ -242,7 +241,7 @@ class ContactCard extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
-      onTap: () => launchURl.selectUrlMethod(contactPoint.url),
+      onTap: () => LaunchURl.selectUrlMethod(contactPoint.url),
       child: ValueListenableBuilder<bool>(
         valueListenable: _colorChangeNotifier,
         builder: (context, value, child) => AnimatedContainer(

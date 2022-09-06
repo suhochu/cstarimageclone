@@ -98,13 +98,13 @@ class _OverlayWidgetState extends State<OverlayWidget> {
       });
     });
     super.initState();
-    phoneIcon = SideButton(url: URLs.phoneCall);
-    kakaoTalkIcon = SideButton(url: URLs.kakaoChannel);
-    naverTalkTalk = SideButton(url: URLs.naverTalkTalk);
-    instargramIcon = SideButton(url: URLs.instaPage);
-    naverBlog = SideButton(url: URLs.naverBlog);
-    faceBook = SideButton(url: URLs.facebookPage);
-    naverMaps = SideButton(url: URLs.naverMap);
+    phoneIcon = const SideButton(url: URLs.phoneCall);
+    kakaoTalkIcon = const SideButton(url: URLs.kakaoChannel);
+    naverTalkTalk = const SideButton(url: URLs.naverTalkTalk);
+    instargramIcon = const SideButton(url: URLs.instaPage);
+    naverBlog = const SideButton(url: URLs.naverBlog);
+    faceBook = const SideButton(url: URLs.facebookPage);
+    naverMaps = const SideButton(url: URLs.naverMap);
   }
 
   void setTimer() {
@@ -235,12 +235,11 @@ class _OverlayWidgetState extends State<OverlayWidget> {
 }
 
 class SideButton extends StatelessWidget {
-  SideButton({
+  const SideButton({
     Key? key,
     required this.url,
   }) : super(key: key);
   final URLs url;
-  final LaunchURl _launchURl = LaunchURl();
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +273,7 @@ class SideButton extends StatelessWidget {
     return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          onTap: () => _launchURl.selectUrlMethod(url),
+          onTap: () => LaunchURl.selectUrlMethod(url),
           child: image,
         ));
   }

@@ -32,7 +32,6 @@ class _CertificationPageState extends State<CertificationPage> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -52,8 +51,11 @@ class _CertificationPageState extends State<CertificationPage> {
     bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     return [
       const PageBanner(title: '토탈이미지메이킹 컨설턴트 자격증'),
-      SizedBox(child: tabBuilder(), width: isSmallerThanDesktop ? null : 1200,),
-      if(!isSmallerThanMobile) const SizedBox(height: 20),
+      SizedBox(
+        width: isSmallerThanDesktop ? null : 1200,
+        child: tabBuilder(),
+      ),
+      if (!isSmallerThanMobile) const SizedBox(height: 20),
       contentsBuilder(),
       PageFooter(),
       const MainFooter(),
@@ -64,11 +66,13 @@ class _CertificationPageState extends State<CertificationPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const SizedBox(width: 10,),
+        const SizedBox(width: 10),
         tabButton(title: '토탈이미지메이킹\n컨설턴트 자격증', index: 1),
         tabButton(title: '퍼스널컬러\n컨설턴트 자격증', index: 2),
         tabButton(title: '색채심리\n마스터 자격증', index: 3),
-        const SizedBox(width: 10,),
+        const SizedBox(
+          width: 10,
+        ),
       ],
     );
   }
@@ -76,10 +80,8 @@ class _CertificationPageState extends State<CertificationPage> {
   Widget contentsBuilder() {
     int pageIndex;
     try {
-       pageIndex = int.parse(RouteData
-          .of(context)
-          .queryParameters['query']!);
-    } catch(e) {
+      pageIndex = int.parse(RouteData.of(context).queryParameters['query']!);
+    } catch (e) {
       pageIndex = 1;
     }
     if (pageIndex != _selectedIndex) _selectedIndex = pageIndex;
@@ -110,9 +112,7 @@ class _CertificationPageState extends State<CertificationPage> {
         margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 5),
         padding: const EdgeInsets.symmetric(vertical: 10),
         duration: const Duration(milliseconds: 200),
-        color: _selectedIndex == index
-            ? const Color.fromRGBO(164, 69, 237, 1)
-            : const Color.fromRGBO(120, 120, 120, 1),
+        color: _selectedIndex == index ? const Color.fromRGBO(164, 69, 237, 1) : const Color.fromRGBO(120, 120, 120, 1),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: SizedBox(
@@ -121,8 +121,14 @@ class _CertificationPageState extends State<CertificationPage> {
                 child: Text(
               title,
               textAlign: TextAlign.center,
-              style:
-              TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: isSmallerThanDesktop ? isSmallerThanMobile ? 10 : screenWidth * 0.020833 : 25),
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: isSmallerThanDesktop
+                      ? isSmallerThanMobile
+                          ? 10
+                          : screenWidth * 0.020833
+                      : 25),
             )),
           ),
         ),
@@ -160,14 +166,11 @@ class _CertificationPageState extends State<CertificationPage> {
           },
           child: ValueListenableBuilder(
             valueListenable: _opacityNotifier,
-            builder: (BuildContext context, double opacity, Widget? child) =>
-                AnimatedFloatingActionButton(
-                    function: () {
-                      _scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.linear);
-                    },
-                    opacity: opacity),
+            builder: (BuildContext context, double opacity, Widget? child) => AnimatedFloatingActionButton(
+                function: () {
+                  _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                },
+                opacity: opacity),
           ),
         ),
       ),

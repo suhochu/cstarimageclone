@@ -78,7 +78,6 @@ class KakaoTalkButton extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final LaunchURl launchURl = LaunchURl();
   final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier<bool>(false);
 
   @override
@@ -102,7 +101,7 @@ class KakaoTalkButton extends StatelessWidget {
                 : const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             decoration: BoxDecoration(color: _colorChangeNotifier.value == false ? const Color.fromRGBO(255, 202, 40, 1) : const Color.fromRGBO(55, 30, 32, 1)),
             child: GestureDetector(
-              onTap: launchURl.launchKakaoChannel,
+              onTap: () => LaunchURl.selectUrlMethod(URLs.kakaoChannel),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

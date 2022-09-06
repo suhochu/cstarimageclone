@@ -22,7 +22,7 @@ class PageFooter extends StatelessWidget {
         children: [
           ResponsiveRowColumnItem(
             child: GestureDetector(
-              onTap: _launchURl.launchKakaoChannel,
+              onTap: () => LaunchURl.selectUrlMethod(URLs.kakaoChannel),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Image.asset(
