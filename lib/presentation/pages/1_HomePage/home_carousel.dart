@@ -4,7 +4,6 @@ import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../widget/slide_show.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class HomeCarousel extends StatelessWidget {
   const HomeCarousel({Key? key, required this.isSmallerThanDesktop, required this.isSmallerThanMobile, required this.screenWidth}) : super(key: key);
@@ -14,7 +13,6 @@ class HomeCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(children: [
       Container(
         color: Colors.blueGrey,
@@ -65,7 +63,11 @@ class HomeCarousel extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            KakaoTalkButton(),
+            KakaoTalkButton(
+              screenWidth: screenWidth,
+              isSmallerThanDesktop: isSmallerThanDesktop,
+              isSmallerThanMobile: isSmallerThanMobile,
+            ),
           ],
         ),
       )
@@ -76,15 +78,18 @@ class HomeCarousel extends StatelessWidget {
 class KakaoTalkButton extends StatelessWidget {
   KakaoTalkButton({
     Key? key,
+    required this.screenWidth,
+    required this.isSmallerThanDesktop,
+    required this.isSmallerThanMobile,
   }) : super(key: key);
 
   final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier<bool>(false);
+  final double screenWidth;
+  final bool isSmallerThanDesktop;
+  final bool isSmallerThanMobile;
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (PointerEvent details) => _colorChangeNotifier.value = true,

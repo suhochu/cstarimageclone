@@ -4,7 +4,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../all_pages_out.dart';
 
 class HomeIntroduce extends StatelessWidget {
-  HomeIntroduce({Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile}) : super(key: key);
+  HomeIntroduce({Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile})
+      : super(key: key);
   final List<String> titles = [
     '퍼스널컬러진단',
     '컬러자격증과정',
@@ -22,7 +23,6 @@ class HomeIntroduce extends StatelessWidget {
 
   final double screenWidth;
   final bool isSmallerThanTablet;
-
   final bool isSmallerThanDesktop;
   final bool isSmallerThanMobile;
 
@@ -66,8 +66,8 @@ class HomeIntroduce extends StatelessWidget {
   }
 
   ResponsiveRowColumn introduceCardsBuilder(BuildContext context, int index1, int index2) {
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+    // bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+    // bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return ResponsiveRowColumn(
       layout: isSmallerThanMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
       rowMainAxisAlignment: MainAxisAlignment.center,
@@ -80,6 +80,9 @@ class HomeIntroduce extends StatelessWidget {
             content: contents[index1],
             index: index1,
             route: routePages[index1],
+            isSmallerThanMobile: isSmallerThanMobile,
+            isSmallerThanDesktop: isSmallerThanDesktop,
+            screenWidth: screenWidth,
           ),
         ),
         // SizedBox(width: 30 * sizeFactor),
@@ -89,6 +92,9 @@ class HomeIntroduce extends StatelessWidget {
             content: contents[index2],
             index: index2,
             route: routePages[index2],
+            isSmallerThanMobile: isSmallerThanMobile,
+            isSmallerThanDesktop: isSmallerThanDesktop,
+            screenWidth: screenWidth,
           ),
         )
       ],
@@ -103,6 +109,9 @@ class IntroduceCard extends StatelessWidget {
     required this.content,
     required this.index,
     required this.route,
+    required this.screenWidth,
+    required this.isSmallerThanDesktop,
+    required this.isSmallerThanMobile,
   }) : super(key: key);
 
   final String title;
@@ -111,13 +120,12 @@ class IntroduceCard extends StatelessWidget {
   final String route;
 
   final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier(false);
+  final double screenWidth;
+  final bool isSmallerThanDesktop;
+  final bool isSmallerThanMobile;
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
-
     return GestureDetector(
       onTap: () {
         Routemaster.of(context).push(route);
@@ -157,16 +165,32 @@ class IntroduceCard extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(title, style: TextStyle(color: Colors.white, fontSize: isSmallerThanDesktop ? isSmallerThanMobile ? screenWidth * 0.035 : screenWidth * 0.025 : 35, fontWeight: FontWeight.bold)),
+                      Text(title,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: isSmallerThanDesktop
+                                  ? isSmallerThanMobile
+                                      ? screenWidth * 0.035
+                                      : screenWidth * 0.025
+                                  : 35,
+                              fontWeight: FontWeight.bold)),
                       const SizedBox(width: 5),
                       Container(
-                          padding: const EdgeInsets.only(top: 5), child: Icon(Icons.arrow_circle_right, color: Colors.white, size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Icon(Icons.arrow_circle_right, color: Colors.white, size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
                     ],
                   ),
                   SizedBox(height: isSmallerThanDesktop ? screenWidth * 0.015 : 30),
                   Text(
                     content,
-                    style: TextStyle(fontSize: isSmallerThanDesktop ? isSmallerThanMobile ? screenWidth * 0.022 : screenWidth * 0.015 : 16, color: Colors.white, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: isSmallerThanDesktop
+                            ? isSmallerThanMobile
+                                ? screenWidth * 0.022
+                                : screenWidth * 0.015
+                            : 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

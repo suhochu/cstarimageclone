@@ -1,6 +1,5 @@
 import 'package:cstar_image_clone/widget/launch_url.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class CstarImageCenter extends StatelessWidget {
   const CstarImageCenter({Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile}) : super(key: key);
@@ -73,8 +72,6 @@ class CstarImageCenter extends StatelessWidget {
       );
 
   Container directions(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     return Container(
       height: 400,
       color: Colors.white,
@@ -91,7 +88,7 @@ class CstarImageCenter extends StatelessWidget {
                 children: [
                   Text('DIRECTIONS',
                       style: TextStyle(
-                          fontSize: isSmallThanDesktop ? screenWidth * 0.02 : 24,
+                          fontSize: isSmallerThanDesktop ? screenWidth * 0.02 : 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.white)),
                 ],
@@ -105,8 +102,6 @@ class CstarImageCenter extends StatelessWidget {
   }
 
   Widget naverMap(BuildContext context) {
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return LayoutBuilder(builder: (context, constraints) {
       return MouseRegion(
         cursor: SystemMouseCursors.click,
@@ -152,9 +147,6 @@ class CstarImageCenter extends StatelessWidget {
   }
 
   Container customerService(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    bool isSmallThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
     return Container(
       color: const Color.fromRGBO(245, 76, 76, 1),
       alignment: Alignment.center,
@@ -164,11 +156,11 @@ class CstarImageCenter extends StatelessWidget {
           if (!isSmallerThanTablet)
             Column(children: [
               Icon(Icons.phone_in_talk,
-                  color: Colors.white, size: isSmallThanDesktop ? screenWidth * 0.05 : 60),
+                  color: Colors.white, size: isSmallerThanDesktop ? screenWidth * 0.05 : 60),
               const SizedBox(height: 30),
             ]),
           Text('CUSTOMER SERVICE',
-              style: customServiceTextStyle(isSmallThanDesktop
+              style: customServiceTextStyle(isSmallerThanDesktop
                   ? isSmallerThanTablet
                       ? screenWidth * 0.025
                       : screenWidth * 0.019
@@ -189,16 +181,16 @@ class CstarImageCenter extends StatelessWidget {
               children: [
                 const SizedBox(height: 15),
                 Text('010.9340.2890',
-                    style: customServiceTextStyle(isSmallThanDesktop ? screenWidth * 0.02666 : 32)),
+                    style: customServiceTextStyle(isSmallerThanDesktop ? screenWidth * 0.02666 : 32)),
                 const SizedBox(height: 5),
                 Text('02.482.2890',
-                    style: customServiceTextStyle(isSmallThanDesktop ? screenWidth * 0.02666 : 32)),
+                    style: customServiceTextStyle(isSmallerThanDesktop ? screenWidth * 0.02666 : 32)),
                 const SizedBox(height: 15),
               ],
             ),
           Text('궁금한사항 있으시면 언제든 문의주세요!',
               style: TextStyle(
-                  fontSize: isSmallThanDesktop
+                  fontSize: isSmallerThanDesktop
                       ? isSmallerThanTablet
                           ? screenWidth * 0.019
                           : screenWidth * 0.013

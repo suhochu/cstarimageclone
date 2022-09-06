@@ -8,7 +8,9 @@ import '../../../constants/contact_point.dart';
 import '../all_pages_out.dart';
 
 class CstarImageContacts extends StatelessWidget {
-  const CstarImageContacts({Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile}) : super(key: key);
+  const CstarImageContacts(
+      {Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile})
+      : super(key: key);
 
   final double screenWidth;
   final bool isSmallerThanTablet;
@@ -17,7 +19,6 @@ class CstarImageContacts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         SizedBox(height: isSmallerThanMobile ? 30 : 60),
@@ -67,10 +68,6 @@ class CstarImageContacts extends StatelessWidget {
   }
 
   ResponsiveRowColumn contentsWidgetBuilder(BuildContext context) {
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
-    double screenWidth = MediaQuery.of(context).size.width;
     return ResponsiveRowColumn(
       layout: isSmallerThanTablet ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
       rowMainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +113,15 @@ class CstarImageContacts extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(flex: 1, child: CstarConsultingButton()),
+                Expanded(
+                  flex: 1,
+                  child: CstarConsultingButton(
+                    isSmallerThanDesktop: isSmallerThanDesktop,
+                    isSmallerThanTablet: isSmallerThanTablet,
+                    isSmallerThanMobile: isSmallerThanMobile,
+                    screenWidth: screenWidth,
+                  ),
+                ),
               ],
             ),
           ),
@@ -156,7 +161,6 @@ class CstarImageContacts extends StatelessWidget {
       );
 
   Column contactsCardBuilderRow(BuildContext context) {
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -183,15 +187,20 @@ class CstarImageContacts extends StatelessWidget {
 class CstarConsultingButton extends StatelessWidget {
   CstarConsultingButton({
     Key? key,
+    required this.isSmallerThanDesktop,
+    required this.isSmallerThanTablet,
+    required this.screenWidth,
+    required this.isSmallerThanMobile,
   }) : super(key: key);
 
   final ValueNotifier<bool> _colorChangeNotifier = ValueNotifier(false);
+  final bool isSmallerThanDesktop;
+  final bool isSmallerThanTablet;
+  final bool isSmallerThanMobile;
+  final double screenWidth;
 
   @override
   Widget build(BuildContext context) {
-    bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
-    bool isSmallerThanTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-    double screenWidth = MediaQuery.of(context).size.width;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       opaque: false,
@@ -211,7 +220,9 @@ class CstarConsultingButton extends StatelessWidget {
               style: TextStyle(
                   fontSize: isSmallerThanDesktop
                       ? isSmallerThanTablet
-                          ? screenWidth * 0.020
+                          ? isSmallerThanMobile
+                              ? screenWidth * 0.03
+                              : screenWidth * 0.02
                           : screenWidth * 0.022
                       : 30,
                   color: Colors.white,
@@ -281,7 +292,9 @@ class ContactCard extends StatelessWidget {
                           color: Colors.white,
                           fontSize: isSmallerThanDesktop
                               ? isSmallerThanTablet
-                                  ? screenWidth * 0.021
+                                  ? isSmallerThanMobile
+                                      ? screenWidth * 0.03
+                                      : screenWidth * 0.021
                                   : screenWidth * 0.016
                               : 20,
                           fontWeight: FontWeight.bold),
