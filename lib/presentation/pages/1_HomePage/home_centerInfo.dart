@@ -88,7 +88,7 @@ class CstarImageCenter extends StatelessWidget {
                 children: [
                   Text('DIRECTIONS',
                       style: TextStyle(
-                          fontSize: isSmallerThanDesktop ? screenWidth * 0.02 : 24,
+                          fontSize: isSmallerThanDesktop ? screenWidth * 0.03 : 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.white)),
                 ],

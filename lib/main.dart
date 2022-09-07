@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
       title: 'Welcome to CSTAR IMAGE',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       ),

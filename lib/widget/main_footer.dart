@@ -16,9 +16,7 @@ class MainFooter extends StatelessWidget {
     }
 
     return Container(
-      padding: isSmallerThanDesktop
-          ? const EdgeInsets.only(top: 5, bottom: 5)
-          : const EdgeInsets.only(top: 10, bottom: 10),
+      padding: isSmallerThanDesktop ? const EdgeInsets.only(top: 5, bottom: 5) : const EdgeInsets.only(top: 10, bottom: 10),
       color: Colors.black,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,9 +28,7 @@ class MainFooter extends StatelessWidget {
                 SizedBox(
                   child: Text(
                     '씨스타이미지 | 서울 용산구 한강로 2가 71, 백두드레곤 402 | 06588 (구:137-840)',
-                    textAlign: !ResponsiveWrapper.of(context).isSmallerThan(DESKTOP)
-                        ? TextAlign.start
-                        : TextAlign.center,
+                    textAlign: !ResponsiveWrapper.of(context).isSmallerThan(DESKTOP) ? TextAlign.start : TextAlign.center,
                     style: TextStyle(color: Colors.white, fontSize: mobileFontSize()),
                   ),
                 ),
@@ -58,8 +54,7 @@ class MainFooter extends StatelessWidget {
                               style: TextStyle(color: Colors.white, fontSize: mobileFontSize()),
                             ),
                           TextSpan(
-                            text:
-                                'TEL: 02.6482.2890 | H.P: 010.9340.2890 | 이메일: cstarimage@naver.com',
+                            text: 'TEL: 02.6482.2890 | H.P: 010.9340.2890 | 이메일: cstarimage@naver.com',
                             style: TextStyle(color: Colors.white, fontSize: mobileFontSize()),
                           ),
                         ],
@@ -79,12 +74,12 @@ class MainFooter extends StatelessWidget {
           if (!isSmallerThanTablet)
             SizedBox(
               child: Row(
-                children: const [
-                  SizedBox(width: 30),
+                children: [
+                  const SizedBox(width: 30),
                   RouteButton(url: URLs.facebookPage),
-                  SizedBox(width: 30),
+                  const SizedBox(width: 30),
                   RouteButton(url: URLs.instaPage),
-                  SizedBox(width: 120),
+                  const SizedBox(width: 120),
                 ],
               ),
             ),
@@ -94,41 +89,34 @@ class MainFooter extends StatelessWidget {
   }
 }
 
-class RouteButton extends StatefulWidget {
-  const RouteButton({Key? key, required this.url}) : super(key: key);
+class RouteButton extends StatelessWidget {
+  RouteButton({Key? key, required this.url}) : super(key: key);
 
   final URLs url;
-
-  @override
-  State<RouteButton> createState() => _RouteButtonState();
-}
-
-class _RouteButtonState extends State<RouteButton> {
-  bool isInRegion = false;
+  final ValueNotifier<bool> _isInRegion = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     String image;
-    if (widget.url == URLs.facebookPage) {
+    if (url == URLs.facebookPage) {
       image = 'assets/images/footer/icon_facebook.png';
     } else {
       image = 'assets/images/footer/icon_instagram.png';
     }
     return MouseRegion(
-      onEnter: (event) => setState(() {
-        isInRegion = true;
-      }),
-      onExit: (event) => setState(() {
-        isInRegion = false;
-      }),
+      onEnter: (event) => _isInRegion.value = true,
+      onExit: (event) => _isInRegion.value = false,
       child: GestureDetector(
-        onTap: () => LaunchURl.selectUrlMethod(widget.url),
-        child: Image.asset(
-          image,
-          fit: BoxFit.fitHeight,
-          filterQuality: FilterQuality.high,
-          color: isInRegion ? const Color.fromRGBO(197, 198, 199, 1) : Colors.white,
-          height: 30,
+        onTap: () => LaunchURl.selectUrlMethod(url),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: _isInRegion,
+          builder: (context, value, child) => Image.asset(
+            image,
+            fit: BoxFit.fitHeight,
+            filterQuality: FilterQuality.high,
+            color: _isInRegion.value ? const Color.fromRGBO(197, 198, 199, 1) : Colors.white,
+            height: 30,
+          ),
         ),
       ),
     );

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class PageFooter extends StatelessWidget {
-  PageFooter({Key? key}) : super(key: key);
-  final LaunchURl _launchURl = LaunchURl();
+  const PageFooter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +38,9 @@ class PageFooter extends StatelessWidget {
               ),
             ),
           ),
-          // const SizedBox(width: 20),
           ResponsiveRowColumnItem(
             child: GestureDetector(
-              onTap: () {
-                // Todo implement this at android and IOS
-              },
+              onTap: () => LaunchURl.selectUrlMethod(URLs.phoneCall),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: Image.asset(

@@ -52,7 +52,12 @@ class LaunchURl {
         }
         break;
       case URLs.phoneCall:
-        print('phone call');
+        if (!await launchUrl(Uri(
+          scheme: 'tel',
+          path: '01083790578'
+        ))) {
+          throw 'Could not call Cstar';
+        }
         break;
       default:
         throw 'Could not launch $url';

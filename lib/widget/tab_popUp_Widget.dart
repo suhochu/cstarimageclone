@@ -89,7 +89,6 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     final overlay = Overlay.of(context);
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
-    // final offset = renderBox.localToGlobal(Offset.zero);
     final screenWidth = MediaQuery.of(context).size.width;
 
     entry?.remove();
@@ -97,8 +96,6 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     entry = OverlayEntry(
       builder: (context) => Positioned(
         width: size.width + 100,
-        // left: offset.dx,
-        // top: offset.dy,
         child: CompositedTransformFollower(
           link: layerLink,
           showWhenUnlinked: false,
@@ -107,7 +104,6 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
         ),
       ),
     );
-    // 118 - ((screenWidth - 800) * 0.0215385
     _animationController.addListener(() {
       overlay!.setState(() {});
     });

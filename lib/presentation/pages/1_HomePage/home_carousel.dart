@@ -119,7 +119,7 @@ class KakaoTalkButton extends StatelessWidget {
                             : screenWidth * 0.033
                         : 35,
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 10),
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     child: Text(
@@ -129,8 +129,8 @@ class KakaoTalkButton extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: isSmallerThanDesktop
                               ? isSmallerThanMobile
-                                  ? screenWidth * 0.03
-                                  : screenWidth * 0.02
+                                  ? screenWidth * 0.035
+                                  : screenWidth * 0.025
                               : 22),
                     ),
                   ),

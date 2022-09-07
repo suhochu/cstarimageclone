@@ -16,7 +16,6 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   final GlobalKey globalKey = GlobalKey();
   final LatLng _latLng = const LatLng(37.5301773, 126.9716482);
   final LaunchURl launchURl = LaunchURl();
-
   final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
 
   @override
@@ -47,14 +46,12 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           markerId: const MarkerId('CSTAR'),
           draggable: true,
           position: _latLng,
-          onTap: () {
-            _customInfoWindowController.addInfoWindow!(windowInfo(), _latLng);
-          }),
+          onTap: () => _customInfoWindowController.addInfoWindow!(windowInfo(), _latLng)),
     );
   }
 
   void _onMapCreated(GoogleMapController controller) {
-     _customInfoWindowController.googleMapController = controller;
+    _customInfoWindowController.googleMapController = controller;
     _customInfoWindowController.addInfoWindow!(windowInfo(), _latLng);
   }
 
@@ -62,7 +59,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   Widget build(BuildContext context) {
     addMarker();
     return GestureDetector(
-      onTap: ()=> LaunchURl.selectUrlMethod(URLs.cstarDirection),
+      onTap: () => LaunchURl.selectUrlMethod(URLs.cstarDirection),
       child: Stack(
         children: [
           GoogleMap(
@@ -72,15 +69,10 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
             ),
             markers: _markers,
             onMapCreated: _onMapCreated,
-            onTap: (position) {
-              _customInfoWindowController.hideInfoWindow!();
-            },
-            onCameraMove: (position) {
-              _customInfoWindowController.onCameraMove!();
-            },
+            onTap: (position) => _customInfoWindowController.hideInfoWindow!(),
+            onCameraMove: (position) => _customInfoWindowController.onCameraMove!(),
           ),
-          CustomInfoWindow(
-              controller: _customInfoWindowController, height: 60, width: 150, offset: 37)
+          CustomInfoWindow(controller: _customInfoWindowController, height: 60, width: 150, offset: 37)
         ],
       ),
     );

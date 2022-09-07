@@ -170,28 +170,38 @@ class IntroduceCard extends StatelessWidget {
                               color: Colors.white,
                               fontSize: isSmallerThanDesktop
                                   ? isSmallerThanMobile
-                                      ? screenWidth * 0.035
+                                      ? screenWidth * 0.04
                                       : screenWidth * 0.025
                                   : 35,
                               fontWeight: FontWeight.bold)),
                       const SizedBox(width: 5),
                       Container(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Icon(Icons.arrow_circle_right, color: Colors.white, size: isSmallerThanDesktop ? screenWidth * 0.03 : 30)),
+                        padding: isSmallerThanMobile ? null : const EdgeInsets.only(top: 5),
+                        child: Icon(
+                          Icons.arrow_circle_right,
+                          color: Colors.white,
+                          size: isSmallerThanDesktop
+                              ? isSmallerThanMobile
+                                  ? screenWidth * 0.04
+                                  : screenWidth * 0.03
+                              : 30,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: isSmallerThanDesktop ? screenWidth * 0.015 : 30),
-                  Text(
-                    content,
-                    style: TextStyle(
-                        fontSize: isSmallerThanDesktop
-                            ? isSmallerThanMobile
-                                ? screenWidth * 0.022
-                                : screenWidth * 0.015
-                            : 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
-                  ),
+                  if (!isSmallerThanMobile) SizedBox(height: isSmallerThanDesktop ? screenWidth * 0.015 : 30),
+                  if (!isSmallerThanMobile)
+                    Text(
+                      content,
+                      style: TextStyle(
+                          fontSize: isSmallerThanDesktop
+                              ? isSmallerThanMobile
+                                  ? screenWidth * 0.022
+                                  : screenWidth * 0.015
+                              : 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
                 ],
               ),
             ),

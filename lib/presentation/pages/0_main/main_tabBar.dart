@@ -60,7 +60,6 @@ class TopTabBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   DropdownMenuItem<int> menuButtonBuilder(int index, BuildContext context) {
-    bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return DropdownMenuItem<int>(
         value: index,
         onTap: null,
@@ -68,7 +67,7 @@ class TopTabBar extends StatelessWidget implements PreferredSizeWidget {
             contentPadding: const EdgeInsets.all(1),
             title: Text(
               tabBarMenuNames[index],
-              style: TextStyle(fontSize: isSmallerThanMobile ? 8 : 11.5, fontWeight: FontWeight.w800, color: Colors.white),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: Colors.white),
             )));
   }
 

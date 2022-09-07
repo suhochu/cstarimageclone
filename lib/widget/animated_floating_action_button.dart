@@ -1,36 +1,20 @@
 import 'package:flutter/material.dart';
 
-class AnimatedFloatingActionButton extends StatefulWidget {
-  const AnimatedFloatingActionButton(
-      {Key? key,
-        required this.opacity,
-        required this.function,
-      })
-      : super(key: key);
+class AnimatedFloatingActionButton extends StatelessWidget {
+  const AnimatedFloatingActionButton({
+    Key? key,
+    required this.opacity,
+    required this.function,
+  }) : super(key: key);
   final double opacity;
   final GestureTapCallback function;
 
   @override
-  State<AnimatedFloatingActionButton> createState() =>
-      _AnimatedFloatingActionButtonState();
-}
-
-class _AnimatedFloatingActionButtonState
-    extends State<AnimatedFloatingActionButton> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-
-  @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
-      onTap: widget.function,
+      onTap: function,
       child: AnimatedOpacity(
-        opacity: widget.opacity,
+        opacity: opacity,
         duration: const Duration(milliseconds: 300),
         child: const PhysicalModel(
           color: Colors.black,
