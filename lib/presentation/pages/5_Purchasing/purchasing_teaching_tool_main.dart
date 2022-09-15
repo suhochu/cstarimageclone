@@ -1,100 +1,45 @@
-import 'package:cstar_image_clone/widget/animated_floating_action_button.dart';
+import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
 import 'package:flutter/material.dart';
-import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 import '../../../widget/main_footer.dart';
 import '../../../widget/page_banner.dart';
 import '../../../widget/page_footer.dart';
 
-class PurchasingTeachingToolPage extends StatefulWidget {
+class PurchasingTeachingToolPage extends StatelessWidget {
   static const String routeName = 'purchasing_teaching_tool';
 
   const PurchasingTeachingToolPage({Key? key}) : super(key: key);
 
   @override
-  State<PurchasingTeachingToolPage> createState() => _PurchasingTeachingToolPageState();
+  Widget build(BuildContext context) {
+    return const DefaultLayout(child: _BuildContents());
+  }
 }
 
-class _PurchasingTeachingToolPageState extends State<PurchasingTeachingToolPage> {
-  late final ScrollController _scrollController;
-  final ValueNotifier<double> _opacityNotifier = ValueNotifier<double>(0);
-
-  final ValueNotifier<bool> _isSelectedNotifier = ValueNotifier<bool>(false);
-
-  void _opacityFAB() {
-    if (_scrollController.offset <= 50) {
-      _opacityNotifier.value = 0;
-    } else {
-      _opacityNotifier.value = 1;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-    _scrollController.addListener(_opacityFAB);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_opacityFAB);
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  List<Widget> buildContents() {
-    return [
-      const PageBanner(
-        title: '컬러교구 구입',
-      ),
-      for (int i = 1; i <= 20; i++) insideImage(i.toString()),
-      PageFooter(),
-      const MainFooter(),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: WebSmoothScroll(
-        controller: _scrollController,
-        curve: Curves.fastOutSlowIn,
-        animationDuration: 300,
-        child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: buildContents(),
-            )),
-      ),
-      floatingActionButton: ValueListenableBuilder<bool>(
-        valueListenable: _isSelectedNotifier,
-        builder: (context, value, child) => AnimatedPadding(
-          duration: const Duration(milliseconds: 60),
-          padding: EdgeInsets.only(bottom: _isSelectedNotifier.value ? 10 : 5),
-          child: MouseRegion(
-            onEnter: (event) => _isSelectedNotifier.value = true,
-            onExit: (event) => _isSelectedNotifier.value = false,
-            child: ValueListenableBuilder(
-              valueListenable: _opacityNotifier,
-              builder: (BuildContext context, double opacity, Widget? child) => AnimatedFloatingActionButton(
-                  function: () {
-                    _scrollController.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                  },
-                  opacity: opacity),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+class _BuildContents extends StatelessWidget {
+  const _BuildContents({Key? key}) : super(key: key);
 
   Widget insideImage(String index) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Image.asset(
         'assets/images/teachingTool/$index.jpeg',
+        // Todo 네이버 스마트 스토어 URL 링크 걸기
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const PageBanner(
+          title: '컬러교구 구입',
+        ),
+        for (int i = 1; i <= 20; i++) insideImage(i.toString()),
+        const PageFooter(),
+        const MainFooter()
+      ],
     );
   }
 }
