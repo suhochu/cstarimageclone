@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+        fontFamily: 'NotoSans',
       ),
       routerDelegate: RoutemasterDelegate(
         observers: [TitleObserver()],
