@@ -1,8 +1,8 @@
 import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
-import 'package:cstar_image_clone/widget/page_footer.dart';
+import 'package:cstar_image_clone/presentation/pages/99_component/page_banner.dart';
+import 'package:cstar_image_clone/presentation/pages/99_component/page_footer.dart';
 import 'package:flutter/material.dart';
-import '../../../widget/page_banner.dart';
-import '../../../widget/main_footer.dart';
+import '../99_component/main_footer.dart';
 
 class PersonalColorDiagnosisPage extends StatelessWidget {
   static const String routeName = 'personal_color_diagnosis';

@@ -1,7 +1,7 @@
 import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../../widget/main_footer.dart';
+import '../99_component/main_footer.dart';
 import 'home_export_pages.dart';
 
 class HomeMain extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:cstar_image_clone/widget/launch_url.dart';
+import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:flutter/material.dart';
 
 class CstarImageCenter extends StatelessWidget {

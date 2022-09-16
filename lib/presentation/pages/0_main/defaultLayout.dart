@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
-
 import '../../../widget/animated_floating_action_button.dart';
 
 class DefaultLayout extends StatefulWidget {

@@ -1,8 +1,8 @@
-import 'package:cstar_image_clone/widget/page_footer.dart';
+import 'package:cstar_image_clone/presentation/pages/99_component/page_banner.dart';
 import 'package:flutter/material.dart';
-import '../../../widget/main_footer.dart';
-import '../../../widget/page_banner.dart';
+import '../99_component/main_footer.dart';
 import '../0_main/defaultLayout.dart';
+import '../99_component/page_footer.dart';
 
 class ColorPsychologyConsultPage extends StatelessWidget {
   static const String routeName = 'color_psychology_consult';

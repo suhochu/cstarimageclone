@@ -1,10 +1,10 @@
 import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
+import 'package:cstar_image_clone/presentation/pages/99_component/page_banner.dart';
+import 'package:cstar_image_clone/presentation/pages/99_component/page_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:routemaster/routemaster.dart';
-import '../../../widget/main_footer.dart';
-import '../../../widget/page_banner.dart';
-import '../../../widget/page_footer.dart';
+import '../99_component/main_footer.dart';
 
 class CertificationPage extends StatelessWidget {
   static const String routeName = 'certification_total_image_making';
@@ -18,37 +18,22 @@ class CertificationPage extends StatelessWidget {
   }
 }
 
-class _BuildContents extends StatefulWidget {
-  const _BuildContents({Key? key, required this.query}) : super(key: key);
+class _BuildContents extends StatelessWidget {
+  _BuildContents({Key? key, required this.query}) : super(key: key);
   final String query;
 
-  @override
-  State<_BuildContents> createState() => _BuildContentsState();
-}
-
-class _BuildContentsState extends State<_BuildContents> {
-  late Function tap;
-  late Widget page1;
-  late Widget page2;
-  late Widget page3;
-
-
-  @override
-  void initState() {
-    super.initState();
-    page1 = Container(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Image.asset('assets/images/certification/1.jpeg'));
-    page2 = Container(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Image.asset('assets/images/certification/2.jpeg'));
-    page3 = Container(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Image.asset('assets/images/certification/3.jpeg'));
-  }
+  final Widget page1 = Container(
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      child: Image.asset('assets/images/certification/1.jpeg'));
+  final Widget page2 = Container(
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      child: Image.asset('assets/images/certification/2.jpeg'));
+  final Widget page3 = Container(
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      child: Image.asset('assets/images/certification/3.jpeg'));
 
   Widget tabBuilder() {
-    var selectedIndex = int.parse(widget.query);
+    var selectedIndex = int.parse(query);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -76,7 +61,7 @@ class _BuildContentsState extends State<_BuildContents> {
   }
 
   Widget contentsBuilder() {
-    switch (int.parse(widget.query)) {
+    switch (int.parse(query)) {
       case 2:
         return page1;
       case 3:
@@ -119,13 +104,9 @@ class _TabButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isSmallerThanDesktop = ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
-        // selectionCallback(index);
         Routemaster.of(context).push('/${CertificationPage.routeName}?query=$index');
       },
       child: AnimatedContainer(
@@ -139,17 +120,17 @@ class _TabButton extends StatelessWidget {
             width: isSmallerThanDesktop ? screenWidth / 30 * 7 : 280,
             child: Center(
                 child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: isSmallerThanDesktop
-                          ? isSmallerThanMobile
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: isSmallerThanDesktop
+                      ? isSmallerThanMobile
                           ? 10
                           : screenWidth * 0.020833
-                          : 25),
-                )),
+                      : 25),
+            )),
           ),
         ),
       ),

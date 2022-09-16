@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widget/launch_url.dart';
+import '../util/launch_url.dart';
 
 class ContactPoint {
   String title;

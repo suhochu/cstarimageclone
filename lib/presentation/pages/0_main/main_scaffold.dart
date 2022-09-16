@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cstar_image_clone/widget/launch_url.dart';
+import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_framework/responsive_framework.dart';

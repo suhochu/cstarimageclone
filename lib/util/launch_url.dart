@@ -11,8 +11,14 @@ enum URLs {
   phoneCall,
 }
 
-class LaunchURl {
+enum PurchaseURLs {
+  colorCard,
+  diagnosisSheet,
+  diagnosisKit,
+  warmCoolDiagnosisSheet,
+}
 
+class LaunchURl {
 
   static void selectUrlMethod(URLs url) async {
     switch (url) {
@@ -62,6 +68,36 @@ class LaunchURl {
       default:
         throw 'Could not launch $url';
     }
+  }
+}
+
+class LaunchPurchaseURLs {
+  static void selectUrlMethod(PurchaseURLs url) async {
+    switch(url){
+      case PurchaseURLs.colorCard:
+        if (!await launchUrl(Uri.parse('https://smartstore.naver.com/cstarimage/products/5643632300'))) {
+          throw 'Could not open Purchasing Site';
+        }
+        break;
+      case PurchaseURLs.diagnosisSheet:
+        if (!await launchUrl(Uri.parse('https://smartstore.naver.com/cstarimage/products/3376416852?'))) {
+          throw 'Could not open Purchasing Site';
+        }
+        break;
+      case PurchaseURLs.diagnosisKit:
+        if (!await launchUrl(Uri.parse('https://smartstore.naver.com/cstarimage/products/5643660239?'))) {
+          throw 'Could not open Purchasing Site';
+        }
+        break;
+      case PurchaseURLs.warmCoolDiagnosisSheet:
+        if (!await launchUrl(Uri.parse('https://smartstore.naver.com/cstarimage/products/5461732222'))) {
+          throw 'Could not open Purchasing Site';
+        }
+        break;
+      default:
+
+    }
+
   }
 
 }

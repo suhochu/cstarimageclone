@@ -1,4 +1,4 @@
-import 'package:cstar_image_clone/widget/launch_url.dart';
+import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

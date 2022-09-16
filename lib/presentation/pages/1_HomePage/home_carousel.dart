@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:cstar_image_clone/widget/launch_url.dart';
+import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../widget/slide_show.dart';
+import '../../../util/slide_show.dart';
 
 class HomeCarousel extends StatelessWidget {
   const HomeCarousel({Key? key, required this.isSmallerThanDesktop, required this.isSmallerThanMobile, required this.screenWidth}) : super(key: key);

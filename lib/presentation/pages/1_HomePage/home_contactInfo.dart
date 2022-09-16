@@ -1,5 +1,5 @@
-import 'package:cstar_image_clone/widget/launch_url.dart';
-import 'package:cstar_image_clone/widget/slide_show.dart';
+import 'package:cstar_image_clone/util/launch_url.dart';
+import 'package:cstar_image_clone/util/slide_show.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:routemaster/routemaster.dart';
