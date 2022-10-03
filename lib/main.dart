@@ -12,10 +12,9 @@ void main() {
 class MyApp extends StatelessWidget {
 
   const MyApp({Key? key}) : super(key: key);
-
-  //todo Gorouter로 변경합시다!
   @override
   Widget build(BuildContext context) {
+    print('안녕하세요!');
     return MaterialApp.router(
       builder: (context, child) =>
       ResponsiveWrapper.builder(BouncingScrollWrapper.builder(context, child!),
