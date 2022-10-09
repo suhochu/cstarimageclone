@@ -13,7 +13,7 @@ enum PageName {
 String routeNames(PageName pageName) {
   switch (pageName) {
     case PageName.main:
-      return 'cstar_main';
+      return '/';
     case PageName.personalColor:
       return 'personal_color_diagnosis';
     case PageName.colorPsychology:

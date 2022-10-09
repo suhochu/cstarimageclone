@@ -40,8 +40,35 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBymDLxBjPuNuVPLiItOWkyeanBMaZxTjE"></script>
+  <style>
+    .container {
+      width: 100vh;
+      height: 70vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .landing {
+      width: 100vw;
+      height: 30vh;
+      display: flex;
+      justify-content: center;
+      align-items: center; 
+    }
+    .indicator {
+      width: 50vw;
+    }
+  </style>
 </head>
-<body>
+<body style="overflow: hidden">
+  <div id="loading_indicator" class="landing">
+    <img class="indicator" src="./assets/cstar_landing.png"/>
+  </div>
+  <div id="loading_indicator" class="container">
+    <img class="indicator" src="./assets/loading_image.gif"/>
+  </div>
+
+
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -55,6 +82,16 @@
         return appRunner.runApp();
       });
     });
+  </script>
+  <script>
+    window.onload = function(){
+      setTimeout(function(){
+        var loadingIndicator = document.getElementById("loading_indicator");
+        if(loadingIndicator){
+          loadingIndicator.remove();
+        }
+      },10000)
+    }
   </script>
 </body>
 </html>
