@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../util/slide_show.dart';
 
 class HomeCarousel extends StatelessWidget {

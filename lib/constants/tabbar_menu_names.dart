@@ -1,4 +1,3 @@
-// List<String> tabBarMenuNames = ['퍼스널 컬러 진단', '색채심리상담', '자격증과정', '컬러교구 구입', '교육 및 강의'];
 import 'package:cstar_image_clone/constants/route_Name.dart';
 
 String tabBarMenuNames(PageName pageName) {

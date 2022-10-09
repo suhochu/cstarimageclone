@@ -1,29 +1,20 @@
 import 'package:cstar_image_clone/route/go_router_provider.dart';
-import 'package:cstar_image_clone/route/route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-// import 'package:routemaster/routemaster.dart';
-
-import 'constants/route_Name.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() {
-  // Routemaster.setPathUrlStrategy();
+  setPathUrlStrategy();
   runApp(_MyApp());
 }
 
 class _MyApp extends StatelessWidget {
-
   final goRouter = GoRouterInformation().goRouter;
-
 
   _MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('안녕하세요!');
-    print('/${routeNames(PageName.main)}');
     return MaterialApp.router(
       builder: (context, child) => ResponsiveWrapper.builder(BouncingScrollWrapper.builder(context, child!),
           maxWidth: 2880,

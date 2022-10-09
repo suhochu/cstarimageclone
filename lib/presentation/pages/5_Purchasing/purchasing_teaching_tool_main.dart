@@ -1,9 +1,9 @@
-import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
-import 'package:cstar_image_clone/presentation/pages/99_component/page_banner.dart';
-import 'package:cstar_image_clone/presentation/pages/99_component/page_footer.dart';
+import 'package:cstar_image_clone/layout/defaultLayout.dart';
+import 'package:cstar_image_clone/layout/page_banner.dart';
+import 'package:cstar_image_clone/layout/page_footer.dart';
 import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:flutter/material.dart';
-import '../99_component/main_footer.dart';
+import '../../../layout/main_footer.dart';
 
 class PurchasingTeachingToolPage extends StatelessWidget {
   static const String routeName = 'purchasing_teaching_tool';

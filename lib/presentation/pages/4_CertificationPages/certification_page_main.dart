@@ -1,13 +1,11 @@
 import 'package:cstar_image_clone/constants/route_Name.dart';
-import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
-import 'package:cstar_image_clone/presentation/pages/99_component/page_banner.dart';
-import 'package:cstar_image_clone/presentation/pages/99_component/page_footer.dart';
+import 'package:cstar_image_clone/layout/page_banner.dart';
+import 'package:cstar_image_clone/layout/page_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
-// import 'package:routemaster/routemaster.dart';
-import '../99_component/main_footer.dart';
+import '../../../layout/defaultLayout.dart';
+import '../../../layout/main_footer.dart';
 
 class CertificationPage extends StatelessWidget {
   static const String routeName = 'certification_total_image_making';
@@ -126,7 +124,7 @@ class _TabButton extends StatelessWidget {
                       ? isSmallerThanMobile
                           ? 10
                           : screenWidth * 0.020833
-                      : 25),
+                      : 27),
             )),
           ),
         ),

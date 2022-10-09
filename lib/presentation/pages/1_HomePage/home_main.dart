@@ -1,8 +1,11 @@
-import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
+import 'package:cstar_image_clone/layout/defaultLayout.dart';
+import 'package:cstar_image_clone/presentation/pages/1_HomePage/home_carousel.dart';
+import 'package:cstar_image_clone/presentation/pages/1_HomePage/home_centerInfo.dart';
+import 'package:cstar_image_clone/presentation/pages/1_HomePage/home_contactInfo.dart';
+import 'package:cstar_image_clone/presentation/pages/1_HomePage/home_introduce.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../99_component/main_footer.dart';
-import 'home_export_pages.dart';
+import '../../../layout/main_footer.dart';
 
 class HomeMain extends StatelessWidget {
   const HomeMain({Key? key}) : super(key: key);

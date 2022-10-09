@@ -1,7 +1,7 @@
+import 'package:cstar_image_clone/constants/route_Name.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:routemaster/routemaster.dart';
-import '../presentation/pages/all_pages_out.dart';
 import '../constants/tabbar_menu_names.dart';
 
 class TabWidget extends StatefulWidget {
@@ -62,13 +62,13 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
                 PopUpMenu(
                     title: tabBarMenuSubNames[0],
                     event: () {
-                      Routemaster.of(context).push('/${CertificationPage.routeName}?query=1');
+                      context.goNamed(routeNames(PageName.certifications), queryParams: {'page' : '1'});
                     }),
                 const Divider(color: Colors.grey, height: 1),
                 PopUpMenu(
                     title: tabBarMenuSubNames[1],
                     event: () {
-                      Routemaster.of(context).push('/${CertificationPage.routeName}?query=2');
+                      context.goNamed(routeNames(PageName.certifications), queryParams: {'page' : '2'});
                     }),
                 const Divider(
                   color: Colors.grey,
@@ -77,7 +77,7 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
                 PopUpMenu(
                     title: tabBarMenuSubNames[2],
                     event: () {
-                      Routemaster.of(context).replace('/${CertificationPage.routeName}/?query=3');
+                      context.goNamed(routeNames(PageName.certifications), queryParams: {'page' : '3'});
                     }),
               ],
             ),
@@ -95,7 +95,7 @@ class _TabWidgetState extends State<TabWidget> with SingleTickerProviderStateMix
     entry = null;
     entry = OverlayEntry(
       builder: (context) => Positioned(
-        width: size.width + 100,
+        width: size.width + 120,
         child: CompositedTransformFollower(
           link: layerLink,
           showWhenUnlinked: false,

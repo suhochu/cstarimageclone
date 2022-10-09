@@ -1,8 +1,8 @@
 import 'package:cstar_image_clone/constants/route_Name.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../../widget/tab_popUp_Widget.dart';
-import '../../../constants/tabbar_menu_names.dart';
+import 'tab_popUp_Widget.dart';
+import '../constants/tabbar_menu_names.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class TopTabBar extends StatelessWidget implements PreferredSizeWidget {

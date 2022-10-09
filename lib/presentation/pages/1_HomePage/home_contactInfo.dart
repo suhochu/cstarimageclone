@@ -1,15 +1,19 @@
+import 'package:cstar_image_clone/constants/route_Name.dart';
 import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:cstar_image_clone/util/slide_show.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:routemaster/routemaster.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../../constants/contact_point.dart';
-import '../all_pages_out.dart';
 
 class CstarImageContacts extends StatelessWidget {
   const CstarImageContacts(
-      {Key? key, required this.screenWidth, required this.isSmallerThanTablet, required this.isSmallerThanDesktop, required this.isSmallerThanMobile})
+      {Key? key,
+      required this.screenWidth,
+      required this.isSmallerThanTablet,
+      required this.isSmallerThanDesktop,
+      required this.isSmallerThanMobile})
       : super(key: key);
 
   final double screenWidth;
@@ -128,7 +132,9 @@ class CstarImageContacts extends StatelessWidget {
         ),
         ResponsiveRowColumnItem(
           child: Container(
-            margin: isSmallerThanTablet ? EdgeInsets.only(top: isSmallerThanMobile ? 5 : 15) : const EdgeInsets.only(left: 15, right: 20, top: 20, bottom: 20),
+            margin: isSmallerThanTablet
+                ? EdgeInsets.only(top: isSmallerThanMobile ? 5 : 15)
+                : const EdgeInsets.only(left: 15, right: 20, top: 20, bottom: 20),
             width: isSmallerThanDesktop
                 ? isSmallerThanTablet
                     ? screenWidth - 80
@@ -207,13 +213,15 @@ class CstarConsultingButton extends StatelessWidget {
       onEnter: (PointerEvent details) => _colorChangeNotifier.value = true,
       onExit: (PointerEvent details) => _colorChangeNotifier.value = false,
       child: GestureDetector(
-        onTap: () => Routemaster.of(context).push('/inquiry_education_lecture'),
+        onTap: () => context.goNamed(routeNames(PageName.inquiry)),
         child: ValueListenableBuilder<bool>(
           valueListenable: _colorChangeNotifier,
           builder: (context, value, child) => AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             padding: const EdgeInsets.symmetric(vertical: 3),
-            color: _colorChangeNotifier.value ? const Color.fromRGBO(43, 26, 103, 1) : const Color.fromRGBO(67, 46, 136, 1),
+            color: _colorChangeNotifier.value
+                ? const Color.fromRGBO(43, 26, 103, 1)
+                : const Color.fromRGBO(67, 46, 136, 1),
             child: Center(
                 child: Text(
               '씨스타 이미지 컨설팅 문의',

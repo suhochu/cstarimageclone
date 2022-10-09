@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:cstar_image_clone/util/launch_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:routemaster/routemaster.dart';
-import '../all_pages_out.dart';
+import '../../../layout/main_tabBar.dart';
 
 class CstarImageHomePage extends StatefulWidget {
   const CstarImageHomePage({Key? key, required this.child}) : super(key: key);

@@ -1,1 +1,0 @@
-export 'purchasing_teaching_tool_main.dart';
