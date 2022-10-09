@@ -207,7 +207,7 @@ class CstarConsultingButton extends StatelessWidget {
       onEnter: (PointerEvent details) => _colorChangeNotifier.value = true,
       onExit: (PointerEvent details) => _colorChangeNotifier.value = false,
       child: GestureDetector(
-        onTap: () => Routemaster.of(context).push('/${InquiryEducationOrLecturePage.routeName}'),
+        onTap: () => Routemaster.of(context).push('/inquiry_education_lecture'),
         child: ValueListenableBuilder<bool>(
           valueListenable: _colorChangeNotifier,
           builder: (context, value, child) => AnimatedContainer(

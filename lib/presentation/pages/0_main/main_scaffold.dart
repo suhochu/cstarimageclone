@@ -8,7 +8,8 @@ import 'package:routemaster/routemaster.dart';
 import '../all_pages_out.dart';
 
 class CstarImageHomePage extends StatefulWidget {
-  const CstarImageHomePage({Key? key}) : super(key: key);
+  const CstarImageHomePage({Key? key, required this.child}) : super(key: key);
+  final Widget child;
 
   @override
   State<CstarImageHomePage> createState() => _CstarImageHomePageState();
@@ -60,12 +61,10 @@ class _CstarImageHomePageState extends State<CstarImageHomePage> {
       }
     });
 
-    final indexedPage = IndexedPage.of(context);
+    // final indexedPage = IndexedPage.of(context);
     return Scaffold(
       appBar: const TopTabBar(),
-      body: PageStackNavigator(
-        stack: indexedPage.currentStack,
-      ),
+      body: widget.child,
     );
   }
 }
@@ -171,7 +170,11 @@ class _OverlayWidgetState extends State<OverlayWidget> {
                       SizedBox(height: isSmallerThanMobile ? 10 : 15),
                       RotatedBox(
                         quarterTurns: 3,
-                        child: Text('QUICK MENU', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: isSmallerThanMobile ? 8 : 16)),
+                        child: Text('QUICK MENU',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: isSmallerThanMobile ? 8 : 16)),
                       ),
                     ],
                   ),
@@ -246,7 +249,7 @@ class SideButton extends StatelessWidget {
     Widget image;
     switch (url) {
       case URLs.naverTalkTalk:
-        image = SvgPicture.asset('assets/images/SVG/naverTalkTalk.svg', fit: BoxFit.cover);
+        image = SvgPicture.asset('assets/images/SVG/navertalktalk.svg', fit: BoxFit.cover);
         break;
       case URLs.kakaoChannel:
         image = SvgPicture.asset('assets/images/SVG/bgkakaoTalk.svg', fit: BoxFit.cover);

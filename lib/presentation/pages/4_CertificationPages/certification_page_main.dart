@@ -1,9 +1,12 @@
+import 'package:cstar_image_clone/constants/route_Name.dart';
 import 'package:cstar_image_clone/presentation/pages/0_main/DefaultLayout.dart';
 import 'package:cstar_image_clone/presentation/pages/99_component/page_banner.dart';
 import 'package:cstar_image_clone/presentation/pages/99_component/page_footer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:routemaster/routemaster.dart';
+
+// import 'package:routemaster/routemaster.dart';
 import '../99_component/main_footer.dart';
 
 class CertificationPage extends StatelessWidget {
@@ -60,17 +63,6 @@ class _BuildContents extends StatelessWidget {
     );
   }
 
-  Widget contentsBuilder() {
-    switch (int.parse(query)) {
-      case 2:
-        return page1;
-      case 3:
-        return page3;
-      default:
-        return page2;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     bool isSmallerThanMobile = ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
@@ -80,7 +72,12 @@ class _BuildContents extends StatelessWidget {
         const PageBanner(title: '토탈이미지메이킹 컨설턴트 자격증'),
         SizedBox(width: isSmallerThanDesktop ? null : 1200, child: tabBuilder()),
         if (!isSmallerThanMobile) const SizedBox(height: 20),
-        contentsBuilder(),
+        query == '1'
+            ? page1
+            : query == '2'
+                ? page2
+                : page3,
+        // contentsBuilder(),
         const PageFooter(),
         const MainFooter(),
       ],
@@ -107,7 +104,7 @@ class _TabButton extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
-        Routemaster.of(context).push('/${CertificationPage.routeName}?query=$index');
+        context.goNamed(routeNames(PageName.certifications), queryParams: {'page': '$index'});
       },
       child: AnimatedContainer(
         margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 5),

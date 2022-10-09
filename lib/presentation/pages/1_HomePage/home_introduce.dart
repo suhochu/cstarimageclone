@@ -18,7 +18,7 @@ class HomeIntroduce extends StatelessWidget {
     '/${PersonalColorDiagnosisPage.routeName}',
     '/${CertificationPage.routeName}?query=1',
     '/${PurchasingTeachingToolPage.routeName}',
-    '/${InquiryEducationOrLecturePage.routeName}',
+    '/inquiry_education_lecture',
   ];
 
   final double screenWidth;
